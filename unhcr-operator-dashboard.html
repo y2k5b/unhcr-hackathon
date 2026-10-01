@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UNHCR Kenya Operation | Inter-Agency Coordination Dashboard</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Google Fonts: Inter / Figtree for Institutional Rigor -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            unhcr: {
+              blue: '#0072bc',      // Official UNHCR Primary Blue
+              dark: '#00558c',      // Official UNHCR Dark Blue
+              light: '#d9e8f5',     // Official UNHCR Tint Light Blue
+              yellow: '#ffd100',    // Official UNHCR Accent / Gold
+              ink: '#1c1c1b',       // High contrast institutional dark
+              gray: '#f4f7fb',      // Neutral field background
+              border: '#dbe3ec',    // Crisp 1px boundary
+              muted: '#526071',     // WCAG AAA compliant secondary text
+              critical: '#b91c1c',  // Red 700 for immediate life-saving alerts
+              warning: '#c2410c',   // Orange 700
+              success: '#15803d',   // Green 700
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* WCAG AA / AAA High Contrast & Clean Border Defaults */
+    body {
+      background-color: #f4f7fb;
+      color: #1c1c1b;
+      -webkit-font-smoothing: antialiased;
+    }
+    .chart-container {
+      position: relative;
+      width: 100%;
+      height: 250px;
+    }
+    @media (min-width: 1024px) {
+      .chart-container {
+        height: 270px;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans">
+
+  <!-- ========================================================================= -->
+  <!-- 1. FORMAL UNHCR HEADER & INTERNAL COORDINATION NAVIGATION                 -->
+  <!-- ========================================================================= -->
+  <header class="bg-white border-b border-unhcr-border sticky top-0 z-40">
+    <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-4">
+      
+      <!-- Brand & Hub Identity -->
+      <div class="flex items-center gap-5">
+        <div class="flex items-center gap-3">
+          <!-- Official UNHCR Emblem SVG -->
+          <svg class="h-10 w-10 text-unhcr-blue flex-shrink-0" viewBox="0 0 100 100" fill="currentColor" aria-label="UNHCR Official Emblem">
+            <circle cx="50" cy="50" r="48" fill="none" stroke="currentColor" stroke-width="4"/>
+            <path d="M50 20 C42 20 36 26 36 34 C36 42 42 48 50 48 C58 48 64 42 64 34 C64 26 58 20 50 20 Z" />
+            <path d="M30 76 C30 62 40 54 50 54 C60 54 70 62 70 76 Z" />
+            <path d="M22 48 C20 58 24 68 32 75 C30 68 31 58 36 50 C30 48 25 48 22 48 Z" />
+            <path d="M78 48 C80 58 76 68 68 75 C70 68 69 58 64 50 C70 48 75 48 78 48 Z" />
+          </svg>
+          <div class="border-l-2 border-unhcr-border pl-3 leading-tight">
+            <div class="text-xl font-extrabold tracking-tight text-unhcr-blue leading-none">UNHCR</div>
+            <div class="text-[11px] font-semibold text-unhcr-muted tracking-wide uppercase mt-0.5">The UN Refugee Agency</div>
+          </div>
+        </div>
+
+        <div class="hidden xl:block text-xs border-l border-unhcr-border pl-4 leading-tight">
+          <span class="font-bold text-unhcr-dark block">Kenya Operation Coordination Hub</span>
+          <span class="text-unhcr-muted">Sub-Offices Kakuma & Dadaab · proGres v4 Master Registry</span>
+        </div>
+      </div>
+
+      <!-- Coordination Navigation: INTERNAL MODULES ONLY (Beneficiary portal strictly separated) -->
+      <nav aria-label="Internal Operations Modules" class="flex items-center gap-1 sm:gap-2">
+        <a href="#overview" class="px-3 py-1.5 text-xs font-bold bg-unhcr-blue text-white rounded-none border border-unhcr-blue" aria-current="page">
+          Quadro Operativo
+        </a>
+        <a href="#cbi" class="px-3 py-1.5 text-xs font-semibold text-unhcr-ink hover:text-unhcr-blue hover:bg-unhcr-gray border border-unhcr-border transition-colors">
+          Registro Assistenza CBI
+        </a>
+        <a href="#logistics" class="px-3 py-1.5 text-xs font-semibold text-unhcr-ink hover:text-unhcr-blue hover:bg-unhcr-gray border border-unhcr-border transition-colors">
+          Logistica Campo (WFP/UNICEF)
+        </a>
+      </nav>
+
+      <!-- Operation Duty Station & Officer ID -->
+      <div class="flex items-center gap-3 text-xs">
+        <div class="text-right hidden sm:block">
+          <span class="font-mono font-bold text-unhcr-ink block">DUTY STATION: NAIROBI/KAKUMA</span>
+          <span class="text-unhcr-muted font-medium">Inter-Agency Standing Committee (IASC)</span>
+        </div>
+        <div class="bg-unhcr-gray border border-unhcr-border px-3 py-1.5 text-xs font-mono font-bold text-unhcr-dark">
+          DUTY OFFICER #207
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- 2. REALISTIC OPERATIONAL FILTER BAR (CLUSTER & SITE TRIAGE)                -->
+  <!-- ========================================================================= -->
+  <section class="bg-white border-b border-unhcr-border px-4 sm:px-6 lg:px-8 py-3">
+    <div class="max-w-[1600px] mx-auto flex flex-wrap items-center justify-between gap-3">
+      
+      <!-- Filter Controls -->
+      <div class="flex flex-wrap items-center gap-3">
+        <div class="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-unhcr-dark">
+          <svg class="w-3.5 h-3.5 text-unhcr-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+          </svg>
+          <span>Filtri Operativi:</span>
+        </div>
+
+        <!-- 1. Camp / Site -->
+        <div class="flex items-center border border-unhcr-border bg-unhcr-gray px-2.5 py-1 text-xs">
+          <label for="filter-site" class="text-unhcr-muted font-semibold mr-2 uppercase text-[10px]">Camp/Site:</label>
+          <select id="filter-site" class="bg-transparent font-semibold text-unhcr-ink outline-none cursor-pointer" onchange="applyFilters()">
+            <option value="all">Tutti i Campi (Kenya Total)</option>
+            <option value="kakuma_1">Kakuma 1 (Settori 1-4)</option>
+            <option value="kakuma_2">Kakuma 2 (Settori 5-8)</option>
+            <option value="kalobeyei">Kalobeyei Integrated Settlement</option>
+            <option value="dadaab_hagadera">Dadaab - Hagadera Sub-Camp</option>
+            <option value="dadaab_ifo">Dadaab - Ifo Sub-Camp</option>
+          </select>
+        </div>
+
+        <!-- 2. Vulnerability Priority -->
+        <div class="flex items-center border border-unhcr-border bg-unhcr-gray px-2.5 py-1 text-xs">
+          <label for="filter-vulnerability" class="text-unhcr-muted font-semibold mr-2 uppercase text-[10px]">Vulnerability Priority:</label>
+          <select id="filter-vulnerability" class="bg-transparent font-semibold text-unhcr-ink outline-none cursor-pointer" onchange="applyFilters()">
+            <option value="all">Tutti i Livelli</option>
+            <option value="critical">Level 1: Critical (Immediate Evacuation/Care)</option>
+            <option value="high">Level 2: High (UASC / Severe Chronic)</option>
+            <option value="standard">Level 3: Standard Field Monitoring</option>
+          </select>
+        </div>
+
+        <!-- 3. Sector Cluster -->
+        <div class="flex items-center border border-unhcr-border bg-unhcr-gray px-2.5 py-1 text-xs">
+          <label for="filter-cluster" class="text-unhcr-muted font-semibold mr-2 uppercase text-[10px]">Sector Cluster:</label>
+          <select id="filter-cluster" class="bg-transparent font-semibold text-unhcr-ink outline-none cursor-pointer" onchange="applyFilters()">
+            <option value="all">Tutti i Cluster IASC</option>
+            <option value="Health">Health & Nutrition</option>
+            <option value="WASH">WASH (Water & Sanitation)</option>
+            <option value="Protection">Child Protection & SGBV</option>
+            <option value="Shelter">Shelter & Camp Infrastructure</option>
+            <option value="Logistics">CRI & Logistics Delivery</option>
+          </select>
+        </div>
+
+        <!-- Reset Button -->
+        <button type="button" onclick="resetFilters()" class="text-xs font-semibold text-unhcr-blue hover:underline px-2 py-1">
+          Azzera
+        </button>
+      </div>
+
+      <!-- Operational Status Info -->
+      <div class="flex items-center gap-2 text-xs text-unhcr-muted">
+        <span class="inline-block w-2 h-2 rounded-full bg-unhcr-success" aria-hidden="true"></span>
+        <span class="font-mono text-[11px]">Sincronizzazione Live: 29 Settembre 2026, 21:55 EAT (UTC+3)</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- MAIN WORKSPACE                                                            -->
+  <!-- ========================================================================= -->
+  <main class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 space-y-6">
+
+    <!-- Operational Context Bar -->
+    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-unhcr-border pb-3">
+      <div>
+        <h1 class="text-xl sm:text-2xl font-extrabold text-unhcr-ink tracking-tight">
+          Panoramica Generale di Coordinamento Cluster
+        </h1>
+        <p class="text-xs text-unhcr-muted mt-0.5">
+          Quadro di comando per responsabili di settore, logistica umanitaria e protezione internazionale.
+        </p>
+      </div>
+      <div class="flex items-center gap-2">
+        <button type="button" onclick="window.print()" class="border border-unhcr-border bg-white hover:bg-unhcr-gray px-3 py-1.5 text-xs font-bold text-unhcr-ink">
+          Stampa Rapporto di Situazione (SitRep)
+        </button>
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- 3. TOP IMPACT KPI CARDS (AUTHENTIC HUMANITARIAN METRICS)                  -->
+    <!-- ========================================================================= -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      
+      <!-- KPI 1: Total Registered Individuals -->
+      <div class="border border-unhcr-border bg-white p-4 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-unhcr-muted">Total Registered Individuals</span>
+            <span class="text-[11px] font-mono font-semibold text-unhcr-blue bg-unhcr-light px-1.5 py-0.5">proGres Active</span>
+          </div>
+          <div class="mt-2 flex items-baseline gap-2">
+            <span id="kpi-total-reg" class="font-mono text-3xl font-extrabold tracking-tight text-unhcr-ink">248,310</span>
+          </div>
+        </div>
+        <div class="mt-3 pt-2.5 border-t border-unhcr-border flex items-center justify-between text-xs text-unhcr-muted">
+          <span>Nuovi ingressi 7 giorni:</span>
+          <strong id="kpi-weekly-arrivals" class="font-mono text-unhcr-ink font-bold">+1,085 registrati</strong>
+        </div>
+      </div>
+
+      <!-- KPI 2: Shelter Allocation Rate -->
+      <div class="border border-unhcr-border bg-white p-4 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-unhcr-muted">Shelter Allocation Rate</span>
+            <span id="kpi-shelter-status" class="text-[11px] font-bold text-unhcr-warning bg-orange-50 px-1.5 py-0.5">High Capacity</span>
+          </div>
+          <div class="mt-2 flex items-baseline justify-between">
+            <span id="kpi-shelter-rate" class="font-mono text-3xl font-extrabold tracking-tight text-unhcr-ink">84.2%</span>
+            <span class="text-xs text-unhcr-muted font-medium">Posti occupati</span>
+          </div>
+          <!-- Capacity Progress Bar -->
+          <div class="mt-2 w-full h-1.5 bg-unhcr-gray overflow-hidden">
+            <div id="kpi-shelter-bar" class="h-full bg-unhcr-blue" style="width: 84.2%;"></div>
+          </div>
+        </div>
+        <div class="mt-3 pt-2.5 border-t border-unhcr-border flex items-center justify-between text-xs text-unhcr-muted">
+          <span>Unità abitative residue (RHU):</span>
+          <strong id="kpi-shelter-avail" class="font-mono text-unhcr-ink font-bold">1,280 disponibili</strong>
+        </div>
+      </div>
+
+      <!-- KPI 3: Urgent Protection & Medical Cases -->
+      <div class="border border-unhcr-border bg-white p-4 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-unhcr-muted">Urgent Protection & Medical</span>
+            <span class="text-[11px] font-bold text-unhcr-critical bg-red-50 border border-red-200 px-1.5 py-0.5">Priority Triage</span>
+          </div>
+          <div class="mt-2 flex items-baseline gap-2">
+            <span id="kpi-urgent-cases" class="font-mono text-3xl font-extrabold tracking-tight text-unhcr-critical">38</span>
+            <span class="text-xs font-semibold text-unhcr-muted">segnalazioni attive</span>
+          </div>
+        </div>
+        <div class="mt-3 pt-2.5 border-t border-unhcr-border flex items-center justify-between text-xs text-unhcr-muted">
+          <span>Evacuazioni mediche / UASC:</span>
+          <strong class="font-mono text-unhcr-critical font-bold">22 Sanitarie · 16 Minori</strong>
+        </div>
+      </div>
+
+      <!-- KPI 4: Core Relief Items (CRI) Distributed -->
+      <div class="border border-unhcr-border bg-white p-4 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-unhcr-muted">Core Relief Items (CRI)</span>
+            <span class="text-[11px] font-mono font-semibold text-unhcr-success bg-green-50 px-1.5 py-0.5">Ciclo Settembre</span>
+          </div>
+          <div class="mt-2 flex items-baseline gap-2">
+            <span id="kpi-cri-distributed" class="font-mono text-3xl font-extrabold tracking-tight text-unhcr-ink">8,650</span>
+            <span class="text-xs font-semibold text-unhcr-muted">kit NFI consegnati</span>
+          </div>
+        </div>
+        <div class="mt-3 pt-2.5 border-t border-unhcr-border flex items-center justify-between text-xs text-unhcr-muted">
+          <span>Copertura target mensile:</span>
+          <strong class="font-mono text-unhcr-success font-bold">94.2% soddisfatto</strong>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- 4. DATA VISUALIZATIONS (TRENDS & PROTECTION DEMOGRAPHICS)                 -->
+    <!-- ========================================================================= -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      
+      <!-- Left Column (7 cols): Clean Line Chart for 30-Day Arrivals -->
+      <div class="lg:col-span-7 border border-unhcr-border bg-white p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-unhcr-border pb-3">
+            <div>
+              <h2 class="text-sm font-bold uppercase tracking-wider text-unhcr-dark">
+                Trend of Daily Arrivals & Registrations (Past 30 Days)
+              </h2>
+              <span class="text-[11px] text-unhcr-muted">Flussi registrati ai reception desk di frontiera (Sudan, Somalia, RDC)</span>
+            </div>
+            <div class="flex items-center gap-3 text-xs font-mono">
+              <span class="text-unhcr-muted">Media mobile: <strong class="text-unhcr-blue">138 arrivi/giorno</strong></span>
+            </div>
+          </div>
+
+          <div class="chart-container mt-4">
+            <canvas id="arrivalsChart"></canvas>
+          </div>
+        </div>
+
+        <div class="border-t border-unhcr-border pt-3 mt-2 flex flex-wrap items-center justify-between text-[11px] text-unhcr-muted">
+          <span>Fonte dati: UNHCR proGres v4 · Frontiera di Lokichogio e corridoio Dadaab</span>
+          <span class="font-semibold text-unhcr-ink">Picco rilevato: 16 Settembre (Corridoio Sudan: 195 arrivi)</span>
+        </div>
+      </div>
+
+      <!-- Right Column (5 cols): Donut Chart for Protection Demographics -->
+      <div class="lg:col-span-5 border border-unhcr-border bg-white p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-unhcr-border pb-3">
+            <div>
+              <h2 class="text-sm font-bold uppercase tracking-wider text-unhcr-dark">
+                Demographic & Vulnerability Profile
+              </h2>
+              <span class="text-[11px] text-unhcr-muted">Ripartizione del Protection Cluster per priorità di assistenza</span>
+            </div>
+          </div>
+
+          <div class="chart-container mt-4 flex items-center justify-center">
+            <canvas id="demographicsChart"></canvas>
+          </div>
+        </div>
+
+        <div class="border-t border-unhcr-border pt-3 mt-2 text-[11px] text-unhcr-muted flex items-center justify-between">
+          <span>BAMBINI E MINORI (inclusi 3.840 UASC non accompagnati): <strong class="text-unhcr-ink">Priorità BIA/BID</strong></span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- 5. PRIORITY FIELD ACTIONS (IASC CLUSTER COORDINATION)                     -->
+    <!-- ========================================================================= -->
+    <section aria-labelledby="field-actions-title" class="border border-unhcr-border bg-white">
+      
+      <!-- Table Header & Summary -->
+      <div class="p-4 sm:px-6 border-b border-unhcr-border flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <div class="flex items-center gap-2">
+            <h2 id="field-actions-title" class="text-sm font-bold uppercase tracking-wider text-unhcr-dark">
+              Priority Field Actions (IASC Cluster Coordination)
+            </h2>
+            <span id="actions-counter" class="bg-unhcr-blue text-white font-mono text-[10px] font-bold px-2 py-0.5">
+              6 Interventi Attivi
+            </span>
+          </div>
+          <p class="text-xs text-unhcr-muted mt-0.5">
+            Disposizioni operative urgenti per i capifila dei settori WASH, Sanità, Protezione, Alloggi e Logistica.
+          </p>
+        </div>
+
+        <!-- Quick filter within table -->
+        <div class="flex items-center gap-2 text-xs">
+          <span class="text-unhcr-muted font-medium">Stato Interventi:</span>
+          <select id="action-status-filter" class="border border-unhcr-border bg-unhcr-gray px-2 py-1 font-semibold text-unhcr-ink outline-none" onchange="filterActionsByStatus()">
+            <option value="all">Tutti gli stati</option>
+            <option value="open">Solo Aperti (Urgenti)</option>
+            <option value="in_progress">In Corso di Dispiegamento</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Action Items Table -->
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs border-collapse">
+          <thead>
+            <tr class="bg-unhcr-gray border-b border-unhcr-border text-[11px] font-bold uppercase tracking-wider text-unhcr-muted">
+              <th class="py-3 px-4 w-28">Settore</th>
+              <th class="py-3 px-4 w-32">Priorità</th>
+              <th class="py-3 px-4">Esigenza Umanitaria & Dettagli Operativi</th>
+              <th class="py-3 px-4 w-44">Localizzazione</th>
+              <th class="py-3 px-4 w-52">Team Assegnatario</th>
+              <th class="py-3 px-4 w-36 text-right">Azione di Coordinamento</th>
+            </tr>
+          </thead>
+          <tbody id="actions-table-body" class="divide-y divide-unhcr-border">
+            
+            <!-- Item 1: Health -->
+            <tr data-sector="Health" data-status="open" class="hover:bg-unhcr-gray/50 transition-colors">
+              <td class="py-3.5 px-4 font-bold text-unhcr-blue">
+                Health
+              </td>
+              <td class="py-3.5 px-4">
+                <span class="bg-red-50 text-unhcr-critical border border-red-200 text-[10px] font-bold px-1.5 py-0.5 uppercase tracking-wide">
+                  CRITICAL / URGENT
+                </span>
+              </td>
+              <td class="py-3.5 px-4">
+                <div class="font-bold text-unhcr-ink text-xs">Approvazione trasferimento medico d'urgenza</div>
+                <div class="text-unhcr-muted text-[11px] mt-0.5">Minore (4 anni) con grave insufficienza respiratoria dal triage di reception all'Ospedale Distrettuale di Lodwar.</div>
+              </td>
+              <td class="py-3.5 px-4 text-unhcr-ink font-medium">
+                Kakuma 1 · Sector 2
+              </td>
+              <td class="py-3.5 px-4 text-unhcr-muted">
+                Dott.ssa N. Muthoni (Medair / UNHCR Health)
+              </td>
+              <td class="py-3.5 px-4 text-right">
+                <button type="button" onclick="coordinateAction(this, 'TSK-8041')" class="bg-unhcr-blue hover:bg-unhcr-dark text-white px-3 py-1.5 text-xs font-bold transition-colors">
+                  Deploy Team
+                </button>
+              </td>
+            </tr>
+
+            <!-- Item 2: WASH -->
+            <tr data-sector="WASH" data-status="in_progress" class="hover:bg-unhcr-gray/50 transition-colors">
+              <td class="py-3.5 px-4 font-bold text-unhcr-blue">
+                WASH
+              </td>
+              <td class="py-3.5 px-4">
+                <span class="bg-orange-50 text-unhcr-warning border border-orange-200 text-[10px] font-bold px-1.5 py-0.5 uppercase tracking-wide">
+                  HIGH PRIORITY
+                </span>
+              </td>
+              <td class="py-3.5 px-4">
+                <div class="font-bold text-unhcr-ink text-xs">Rifornimento scorte idriche d'emergenza settore B</div>
+                <div class="text-unhcr-muted text-[11px] mt-0.5">Pressione insufficiente al pozzo #4. Dispiegamento prioritario di 2 autobotti da 15.000L per 1.800 residenti.</div>
+              </td>
+              <td class="py-3.5 px-4 text-unhcr-ink font-medium">
+                Kakuma 2 · Block 6
+              </td>
+              <td class="py-3.5 px-4 text-unhcr-muted">
+                Ing. P. Ochieng (UNHCR WASH Lead)
+              </td>
+              <td class="py-3.5 px-4 text-right">
+                <button type="button" onclick="coordinateAction(this, 'TSK-8042')" class="bg-white border border-unhcr-dark text-unhcr-dark hover:bg-unhcr-gray px-3 py-1.5 text-xs font-bold transition-colors">
+                  Coordinate Action
+                </button>
+              </td>
+            </tr>
+
+            <!-- Item 3: Protection -->
+            <tr data-sector="Protection" data-status="open" class="hover:bg-unhcr-gray/50 transition-colors">
+              <td class="py-3.5 px-4 font-bold text-unhcr-blue">
+                Protection
+              </td>
+              <td class="py-3.5 px-4">
+                <span class="bg-red-50 text-unhcr-critical border border-red-200 text-[10px] font-bold px-1.5 py-0.5 uppercase tracking-wide">
+                  CRITICAL / URGENT
+                </span>
+              </td>
+              <td class="py-3.5 px-4">
+                <div class="font-bold text-unhcr-ink text-xs">Presa in carico 3 minori non accompagnati (UASC)</div>
+                <div class="text-unhcr-muted text-[11px] mt-0.5">Tre fratelli (7, 11 e 13 anni) giunti dalla Somalia senza tutore adulto. Nomina assistente sociale e alloggio protetto.</div>
+              </td>
+              <td class="py-3.5 px-4 text-unhcr-ink font-medium">
+                Dadaab · Hagadera Desk
+              </td>
+              <td class="py-3.5 px-4 text-unhcr-muted">
+                A. Hussein (Child Protection Lead)
+              </td>
+              <td class="py-3.5 px-4 text-right">
+                <button type="button" onclick="coordinateAction(this, 'TSK-8043')" class="bg-unhcr-blue hover:bg-unhcr-dark text-white px-3 py-1.5 text-xs font-bold transition-colors">
+                  Deploy Team
+                </button>
+              </td>
+            </tr>
+
+            <!-- Item 4: Shelter -->
+            <tr data-sector="Shelter" data-status="open" class="hover:bg-unhcr-gray/50 transition-colors">
+              <td class="py-3.5 px-4 font-bold text-unhcr-blue">
+                Shelter
+              </td>
+              <td class="py-3.5 px-4">
+                <span class="bg-orange-50 text-unhcr-warning border border-orange-200 text-[10px] font-bold px-1.5 py-0.5 uppercase tracking-wide">
+                  HIGH PRIORITY
+                </span>
+              </td>
+              <td class="py-3.5 px-4">
+                <div class="font-bold text-unhcr-ink text-xs">Assegnazione alloggio d'emergenza per nucleo monoparentale</div>
+                <div class="text-unhcr-muted text-[11px] mt-0.5">Madre con 5 minori sfollata dal Sudan in attesa presso l'area transito. Rilascio kit tende termiche RHU.</div>
+              </td>
+              <td class="py-3.5 px-4 text-unhcr-ink font-medium">
+                Kalobeyei · Village 3
+              </td>
+              <td class="py-3.5 px-4 text-unhcr-muted">
+                E. Kiprop (Shelter Cluster Assistant)
+              </td>
+              <td class="py-3.5 px-4 text-right">
+                <button type="button" onclick="coordinateAction(this, 'TSK-8044')" class="bg-unhcr-blue hover:bg-unhcr-dark text-white px-3 py-1.5 text-xs font-bold transition-colors">
+                  Deploy Team
+                </button>
+              </td>
+            </tr>
+
+            <!-- Item 5: Logistics -->
+            <tr data-sector="Logistics" data-status="in_progress" class="hover:bg-unhcr-gray/50 transition-colors">
+              <td class="py-3.5 px-4 font-bold text-unhcr-blue">
+                Logistics
+              </td>
+              <td class="py-3.5 px-4">
+                <span class="bg-blue-50 text-unhcr-blue border border-blue-200 text-[10px] font-bold px-1.5 py-0.5 uppercase tracking-wide">
+                  COORDINATION
+                </span>
+              </td>
+              <td class="py-3.5 px-4">
+                <div class="font-bold text-unhcr-ink text-xs">Distribuzione kit CRI e coperte a 320 famiglie</div>
+                <div class="text-unhcr-muted text-[11px] mt-0.5">Consegna programmata scorte invernali. Verifica riscontro biometrico BIMS ai cancelli di scarico.</div>
+              </td>
+              <td class="py-3.5 px-4 text-unhcr-ink font-medium">
+                Dadaab · Ifo Central Store
+              </td>
+              <td class="py-3.5 px-4 text-unhcr-muted">
+                Team Logistica LWF / UNHCR
+              </td>
+              <td class="py-3.5 px-4 text-right">
+                <button type="button" onclick="coordinateAction(this, 'TSK-8045')" class="bg-white border border-unhcr-dark text-unhcr-dark hover:bg-unhcr-gray px-3 py-1.5 text-xs font-bold transition-colors">
+                  Coordinate Action
+                </button>
+              </td>
+            </tr>
+
+            <!-- Item 6: Health / Nutrition -->
+            <tr data-sector="Health" data-status="open" class="hover:bg-unhcr-gray/50 transition-colors">
+              <td class="py-3.5 px-4 font-bold text-unhcr-blue">
+                Health
+              </td>
+              <td class="py-3.5 px-4">
+                <span class="bg-orange-50 text-unhcr-warning border border-orange-200 text-[10px] font-bold px-1.5 py-0.5 uppercase tracking-wide">
+                  HIGH PRIORITY
+                </span>
+              </td>
+              <td class="py-3.5 px-4">
+                <div class="font-bold text-unhcr-ink text-xs">Screening malnutrizione acuta (SAM) nel centro accoglienza</div>
+                <div class="text-unhcr-muted text-[11px] mt-0.5">Fornitura immediata supplementi alimentari terapeutici RUTF per 45 bambini sotto i 5 anni.</div>
+              </td>
+              <td class="py-3.5 px-4 text-unhcr-ink font-medium">
+                Kakuma 1 · Clinic 4
+              </td>
+              <td class="py-3.5 px-4 text-unhcr-muted">
+                Nutrition Unit (UNICEF/IRC)
+              </td>
+              <td class="py-3.5 px-4 text-right">
+                <button type="button" onclick="coordinateAction(this, 'TSK-8046')" class="bg-unhcr-blue hover:bg-unhcr-dark text-white px-3 py-1.5 text-xs font-bold transition-colors">
+                  Deploy Team
+                </button>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Action Protocol Footer -->
+      <div class="p-3 bg-unhcr-gray border-t border-unhcr-border flex flex-wrap items-center justify-between text-[11px] text-unhcr-muted">
+        <span>Protocollo IASC: I casi di priorità CRITICAL richiedono dispiegamento documentato entro 120 minuti dalla notifica.</span>
+        <span>Coordinamento intersettoriale: UNHCR, WFP, UNICEF, IRC, LWF, Medair</span>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- 6. FORMAL FOOTER & ACCESSIBILITY / DATA PROTECTION COMPLIANCE             -->
+  <!-- ========================================================================= -->
+  <footer class="bg-white border-t border-unhcr-border mt-auto py-5 text-unhcr-ink">
+    <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+      
+      <!-- Left: Data Protection Notice -->
+      <div class="text-xs space-y-1 text-center md:text-left">
+        <p class="font-bold text-unhcr-dark">
+          UNHCR Data Protection Policy & Humanitarian Confidentiality Standards (2026 Revision)
+        </p>
+        <p class="text-unhcr-muted">
+          Tutti i dati biometrici, demografici e di triage sono protetti in conformità all&apos;Articolo 35 della Convenzione di Ginevra del 1951 e alle linee guida IASC. L&apos;accesso ai registri nominativi è limitato al personale accreditato.
+        </p>
+      </div>
+
+      <!-- Right: Technical System Information (WCAG AAA High Contrast) -->
+      <div class="text-xs text-center md:text-right font-mono text-unhcr-muted flex-shrink-0">
+        <div>SYSTEM: proGres v4 · Core Coordination Engine</div>
+        <div>ACCESSIBILITY: WCAG 2.1 AA / AAA Standard Compliant</div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- 7. CHART.JS & OPERATIONAL FILTER SCRIPTS                                  -->
+  <!-- ========================================================================= -->
+  <script>
+    // --- 1. ARRIVALS TREND LINE CHART (30 Days) ---
+    const days = [
+      '01 Set', '02 Set', '03 Set', '04 Set', '05 Set', '06 Set', '07 Set',
+      '08 Set', '09 Set', '10 Set', '11 Set', '12 Set', '13 Set', '14 Set',
+      '15 Set', '16 Set', '17 Set', '18 Set', '19 Set', '20 Set', '21 Set',
+      '22 Set', '23 Set', '24 Set', '25 Set', '26 Set', '27 Set', '28 Set',
+      '29 Set', '30 Set'
+    ];
+    const arrivalsData = [
+      112, 98, 125, 140, 115, 85, 92, 134, 156, 168,
+      142, 120, 105, 118, 180, 195, 174, 150, 132, 124,
+      145, 162, 158, 139, 128, 148, 165, 172, 142, 155
+    ];
+
+    const ctxArrivals = document.getElementById('arrivalsChart').getContext('2d');
+    const arrivalsChart = new Chart(ctxArrivals, {
+      type: 'line',
+      data: {
+        labels: days,
+        datasets: [{
+          label: 'Daily Arrivals (Registered)',
+          data: arrivalsData,
+          borderColor: '#0072bc',
+          backgroundColor: 'rgba(0, 114, 188, 0.08)',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.2,
+          pointRadius: 2.5,
+          pointBackgroundColor: '#0072bc',
+          pointHoverRadius: 5,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false // Clean, institutional: title already explains dataset
+          },
+          tooltip: {
+            backgroundColor: '#1c1c1b',
+            titleFont: { family: 'Inter', size: 12, weight: 'bold' },
+            bodyFont: { family: 'JetBrains Mono', size: 12 },
+            padding: 10,
+            cornerRadius: 0,
+            displayColors: false,
+            callbacks: {
+              label: function(context) {
+                return context.parsed.y + ' individui registrati';
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            grid: { display: false },
+            ticks: {
+              font: { family: 'JetBrains Mono', size: 10 },
+              color: '#526071',
+              maxTicksLimit: 8
+            }
+          },
+          y: {
+            min: 50,
+            max: 220,
+            grid: {
+              color: '#dbe3ec',
+              borderDash: [2, 3]
+            },
+            ticks: {
+              font: { family: 'JetBrains Mono', size: 10 },
+              color: '#526071',
+              stepSize: 50
+            }
+          }
+        }
+      }
+    });
+
+    // --- 2. DEMOGRAPHICS DONUT CHART (Protection Cluster Standard) ---
+    const ctxDemo = document.getElementById('demographicsChart').getContext('2d');
+    const demographicsChart = new Chart(ctxDemo, {
+      type: 'doughnut',
+      data: {
+        labels: [
+          'Women (18-59): 38%',
+          'Children (0-17): 29%',
+          'Men (18-59): 26%',
+          'Elderly (60+): 7%'
+        ],
+        datasets: [{
+          data: [38, 29, 26, 7],
+          backgroundColor: [
+            '#0072bc', // Official UNHCR Blue (Women)
+            '#ffd100', // Official UNHCR Accent (Children & UASC)
+            '#00558c', // Deep Navy (Men)
+            '#526071'  // Neutral Dark Slate (Elderly)
+          ],
+          borderColor: '#ffffff',
+          borderWidth: 2,
+          hoverOffset: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'right',
+            labels: {
+              boxWidth: 12,
+              padding: 14,
+              font: { family: 'Inter', size: 11, weight: '600' },
+              color: '#1c1c1b'
+            }
+          },
+          tooltip: {
+            backgroundColor: '#1c1c1b',
+            titleFont: { family: 'Inter', size: 11, weight: 'bold' },
+            bodyFont: { family: 'JetBrains Mono', size: 11 },
+            padding: 8,
+            cornerRadius: 0,
+            callbacks: {
+              label: function(context) {
+                return ' ' + context.label;
+              }
+            }
+          }
+        },
+        cutout: '66%'
+      }
+    });
+
+    // --- 3. OPERATIONAL FILTER LOGIC ---
+    const siteMetrics = {
+      all: { total: '248,310', weekly: '+1,085 registrati', shelterRate: '84.2%', avail: '1,280 disponibili', urgent: '38', cri: '8,650' },
+      kakuma_1: { total: '78,420', weekly: '+340 registrati', shelterRate: '89.1%', avail: '420 disponibili', urgent: '14', cri: '3,120' },
+      kakuma_2: { total: '62,190', weekly: '+280 registrati', shelterRate: '81.4%', avail: '360 disponibili', urgent: '9', cri: '2,400' },
+      kalobeyei: { total: '46,200', weekly: '+195 registrati', shelterRate: '79.0%', avail: '280 disponibili', urgent: '6', cri: '1,550' },
+      dadaab_hagadera: { total: '34,500', weekly: '+150 registrati', shelterRate: '92.3%', avail: '120 disponibili', urgent: '5', cri: '980' },
+      dadaab_ifo: { total: '27,000', weekly: '+120 registrati', shelterRate: '86.0%', avail: '100 disponibili', urgent: '4', cri: '600' }
+    };
+
+    function applyFilters() {
+      const site = document.getElementById('filter-site').value;
+      const metrics = siteMetrics[site] || siteMetrics.all;
+
+      // Update KPI figures dynamically
+      document.getElementById('kpi-total-reg').innerText = metrics.total;
+      document.getElementById('kpi-weekly-arrivals').innerText = metrics.weekly;
+      document.getElementById('kpi-shelter-rate').innerText = metrics.shelterRate;
+      document.getElementById('kpi-shelter-bar').style.width = metrics.shelterRate;
+      document.getElementById('kpi-shelter-avail').innerText = metrics.avail;
+      document.getElementById('kpi-urgent-cases').innerText = metrics.urgent;
+      document.getElementById('kpi-cri-distributed').innerText = metrics.cri;
+
+      // Filter rows in Action Items by Sector if selected
+      const selectedCluster = document.getElementById('filter-cluster').value;
+      const rows = document.querySelectorAll('#actions-table-body tr');
+      let visibleCount = 0;
+
+      rows.forEach(row => {
+        const sector = row.getAttribute('data-sector');
+        if (selectedCluster === 'all' || sector === selectedCluster) {
+          row.style.display = '';
+          visibleCount++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+
+      document.getElementById('actions-counter').innerText = visibleCount + ' Interventi Filtrati';
+    }
+
+    function resetFilters() {
+      document.getElementById('filter-site').value = 'all';
+      document.getElementById('filter-vulnerability').value = 'all';
+      document.getElementById('filter-cluster').value = 'all';
+      document.getElementById('action-status-filter').value = 'all';
+      applyFilters();
+    }
+
+    function filterActionsByStatus() {
+      const status = document.getElementById('action-status-filter').value;
+      const rows = document.querySelectorAll('#actions-table-body tr');
+      let count = 0;
+
+      rows.forEach(row => {
+        const itemStatus = row.getAttribute('data-status');
+        if (status === 'all' || itemStatus === status) {
+          row.style.display = '';
+          count++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+      document.getElementById('actions-counter').innerText = count + ' Interventi Visualizzati';
+    }
+
+    // --- 4. ACTION COORDINATION INTERACTION ---
+    function coordinateAction(button, taskId) {
+      const row = button.closest('tr');
+      button.disabled = true;
+      button.className = "bg-unhcr-dark text-white px-3 py-1.5 text-xs font-mono font-bold";
+      button.innerText = "Team Dispiegato ✓";
+      row.setAttribute('data-status', 'in_progress');
+      row.classList.add('bg-green-50/50');
+    }
+  </script>
+
+</body>
+</html>

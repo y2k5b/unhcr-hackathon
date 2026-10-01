@@ -1,0 +1,268 @@
+{
+  "metadata": {
+    "generated_at": "2026-09-29T06:00:00Z",
+    "operation": "Operazione Kenya",
+    "cycle": "Ciclo di erogazione ottobre 2026",
+    "currency": "USD",
+    "budget_total_usd": 4200,
+    "max_amount_usd": 1500,
+    "model_version": "v4.2-ensemble"
+  },
+  "cases": [
+    {
+      "case_id": "REQ-2026-089",
+      "submitted_at": "2026-09-22T08:14:00Z",
+      "demographics": { "name_hash": "M. A. K.", "origin_country": "Sudan", "family_size": 6, "unaccompanied_minors": 0, "months_displaced": 34, "current_camp": "Kakuma", "preferred_language": "ar" },
+      "vulnerability_profile": { "overall_score": 88, "tags": ["single_parent", "chronic_illness"], "previous_aid_received_usd": 150 },
+      "ai_assessment": { "recommended_action": "APPROVE", "suggested_amount_usd": 800, "confidence": 0.91, "model_version": "v4.2-ensemble" },
+      "xai_explanation": {
+        "operator_summary": "L'erogazione è fortemente raccomandata. Il nucleo familiare presenta vulnerabilità sanitarie croniche combinate a un lungo periodo di sfollamento (34 mesi). Il reddito pregresso registrato non copre il fabbisogno calorico di base per 6 persone. Nessuna anomalia documentale nei database incrociati.",
+        "feature_importances": [
+          { "feature": "vulnerability_tags.chronic_illness", "label": "Malattia cronica", "value": "Presente", "weight": 0.65 },
+          { "feature": "family_size", "label": "Membri del nucleo", "value": "6", "weight": 0.45 },
+          { "feature": "months_displaced", "label": "Mesi di sfollamento", "value": "34", "weight": 0.2 },
+          { "feature": "previous_aid_saturation", "label": "Aiuti ricevuti (90gg)", "value": "$150", "weight": -0.1 }
+        ],
+        "counterfactual": "Con un nucleo di 3 persone l'importo suggerito scenderebbe a $450; l'esito resterebbe APPROVE.",
+        "beneficiary_reasons": [
+          { "icon": "family", "text": { "it": "Il tuo nucleo familiare è composto da 6 persone.", "en": "Your household has 6 members.", "ar": "تتكوّن أسرتك من 6 أفراد." } },
+          { "icon": "health", "text": { "it": "Nel fascicolo è registrata una condizione di salute cronica.", "en": "A chronic health condition is recorded in your file.", "ar": "توجد حالة صحية مزمنة مسجّلة في ملفك." } },
+          { "icon": "time", "text": { "it": "Vivi nel campo da 34 mesi, oltre la soglia prevista.", "en": "You have lived in the camp for 34 months, above the threshold.", "ar": "تعيش في المخيم منذ 34 شهرًا، وهو أكثر من الحد المحدد." } }
+        ],
+        "data_quality_flags": []
+      },
+      "distribution": { "point": "Kakuma Distribution Centre · Zona 3", "window": "12–14 ottobre 2026, 08:00–15:00" },
+      "human_oversight": {
+        "status": "PENDING", "final_amount_usd": null, "operator_id": null, "decision_reason": null, "decided_at": null, "appeal": null,
+        "audit_trail": [
+          { "timestamp": "2026-09-22T08:14:00Z", "actor": "Registrazione", "action": "Richiesta registrata al desk di Kakuma" },
+          { "timestamp": "2026-09-29T06:00:00Z", "actor": "Modello v4.2", "action": "Valutazione IA: APPROVE ($800), confidenza 91%" }
+        ]
+      }
+    },
+    {
+      "case_id": "REQ-2026-090",
+      "submitted_at": "2026-09-23T10:02:00Z",
+      "demographics": { "name_hash": "A. O. N.", "origin_country": "Sud Sudan", "family_size": 4, "unaccompanied_minors": 2, "months_displaced": 8, "current_camp": "Kalobeyei", "preferred_language": "en" },
+      "vulnerability_profile": { "overall_score": 79, "tags": ["unaccompanied_minors", "new_arrival"], "previous_aid_received_usd": 0 },
+      "ai_assessment": { "recommended_action": "APPROVE", "suggested_amount_usd": 600, "confidence": 0.84, "model_version": "v4.2-ensemble" },
+      "xai_explanation": {
+        "operator_summary": "Raccomandata l'erogazione. Il nucleo include 2 minori non accompagnati in affido provvisorio e nessun aiuto monetario ricevuto finora. L'arrivo recente (8 mesi) indica assenza di mezzi di sussistenza stabili.",
+        "feature_importances": [
+          { "feature": "unaccompanied_minors", "label": "Minori non accompagnati", "value": "2", "weight": 0.58 },
+          { "feature": "previous_aid_saturation", "label": "Aiuti ricevuti (90gg)", "value": "$0", "weight": 0.22 },
+          { "feature": "family_size", "label": "Membri del nucleo", "value": "4", "weight": 0.18 },
+          { "feature": "months_displaced", "label": "Mesi di sfollamento", "value": "8", "weight": 0.12 }
+        ],
+        "counterfactual": "Senza i 2 minori a carico il punteggio scenderebbe a 54 e l'esito diventerebbe REVIEW.",
+        "beneficiary_reasons": [
+          { "icon": "child", "text": { "it": "Nel nucleo ci sono 2 minori non accompagnati sotto la tua tutela.", "en": "2 unaccompanied children are in your care.", "ar": "يوجد في رعايتك طفلان غير مصحوبين." } },
+          { "icon": "aid", "text": { "it": "Non hai ancora ricevuto altri aiuti in denaro.", "en": "You have not received other cash assistance yet.", "ar": "لم تتلقَّ أي مساعدة نقدية أخرى حتى الآن." } },
+          { "icon": "time", "text": { "it": "Sei arrivato da poco (8 mesi): i primi mesi sono i più difficili.", "en": "You arrived recently (8 months ago): the first months are the hardest.", "ar": "وصلت مؤخرًا (منذ 8 أشهر): الأشهر الأولى هي الأصعب." } }
+        ],
+        "data_quality_flags": [
+          { "code": "DOC_PENDING", "severity": "info", "message": "Certificato di tutela provvisoria: validità residua 60 giorni." }
+        ]
+      },
+      "distribution": { "point": "Kalobeyei Village 2 · Punto di distribuzione B", "window": "13–15 ottobre 2026, 09:00–14:00" },
+      "human_oversight": {
+        "status": "PENDING", "final_amount_usd": null, "operator_id": null, "decision_reason": null, "decided_at": null, "appeal": null,
+        "audit_trail": [
+          { "timestamp": "2026-09-23T10:02:00Z", "actor": "Registrazione", "action": "Richiesta registrata al desk di Kalobeyei" },
+          { "timestamp": "2026-09-29T06:00:00Z", "actor": "Modello v4.2", "action": "Valutazione IA: APPROVE ($600), confidenza 84%" }
+        ]
+      }
+    },
+    {
+      "case_id": "REQ-2026-091",
+      "submitted_at": "2026-09-20T13:40:00Z",
+      "demographics": { "name_hash": "F. H. D.", "origin_country": "Somalia", "family_size": 1, "unaccompanied_minors": 0, "months_displaced": 52, "current_camp": "Dadaab", "preferred_language": "ar" },
+      "vulnerability_profile": { "overall_score": 31, "tags": ["informal_employment"], "previous_aid_received_usd": 400 },
+      "ai_assessment": { "recommended_action": "REJECT", "suggested_amount_usd": 0, "confidence": 0.77, "model_version": "v4.2-ensemble" },
+      "xai_explanation": {
+        "operator_summary": "Erogazione non raccomandata in questo ciclo. Il richiedente ha ricevuto $400 negli ultimi 90 giorni, il nucleo è composto da una sola persona e risulta un'attività lavorativa informale. Il lungo periodo di sfollamento attenua parzialmente il punteggio.",
+        "feature_importances": [
+          { "feature": "previous_aid_saturation", "label": "Aiuti ricevuti (90gg)", "value": "$400", "weight": -0.52 },
+          { "feature": "family_size", "label": "Membri del nucleo", "value": "1", "weight": -0.3 },
+          { "feature": "income_signal", "label": "Reddito rilevato", "value": "Informale", "weight": -0.21 },
+          { "feature": "months_displaced", "label": "Mesi di sfollamento", "value": "52", "weight": 0.15 }
+        ],
+        "counterfactual": "Se gli aiuti ricevuti negli ultimi 90 giorni fossero inferiori a $200, il caso passerebbe a REVIEW.",
+        "beneficiary_reasons": [
+          { "icon": "aid", "text": { "it": "Negli ultimi 90 giorni hai già ricevuto $400 di sostegno.", "en": "You received $400 in support in the last 90 days.", "ar": "تلقّيت 400 دولار من الدعم خلال آخر 90 يومًا." } },
+          { "icon": "family", "text": { "it": "Il nucleo registrato è di 1 persona.", "en": "Your registered household has 1 member.", "ar": "أسرتك المسجّلة تتكوّن من فرد واحد." } },
+          { "icon": "income", "text": { "it": "Risulta un'attività lavorativa informale.", "en": "Informal work activity is recorded.", "ar": "يوجد نشاط عمل غير رسمي مسجّل." } }
+        ],
+        "data_quality_flags": []
+      },
+      "distribution": { "point": "Dadaab · Hagadera Field Post", "window": "—" },
+      "human_oversight": {
+        "status": "PENDING", "final_amount_usd": null, "operator_id": null, "decision_reason": null, "decided_at": null, "appeal": null,
+        "audit_trail": [
+          { "timestamp": "2026-09-20T13:40:00Z", "actor": "Registrazione", "action": "Richiesta registrata a Hagadera" },
+          { "timestamp": "2026-09-29T06:00:00Z", "actor": "Modello v4.2", "action": "Valutazione IA: REJECT, confidenza 77%" }
+        ]
+      }
+    },
+    {
+      "case_id": "REQ-2026-092",
+      "submitted_at": "2026-09-24T09:25:00Z",
+      "demographics": { "name_hash": "J. B. M.", "origin_country": "RD Congo", "family_size": 7, "unaccompanied_minors": 1, "months_displaced": 19, "current_camp": "Kakuma", "preferred_language": "en" },
+      "vulnerability_profile": { "overall_score": 64, "tags": ["disability", "large_household"], "previous_aid_received_usd": 200 },
+      "ai_assessment": { "recommended_action": "REVIEW", "suggested_amount_usd": 700, "confidence": 0.52, "model_version": "v4.2-ensemble" },
+      "xai_explanation": {
+        "operator_summary": "Il modello non raggiunge la soglia di confidenza (0.70). Il profilo di vulnerabilità è alto (disabilità, 7 membri), ma il controllo biometrico segnala una possibile sovrapposizione con un altro fascicolo. Serve una verifica umana prima di erogare.",
+        "feature_importances": [
+          { "feature": "biometric_match_risk", "label": "Rischio duplicato", "value": "0.82", "weight": -0.45 },
+          { "feature": "vulnerability_tags.disability", "label": "Disabilità nel nucleo", "value": "Presente", "weight": 0.4 },
+          { "feature": "family_size", "label": "Membri del nucleo", "value": "7", "weight": 0.38 },
+          { "feature": "previous_aid_saturation", "label": "Aiuti ricevuti (90gg)", "value": "$200", "weight": -0.08 }
+        ],
+        "counterfactual": "Se la verifica esclude il duplicato, la confidenza salirebbe a 0.86 e l'esito diventerebbe APPROVE ($700).",
+        "beneficiary_reasons": [
+          { "icon": "document", "text": { "it": "Dobbiamo verificare un documento: per ora non devi fare nulla.", "en": "We need to verify a document. You don't need to do anything for now.", "ar": "نحتاج إلى التحقق من وثيقة. لا يلزمك فعل أي شيء الآن." } },
+          { "icon": "health", "text": { "it": "Nel nucleo è presente una persona con disabilità.", "en": "A person with a disability is part of your household.", "ar": "يوجد في أسرتك شخص من ذوي الإعاقة." } },
+          { "icon": "family", "text": { "it": "Il tuo nucleo familiare è composto da 7 persone.", "en": "Your household has 7 members.", "ar": "تتكوّن أسرتك من 7 أفراد." } }
+        ],
+        "data_quality_flags": [
+          { "code": "DUPLICATE_SUSPECT", "severity": "warning", "message": "Possibile duplicato biometrico con REQ-2025-771 (similarità 0.82)." }
+        ]
+      },
+      "distribution": { "point": "Kakuma Distribution Centre · Zona 1", "window": "12–14 ottobre 2026, 08:00–15:00" },
+      "human_oversight": {
+        "status": "PENDING", "final_amount_usd": null, "operator_id": null, "decision_reason": null, "decided_at": null, "appeal": null,
+        "audit_trail": [
+          { "timestamp": "2026-09-24T09:25:00Z", "actor": "Registrazione", "action": "Richiesta registrata al desk di Kakuma" },
+          { "timestamp": "2026-09-29T06:00:00Z", "actor": "Modello v4.2", "action": "Valutazione IA: REVIEW, confidenza 52% (sotto soglia)" }
+        ]
+      }
+    },
+    {
+      "case_id": "REQ-2026-093",
+      "submitted_at": "2026-09-21T11:10:00Z",
+      "demographics": { "name_hash": "S. T. G.", "origin_country": "Etiopia", "family_size": 3, "unaccompanied_minors": 0, "months_displaced": 27, "current_camp": "Dadaab", "preferred_language": "en" },
+      "vulnerability_profile": { "overall_score": 72, "tags": ["pregnancy", "female_headed"], "previous_aid_received_usd": 100 },
+      "ai_assessment": { "recommended_action": "APPROVE", "suggested_amount_usd": 500, "confidence": 0.88, "model_version": "v4.2-ensemble" },
+      "xai_explanation": {
+        "operator_summary": "Raccomandata l'erogazione. Nucleo con capofamiglia donna e gravidanza in corso; esigenze nutrizionali aumentate nei prossimi mesi. Aiuti pregressi contenuti.",
+        "feature_importances": [
+          { "feature": "vulnerability_tags.pregnancy", "label": "Gravidanza in corso", "value": "Presente", "weight": 0.48 },
+          { "feature": "vulnerability_tags.female_headed", "label": "Capofamiglia donna", "value": "Sì", "weight": 0.31 },
+          { "feature": "months_displaced", "label": "Mesi di sfollamento", "value": "27", "weight": 0.14 },
+          { "feature": "previous_aid_saturation", "label": "Aiuti ricevuti (90gg)", "value": "$100", "weight": -0.06 }
+        ],
+        "counterfactual": "Senza la gravidanza registrata il punteggio sarebbe 58 e l'esito diventerebbe REVIEW.",
+        "beneficiary_reasons": [
+          { "icon": "health", "text": { "it": "È registrata una gravidanza in corso.", "en": "An ongoing pregnancy is recorded.", "ar": "يوجد حمل مسجّل حاليًا." } },
+          { "icon": "family", "text": { "it": "Sei l'unica persona adulta responsabile del nucleo.", "en": "You are the only adult responsible for the household.", "ar": "أنتِ البالغة الوحيدة المسؤولة عن الأسرة." } },
+          { "icon": "time", "text": { "it": "Vivi nel campo da 27 mesi.", "en": "You have lived in the camp for 27 months.", "ar": "تعيشين في المخيم منذ 27 شهرًا." } }
+        ],
+        "data_quality_flags": []
+      },
+      "distribution": { "point": "Dadaab · Ifo Distribution Point", "window": "14–16 ottobre 2026, 08:30–14:30" },
+      "human_oversight": {
+        "status": "PENDING", "final_amount_usd": null, "operator_id": null, "decision_reason": null, "decided_at": null, "appeal": null,
+        "audit_trail": [
+          { "timestamp": "2026-09-21T11:10:00Z", "actor": "Registrazione", "action": "Richiesta registrata a Ifo" },
+          { "timestamp": "2026-09-29T06:00:00Z", "actor": "Modello v4.2", "action": "Valutazione IA: APPROVE ($500), confidenza 88%" }
+        ]
+      }
+    },
+    {
+      "case_id": "REQ-2026-094",
+      "submitted_at": "2026-09-25T07:55:00Z",
+      "demographics": { "name_hash": "R. N. I.", "origin_country": "Burundi", "family_size": 5, "unaccompanied_minors": 0, "months_displaced": 41, "current_camp": "Kalobeyei", "preferred_language": "en" },
+      "vulnerability_profile": { "overall_score": 58, "tags": ["elderly_dependent"], "previous_aid_received_usd": 250 },
+      "ai_assessment": { "recommended_action": "REVIEW", "suggested_amount_usd": 450, "confidence": 0.61, "model_version": "v4.2-ensemble" },
+      "xai_explanation": {
+        "operator_summary": "Caso borderline. Il reddito dichiarato non coincide con i dati del programma di livelihood; con i dati dichiarati il caso sarebbe APPROVE, con quelli del programma REJECT. Si consiglia un colloquio di verifica.",
+        "feature_importances": [
+          { "feature": "income_inconsistency", "label": "Incoerenza reddito", "value": "Rilevata", "weight": -0.34 },
+          { "feature": "vulnerability_tags.elderly_dependent", "label": "Anziano a carico", "value": "Presente", "weight": 0.29 },
+          { "feature": "months_displaced", "label": "Mesi di sfollamento", "value": "41", "weight": 0.18 },
+          { "feature": "family_size", "label": "Membri del nucleo", "value": "5", "weight": 0.16 }
+        ],
+        "counterfactual": "Se il reddito dichiarato viene confermato al colloquio, l'esito diventerebbe APPROVE ($450).",
+        "beneficiary_reasons": [
+          { "icon": "income", "text": { "it": "Stiamo verificando le informazioni sul reddito.", "en": "We are checking the income information.", "ar": "نقوم بالتحقق من معلومات الدخل." } },
+          { "icon": "family", "text": { "it": "Nel nucleo vive una persona anziana a carico.", "en": "An elderly dependent lives in your household.", "ar": "يعيش في أسرتك شخص مسنّ تعيله." } }
+        ],
+        "data_quality_flags": [
+          { "code": "INCOME_INCONSISTENT", "severity": "warning", "message": "Reddito dichiarato ($40/mese) diverso da quello del programma livelihood ($130/mese)." }
+        ]
+      },
+      "distribution": { "point": "Kalobeyei Village 1 · Punto di distribuzione A", "window": "13–15 ottobre 2026, 09:00–14:00" },
+      "human_oversight": {
+        "status": "PENDING", "final_amount_usd": null, "operator_id": null, "decision_reason": null, "decided_at": null, "appeal": null,
+        "audit_trail": [
+          { "timestamp": "2026-09-25T07:55:00Z", "actor": "Registrazione", "action": "Richiesta registrata al desk di Kalobeyei" },
+          { "timestamp": "2026-09-29T06:00:00Z", "actor": "Modello v4.2", "action": "Valutazione IA: REVIEW, confidenza 61% (sotto soglia)" }
+        ]
+      }
+    },
+    {
+      "case_id": "REQ-2026-095",
+      "submitted_at": "2026-09-19T15:30:00Z",
+      "demographics": { "name_hash": "H. Y. A.", "origin_country": "Sudan", "family_size": 2, "unaccompanied_minors": 0, "months_displaced": 6, "current_camp": "Kakuma", "preferred_language": "ar" },
+      "vulnerability_profile": { "overall_score": 61, "tags": ["new_arrival"], "previous_aid_received_usd": 0 },
+      "ai_assessment": { "recommended_action": "APPROVE", "suggested_amount_usd": 250, "confidence": 0.79, "model_version": "v4.2-ensemble" },
+      "xai_explanation": {
+        "operator_summary": "Raccomandata un'erogazione di base. Nucleo arrivato da 6 mesi senza aiuti monetari ricevuti; vulnerabilità specifiche non rilevate.",
+        "feature_importances": [
+          { "feature": "previous_aid_saturation", "label": "Aiuti ricevuti (90gg)", "value": "$0", "weight": 0.3 },
+          { "feature": "months_displaced", "label": "Mesi di sfollamento", "value": "6", "weight": 0.22 },
+          { "feature": "family_size", "label": "Membri del nucleo", "value": "2", "weight": -0.12 }
+        ],
+        "counterfactual": "Con un nucleo di 4 persone l'importo suggerito salirebbe a $500.",
+        "beneficiary_reasons": [
+          { "icon": "time", "text": { "it": "Sei arrivato da 6 mesi.", "en": "You arrived 6 months ago.", "ar": "وصلت منذ 6 أشهر." } },
+          { "icon": "aid", "text": { "it": "Non hai ancora ricevuto altri aiuti in denaro.", "en": "You have not received other cash assistance yet.", "ar": "لم تتلقَّ أي مساعدة نقدية أخرى حتى الآن." } },
+          { "icon": "family", "text": { "it": "Il tuo nucleo familiare è composto da 2 persone.", "en": "Your household has 2 members.", "ar": "تتكوّن أسرتك من فردين." } }
+        ],
+        "data_quality_flags": []
+      },
+      "distribution": { "point": "Kakuma Distribution Centre · Zona 2", "window": "12–14 ottobre 2026, 08:00–15:00" },
+      "human_oversight": {
+        "status": "APPROVED", "final_amount_usd": 250, "operator_id": "OP-114", "decision_reason": "Conforme alla raccomandazione IA", "decided_at": "2026-09-29T07:12:00Z", "appeal": null,
+        "audit_trail": [
+          { "timestamp": "2026-09-19T15:30:00Z", "actor": "Registrazione", "action": "Richiesta registrata al desk di Kakuma" },
+          { "timestamp": "2026-09-29T06:00:00Z", "actor": "Modello v4.2", "action": "Valutazione IA: APPROVE ($250), confidenza 79%" },
+          { "timestamp": "2026-09-29T07:12:00Z", "actor": "OP-114", "action": "Erogazione autorizzata: $250", "note": "Conforme alla raccomandazione IA" }
+        ]
+      }
+    },
+    {
+      "case_id": "REQ-2026-096",
+      "submitted_at": "2026-09-26T08:45:00Z",
+      "demographics": { "name_hash": "K. M. O.", "origin_country": "Somalia", "family_size": 8, "unaccompanied_minors": 3, "months_displaced": 14, "current_camp": "Dadaab", "preferred_language": "ar" },
+      "vulnerability_profile": { "overall_score": 93, "tags": ["unaccompanied_minors", "chronic_illness", "large_household"], "previous_aid_received_usd": 0 },
+      "ai_assessment": { "recommended_action": "APPROVE", "suggested_amount_usd": 1200, "confidence": 0.95, "model_version": "v4.2-ensemble" },
+      "xai_explanation": {
+        "operator_summary": "Priorità massima. Nucleo di 8 persone con 3 minori non accompagnati e una patologia cronica. Nessun aiuto monetario ricevuto. Il caso è già stato segnalato al team Protezione minori.",
+        "feature_importances": [
+          { "feature": "unaccompanied_minors", "label": "Minori non accompagnati", "value": "3", "weight": 0.71 },
+          { "feature": "family_size", "label": "Membri del nucleo", "value": "8", "weight": 0.52 },
+          { "feature": "vulnerability_tags.chronic_illness", "label": "Malattia cronica", "value": "Presente", "weight": 0.44 },
+          { "feature": "previous_aid_saturation", "label": "Aiuti ricevuti (90gg)", "value": "$0", "weight": 0.2 }
+        ],
+        "counterfactual": "Anche senza la patologia cronica l'esito resterebbe APPROVE ($950).",
+        "beneficiary_reasons": [
+          { "icon": "child", "text": { "it": "3 minori non accompagnati sono sotto la tua tutela.", "en": "3 unaccompanied children are in your care.", "ar": "يوجد في رعايتك 3 أطفال غير مصحوبين." } },
+          { "icon": "family", "text": { "it": "Il tuo nucleo familiare è composto da 8 persone.", "en": "Your household has 8 members.", "ar": "تتكوّن أسرتك من 8 أفراد." } },
+          { "icon": "health", "text": { "it": "Nel fascicolo è registrata una condizione di salute cronica.", "en": "A chronic health condition is recorded in your file.", "ar": "توجد حالة صحية مزمنة مسجّلة في ملفك." } }
+        ],
+        "data_quality_flags": [
+          { "code": "PROTECTION_REFERRAL", "severity": "info", "message": "Già segnalato al team Protezione minori (ref. CP-2026-0412)." }
+        ]
+      },
+      "distribution": { "point": "Dadaab · Dagahaley Distribution Point", "window": "14–16 ottobre 2026, 08:30–14:30" },
+      "human_oversight": {
+        "status": "PENDING", "final_amount_usd": null, "operator_id": null, "decision_reason": null, "decided_at": null, "appeal": null,
+        "audit_trail": [
+          { "timestamp": "2026-09-26T08:45:00Z", "actor": "Registrazione", "action": "Richiesta registrata a Dagahaley" },
+          { "timestamp": "2026-09-29T06:00:00Z", "actor": "Modello v4.2", "action": "Valutazione IA: APPROVE ($1200), confidenza 95%" }
+        ]
+      }
+    }
+  ]
+}

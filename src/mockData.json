@@ -1,0 +1,887 @@
+{
+  "meta": {
+    "operation": "Operazione Italia",
+    "disclaimer": "Dati fittizi a scopo dimostrativo. Nessun riferimento a persone reali.",
+    "fund": {
+      "total_usd": 6000,
+      "period": "Ottobre 2026"
+    },
+    "budget": {
+      "min_usd": 0,
+      "max_usd": 1500,
+      "step_usd": 50
+    },
+    "score_thresholds": {
+      "high": 75,
+      "medium": 50
+    },
+    "model": {
+      "name": "Modello di prioritizzazione",
+      "version": "0.3"
+    }
+  },
+  "cases": [
+    {
+      "case_id": "HH-2026-0417",
+      "demographics": {
+        "name_hash": "7F3A-92C1",
+        "family_size": 7,
+        "children_under_18": 5,
+        "unaccompanied_minors": 2,
+        "members_with_disability": 0,
+        "origin_country": "Siria",
+        "current_camp": "Campo Nord – Settore B",
+        "months_displaced": 26,
+        "registered_on": "2024-08-14"
+      },
+      "vulnerability_profile": {
+        "overall_score": 92,
+        "dimensions": {
+          "health": {
+            "level": "critical",
+            "note": "Un adulto con malattia cronica e cure discontinue."
+          },
+          "safety": {
+            "level": "critical",
+            "note": "Due minori non accompagnati senza una verifica di tutela recente."
+          },
+          "food": {
+            "level": "attention",
+            "note": "Pasti ridotti a due al giorno."
+          },
+          "shelter": {
+            "level": "attention",
+            "note": "Tenda condivisa da sette persone, senza isolamento dal freddo."
+          }
+        }
+      },
+      "xai_explanation": {
+        "baseline_score": 50,
+        "operator_summary": "Il nucleo accoglie due minori non accompagnati e un adulto con una malattia cronica, e non ha alcuna entrata economica. L'alloggio è precario e l'inverno si avvicina.",
+        "feature_importances": [
+          {
+            "feature": "unaccompanied_minors",
+            "label": "Minori non accompagnati accolti",
+            "impact": 14,
+            "detail": "Due minori senza genitori vivono con il nucleo."
+          },
+          {
+            "feature": "chronic_illness",
+            "label": "Malattia cronica nel nucleo",
+            "impact": 12,
+            "detail": "Un adulto con diabete che richiede cure continue."
+          },
+          {
+            "feature": "no_income",
+            "label": "Nessuna fonte di reddito",
+            "impact": 9,
+            "detail": "Nessun adulto ha un lavoro regolare da oltre 6 mesi."
+          },
+          {
+            "feature": "shelter_conditions",
+            "label": "Condizioni dell'alloggio",
+            "impact": 8,
+            "detail": "Tenda condivisa, senza isolamento dal freddo."
+          },
+          {
+            "feature": "months_displaced",
+            "label": "Durata dello sfollamento",
+            "impact": 6,
+            "detail": "26 mesi lontano da casa."
+          },
+          {
+            "feature": "community_support",
+            "label": "Rete di supporto nella comunità",
+            "impact": -4,
+            "detail": "Parenti nello stesso settore del campo."
+          },
+          {
+            "feature": "recent_assistance",
+            "label": "Assistenza ricevuta di recente",
+            "impact": -3,
+            "detail": "Kit invernale distribuito due mesi fa."
+          }
+        ]
+      },
+      "ai_assessment": {
+        "suggested_amount_usd": 1200,
+        "confidence": 0.91,
+        "mitigation_plan": [
+          {
+            "action": "Fissare una visita di protezione per i due minori non accompagnati",
+            "priority": "urgent"
+          },
+          {
+            "action": "Garantire la continuità delle cure per l'adulto con malattia cronica",
+            "priority": "urgent"
+          },
+          {
+            "action": "Fornire materiali per isolare l'alloggio prima dell'inverno",
+            "priority": "soon"
+          },
+          {
+            "action": "Inserire un adulto in un programma di sostegno al reddito",
+            "priority": "routine"
+          }
+        ]
+      },
+      "human_oversight": {
+        "status": "PENDING",
+        "final_amount": null,
+        "reason": null,
+        "reviewed_at": null
+      }
+    },
+    {
+      "case_id": "HH-2026-0421",
+      "demographics": {
+        "name_hash": "B41D-07E5",
+        "family_size": 4,
+        "children_under_18": 3,
+        "unaccompanied_minors": 0,
+        "members_with_disability": 1,
+        "origin_country": "Afghanistan",
+        "current_camp": "Campo Est – Settore A",
+        "months_displaced": 14,
+        "registered_on": "2025-07-02"
+      },
+      "vulnerability_profile": {
+        "overall_score": 84,
+        "dimensions": {
+          "health": {
+            "level": "attention",
+            "note": "Un figlio con disabilità motoria: la fisioterapia è stata interrotta."
+          },
+          "safety": {
+            "level": "attention",
+            "note": "Una donna sola con tre figli minori."
+          },
+          "food": {
+            "level": "critical",
+            "note": "Spesso un solo pasto al giorno."
+          },
+          "shelter": {
+            "level": "stable",
+            "note": "Tenda in buone condizioni."
+          }
+        }
+      },
+      "xai_explanation": {
+        "baseline_score": 50,
+        "operator_summary": "Una madre sola si prende cura di tre figli, uno dei quali ha una disabilità motoria. L'accesso al cibo è il bisogno più urgente.",
+        "feature_importances": [
+          {
+            "feature": "single_caregiver",
+            "label": "Un solo adulto di riferimento",
+            "impact": 13,
+            "detail": "Madre sola con tre figli minori."
+          },
+          {
+            "feature": "food_insecurity",
+            "label": "Insicurezza alimentare",
+            "impact": 11,
+            "detail": "Spesso un solo pasto al giorno negli ultimi 30 giorni."
+          },
+          {
+            "feature": "no_income",
+            "label": "Nessuna fonte di reddito",
+            "impact": 8,
+            "detail": "Nessuna entrata economica dichiarata."
+          },
+          {
+            "feature": "disability",
+            "label": "Persona con disabilità",
+            "impact": 7,
+            "detail": "Un figlio con disabilità motoria."
+          },
+          {
+            "feature": "months_displaced",
+            "label": "Durata dello sfollamento",
+            "impact": 4,
+            "detail": "14 mesi lontano da casa."
+          },
+          {
+            "feature": "recent_assistance",
+            "label": "Assistenza ricevuta di recente",
+            "impact": -5,
+            "detail": "Distribuzione alimentare il mese scorso."
+          },
+          {
+            "feature": "health_access",
+            "label": "Accesso a cure mediche",
+            "impact": -4,
+            "detail": "La clinica del campo è raggiungibile a piedi."
+          }
+        ]
+      },
+      "ai_assessment": {
+        "suggested_amount_usd": 1000,
+        "confidence": 0.88,
+        "mitigation_plan": [
+          {
+            "action": "Attivare un supporto alimentare continuativo",
+            "priority": "urgent"
+          },
+          {
+            "action": "Riprendere il ciclo di fisioterapia per il figlio con disabilità",
+            "priority": "soon"
+          },
+          {
+            "action": "Valutare misure di protezione per il nucleo con un solo adulto",
+            "priority": "soon"
+          },
+          {
+            "action": "Proporre corsi di formazione compatibili con la cura dei figli",
+            "priority": "routine"
+          }
+        ]
+      },
+      "human_oversight": {
+        "status": "PENDING",
+        "final_amount": null,
+        "reason": null,
+        "reviewed_at": null
+      }
+    },
+    {
+      "case_id": "HH-2026-0433",
+      "demographics": {
+        "name_hash": "C920-1AD8",
+        "family_size": 9,
+        "children_under_18": 6,
+        "unaccompanied_minors": 1,
+        "members_with_disability": 0,
+        "origin_country": "Sud Sudan",
+        "current_camp": "Campo Ovest – Settore C",
+        "months_displaced": 38,
+        "registered_on": "2023-07-20"
+      },
+      "vulnerability_profile": {
+        "overall_score": 79,
+        "dimensions": {
+          "health": {
+            "level": "stable",
+            "note": "Nessuna condizione grave segnalata."
+          },
+          "safety": {
+            "level": "attention",
+            "note": "Un minore non accompagnato da seguire."
+          },
+          "food": {
+            "level": "critical",
+            "note": "Le razioni non bastano per nove persone."
+          },
+          "shelter": {
+            "level": "attention",
+            "note": "Sovraffollamento: nove persone in un solo alloggio."
+          }
+        }
+      },
+      "xai_explanation": {
+        "baseline_score": 50,
+        "operator_summary": "Nucleo numeroso, sfollato da oltre tre anni. Ha un piccolo reddito informale e una buona rete familiare, ma le razioni non bastano per nove persone.",
+        "feature_importances": [
+          {
+            "feature": "months_displaced",
+            "label": "Durata dello sfollamento",
+            "impact": 9,
+            "detail": "38 mesi lontano da casa."
+          },
+          {
+            "feature": "large_family_size",
+            "label": "Nucleo numeroso",
+            "impact": 9,
+            "detail": "Nove persone con un solo alloggio."
+          },
+          {
+            "feature": "food_insecurity",
+            "label": "Insicurezza alimentare",
+            "impact": 8,
+            "detail": "Razioni insufficienti per la dimensione del nucleo."
+          },
+          {
+            "feature": "unaccompanied_minors",
+            "label": "Minori non accompagnati accolti",
+            "impact": 7,
+            "detail": "Un minore senza genitori vive con il nucleo."
+          },
+          {
+            "feature": "shelter_conditions",
+            "label": "Condizioni dell'alloggio",
+            "impact": 6,
+            "detail": "Sovraffollamento e poca privacy."
+          },
+          {
+            "feature": "community_support",
+            "label": "Rete di supporto nella comunità",
+            "impact": -6,
+            "detail": "Famiglia allargata presente nel campo."
+          },
+          {
+            "feature": "has_income",
+            "label": "Reddito occasionale",
+            "impact": -4,
+            "detail": "Piccolo commercio informale."
+          }
+        ]
+      },
+      "ai_assessment": {
+        "suggested_amount_usd": 900,
+        "confidence": 0.84,
+        "mitigation_plan": [
+          {
+            "action": "Aumentare le razioni alimentari in base alla dimensione del nucleo",
+            "priority": "urgent"
+          },
+          {
+            "action": "Verificare la tutela del minore non accompagnato",
+            "priority": "soon"
+          },
+          {
+            "action": "Valutare un alloggio più ampio o una seconda tenda",
+            "priority": "soon"
+          },
+          {
+            "action": "Sostenere l'attività commerciale informale con un piccolo contributo",
+            "priority": "routine"
+          }
+        ]
+      },
+      "human_oversight": {
+        "status": "PENDING",
+        "final_amount": null,
+        "reason": null,
+        "reviewed_at": null
+      }
+    },
+    {
+      "case_id": "HH-2026-0440",
+      "demographics": {
+        "name_hash": "D5B2-6E90",
+        "family_size": 3,
+        "children_under_18": 1,
+        "unaccompanied_minors": 0,
+        "members_with_disability": 0,
+        "origin_country": "Ucraina",
+        "current_camp": "Centro di accoglienza Sud",
+        "months_displaced": 7,
+        "registered_on": "2026-02-19"
+      },
+      "vulnerability_profile": {
+        "overall_score": 63,
+        "dimensions": {
+          "health": {
+            "level": "attention",
+            "note": "Una persona anziana con problemi cardiaci."
+          },
+          "safety": {
+            "level": "stable",
+            "note": "Nessuna segnalazione di protezione."
+          },
+          "food": {
+            "level": "stable",
+            "note": "Accesso regolare ai pasti del centro."
+          },
+          "shelter": {
+            "level": "attention",
+            "note": "Stanza condivisa con altre famiglie."
+          }
+        }
+      },
+      "xai_explanation": {
+        "baseline_score": 50,
+        "operator_summary": "Tre persone, tra cui una nonna anziana con problemi cardiaci. Hanno i documenti in regola e cure vicine, ma nessuna entrata economica.",
+        "feature_importances": [
+          {
+            "feature": "elderly_dependents",
+            "label": "Persona anziana a carico",
+            "impact": 10,
+            "detail": "Nonna di 78 anni con mobilità ridotta."
+          },
+          {
+            "feature": "chronic_illness",
+            "label": "Malattia cronica nel nucleo",
+            "impact": 8,
+            "detail": "Ipertensione e cardiopatia."
+          },
+          {
+            "feature": "no_income",
+            "label": "Nessuna fonte di reddito",
+            "impact": 6,
+            "detail": "L'adulto di riferimento non ha ancora trovato lavoro."
+          },
+          {
+            "feature": "shelter_conditions",
+            "label": "Condizioni dell'alloggio",
+            "impact": 4,
+            "detail": "Stanza condivisa nel centro di accoglienza."
+          },
+          {
+            "feature": "documented_status",
+            "label": "Documenti in regola",
+            "impact": -6,
+            "detail": "Registrazione e permesso di soggiorno validi."
+          },
+          {
+            "feature": "community_support",
+            "label": "Rete di supporto nella comunità",
+            "impact": -5,
+            "detail": "Connazionali nello stesso centro."
+          },
+          {
+            "feature": "health_access",
+            "label": "Accesso a cure mediche",
+            "impact": -4,
+            "detail": "Ambulatorio all'interno del centro."
+          }
+        ]
+      },
+      "ai_assessment": {
+        "suggested_amount_usd": 750,
+        "confidence": 0.86,
+        "mitigation_plan": [
+          {
+            "action": "Organizzare controlli regolari per la persona anziana",
+            "priority": "soon"
+          },
+          {
+            "action": "Collegare l'adulto di riferimento a servizi di ricerca del lavoro",
+            "priority": "routine"
+          },
+          {
+            "action": "Valutare una stanza più tranquilla per il riposo",
+            "priority": "routine"
+          }
+        ]
+      },
+      "human_oversight": {
+        "status": "PENDING",
+        "final_amount": null,
+        "reason": null,
+        "reviewed_at": null
+      }
+    },
+    {
+      "case_id": "HH-2026-0452",
+      "demographics": {
+        "name_hash": "E18C-3B74",
+        "family_size": 3,
+        "children_under_18": 2,
+        "unaccompanied_minors": 0,
+        "members_with_disability": 0,
+        "origin_country": "Sudan",
+        "current_camp": "Campo Nord – Settore A",
+        "months_displaced": 5,
+        "registered_on": "2026-04-30"
+      },
+      "vulnerability_profile": {
+        "overall_score": 55,
+        "dimensions": {
+          "health": {
+            "level": "stable",
+            "note": "Nessuna condizione segnalata."
+          },
+          "safety": {
+            "level": "attention",
+            "note": "Un solo adulto di riferimento."
+          },
+          "food": {
+            "level": "attention",
+            "note": "Pasti saltuari nelle ultime settimane."
+          },
+          "shelter": {
+            "level": "attention",
+            "note": "La copertura della tenda ha bisogno di riparazioni."
+          }
+        }
+      },
+      "xai_explanation": {
+        "baseline_score": 50,
+        "operator_summary": "Un padre solo con due figli, arrivato da pochi mesi. La situazione è discreta ma fragile, e alcuni dati del fascicolo sono incompleti.",
+        "feature_importances": [
+          {
+            "feature": "food_insecurity",
+            "label": "Insicurezza alimentare",
+            "impact": 8,
+            "detail": "Pasti saltuari nelle ultime settimane."
+          },
+          {
+            "feature": "single_caregiver",
+            "label": "Un solo adulto di riferimento",
+            "impact": 6,
+            "detail": "Padre solo con due figli."
+          },
+          {
+            "feature": "shelter_conditions",
+            "label": "Condizioni dell'alloggio",
+            "impact": 4,
+            "detail": "Copertura della tenda danneggiata."
+          },
+          {
+            "feature": "months_displaced",
+            "label": "Durata dello sfollamento",
+            "impact": 2,
+            "detail": "5 mesi lontano da casa."
+          },
+          {
+            "feature": "documented_status",
+            "label": "Documenti in regola",
+            "impact": -6,
+            "detail": "Registrazione UNHCR completata."
+          },
+          {
+            "feature": "community_support",
+            "label": "Rete di supporto nella comunità",
+            "impact": -6,
+            "detail": "Vicini di tenda che aiutano con i bambini."
+          },
+          {
+            "feature": "recent_assistance",
+            "label": "Assistenza ricevuta di recente",
+            "impact": -3,
+            "detail": "Kit di igiene distribuito il mese scorso."
+          }
+        ]
+      },
+      "ai_assessment": {
+        "suggested_amount_usd": 600,
+        "confidence": 0.72,
+        "mitigation_plan": [
+          {
+            "action": "Completare i dati mancanti nella prossima visita",
+            "priority": "soon"
+          },
+          {
+            "action": "Monitorare la situazione alimentare per 30 giorni",
+            "priority": "soon"
+          },
+          {
+            "action": "Riparare la copertura della tenda",
+            "priority": "routine"
+          }
+        ]
+      },
+      "human_oversight": {
+        "status": "PENDING",
+        "final_amount": null,
+        "reason": null,
+        "reviewed_at": null
+      }
+    },
+    {
+      "case_id": "HH-2026-0466",
+      "demographics": {
+        "name_hash": "F02A-D815",
+        "family_size": 2,
+        "children_under_18": 0,
+        "unaccompanied_minors": 0,
+        "members_with_disability": 0,
+        "origin_country": "Venezuela",
+        "current_camp": "Centro di accoglienza Sud",
+        "months_displaced": 11,
+        "registered_on": "2025-10-08"
+      },
+      "vulnerability_profile": {
+        "overall_score": 38,
+        "dimensions": {
+          "health": {
+            "level": "stable",
+            "note": "Nessuna condizione segnalata."
+          },
+          "safety": {
+            "level": "stable",
+            "note": "Nessuna segnalazione di protezione."
+          },
+          "food": {
+            "level": "attention",
+            "note": "Qualche pasto saltato a fine mese."
+          },
+          "shelter": {
+            "level": "stable",
+            "note": "Alloggio stabile."
+          }
+        }
+      },
+      "xai_explanation": {
+        "baseline_score": 50,
+        "operator_summary": "Due adulti in salute, con documenti in regola, alloggio stabile e una buona rete di conoscenti. L'unico bisogno rilevante è il reddito.",
+        "feature_importances": [
+          {
+            "feature": "no_income",
+            "label": "Nessuna fonte di reddito",
+            "impact": 5,
+            "detail": "Entrambi in cerca di lavoro."
+          },
+          {
+            "feature": "months_displaced",
+            "label": "Durata dello sfollamento",
+            "impact": 4,
+            "detail": "11 mesi lontano da casa."
+          },
+          {
+            "feature": "food_insecurity",
+            "label": "Insicurezza alimentare",
+            "impact": 3,
+            "detail": "Qualche pasto saltato a fine mese."
+          },
+          {
+            "feature": "community_support",
+            "label": "Rete di supporto nella comunità",
+            "impact": -8,
+            "detail": "Amici e connazionali nel centro."
+          },
+          {
+            "feature": "documented_status",
+            "label": "Documenti in regola",
+            "impact": -6,
+            "detail": "Registrazione e permesso validi."
+          },
+          {
+            "feature": "stable_housing",
+            "label": "Alloggio stabile",
+            "impact": -5,
+            "detail": "Camera assegnata da oltre sei mesi."
+          },
+          {
+            "feature": "health_access",
+            "label": "Accesso a cure mediche",
+            "impact": -5,
+            "detail": "Iscritti al servizio sanitario locale."
+          }
+        ]
+      },
+      "ai_assessment": {
+        "suggested_amount_usd": 300,
+        "confidence": 0.81,
+        "mitigation_plan": [
+          {
+            "action": "Orientare il nucleo verso opportunità di lavoro locali",
+            "priority": "routine"
+          },
+          {
+            "action": "Riverificare la situazione tra tre mesi",
+            "priority": "routine"
+          }
+        ]
+      },
+      "human_oversight": {
+        "status": "PENDING",
+        "final_amount": null,
+        "reason": null,
+        "reviewed_at": null
+      }
+    },
+    {
+      "case_id": "HH-2026-0389",
+      "demographics": {
+        "name_hash": "0A7E-5C36",
+        "family_size": 5,
+        "children_under_18": 4,
+        "unaccompanied_minors": 0,
+        "members_with_disability": 1,
+        "origin_country": "Somalia",
+        "current_camp": "Campo Est – Settore D",
+        "months_displaced": 31,
+        "registered_on": "2024-02-27"
+      },
+      "vulnerability_profile": {
+        "overall_score": 81,
+        "dimensions": {
+          "health": {
+            "level": "attention",
+            "note": "Un figlio con disabilità che necessita di assistenza."
+          },
+          "safety": {
+            "level": "stable",
+            "note": "Nessuna segnalazione di protezione."
+          },
+          "food": {
+            "level": "critical",
+            "note": "Razioni insufficienti prima della distribuzione straordinaria."
+          },
+          "shelter": {
+            "level": "attention",
+            "note": "Tenda con infiltrazioni."
+          }
+        }
+      },
+      "xai_explanation": {
+        "baseline_score": 50,
+        "operator_summary": "Una madre sola con quattro figli, uno con disabilità, sfollata da oltre due anni. Il cibo è il bisogno principale.",
+        "feature_importances": [
+          {
+            "feature": "food_insecurity",
+            "label": "Insicurezza alimentare",
+            "impact": 12,
+            "detail": "Razioni insufficienti da diverse settimane."
+          },
+          {
+            "feature": "months_displaced",
+            "label": "Durata dello sfollamento",
+            "impact": 9,
+            "detail": "31 mesi lontano da casa."
+          },
+          {
+            "feature": "single_caregiver",
+            "label": "Un solo adulto di riferimento",
+            "impact": 8,
+            "detail": "Madre sola con quattro figli."
+          },
+          {
+            "feature": "disability",
+            "label": "Persona con disabilità",
+            "impact": 7,
+            "detail": "Un figlio con disabilità."
+          },
+          {
+            "feature": "no_income",
+            "label": "Nessuna fonte di reddito",
+            "impact": 6,
+            "detail": "Nessuna entrata economica."
+          },
+          {
+            "feature": "community_support",
+            "label": "Rete di supporto nella comunità",
+            "impact": -6,
+            "detail": "Sorelle nel campo che aiutano con i bambini."
+          },
+          {
+            "feature": "recent_assistance",
+            "label": "Assistenza ricevuta di recente",
+            "impact": -5,
+            "detail": "Distribuzione alimentare straordinaria."
+          }
+        ]
+      },
+      "ai_assessment": {
+        "suggested_amount_usd": 1000,
+        "confidence": 0.9,
+        "mitigation_plan": [
+          {
+            "action": "Garantire un supporto alimentare continuativo",
+            "priority": "urgent"
+          },
+          {
+            "action": "Riparare le infiltrazioni della tenda",
+            "priority": "soon"
+          }
+        ]
+      },
+      "human_oversight": {
+        "status": "APPROVED",
+        "final_amount": 850,
+        "reason": "La famiglia ha ricevuto una distribuzione alimentare straordinaria la settimana scorsa: ho ridotto l'importo per evitare duplicazioni.",
+        "reviewed_at": "2026-09-29T10:14:00Z"
+      }
+    },
+    {
+      "case_id": "HH-2026-0402",
+      "demographics": {
+        "name_hash": "1B94-A0F2",
+        "family_size": 5,
+        "children_under_18": 3,
+        "unaccompanied_minors": 1,
+        "members_with_disability": 0,
+        "origin_country": "Repubblica Democratica del Congo",
+        "current_camp": "Campo Ovest – Settore A",
+        "months_displaced": 19,
+        "registered_on": "2025-02-12"
+      },
+      "vulnerability_profile": {
+        "overall_score": 70,
+        "dimensions": {
+          "health": {
+            "level": "stable",
+            "note": "Nessuna condizione segnalata."
+          },
+          "safety": {
+            "level": "attention",
+            "note": "Un minore non accompagnato da seguire."
+          },
+          "food": {
+            "level": "attention",
+            "note": "Accesso alimentare irregolare."
+          },
+          "shelter": {
+            "level": "attention",
+            "note": "Alloggio provvisorio."
+          }
+        }
+      },
+      "xai_explanation": {
+        "baseline_score": 50,
+        "operator_summary": "Nucleo che accoglie un minore non accompagnato, senza reddito e con un alloggio provvisorio. I documenti e le cure sono in ordine.",
+        "feature_importances": [
+          {
+            "feature": "shelter_conditions",
+            "label": "Condizioni dell'alloggio",
+            "impact": 9,
+            "detail": "Alloggio provvisorio in materiali leggeri."
+          },
+          {
+            "feature": "no_income",
+            "label": "Nessuna fonte di reddito",
+            "impact": 8,
+            "detail": "Nessuna entrata economica dichiarata."
+          },
+          {
+            "feature": "unaccompanied_minors",
+            "label": "Minori non accompagnati accolti",
+            "impact": 8,
+            "detail": "Un minore senza genitori vive con il nucleo."
+          },
+          {
+            "feature": "months_displaced",
+            "label": "Durata dello sfollamento",
+            "impact": 6,
+            "detail": "19 mesi lontano da casa."
+          },
+          {
+            "feature": "food_insecurity",
+            "label": "Insicurezza alimentare",
+            "impact": 5,
+            "detail": "Accesso alimentare irregolare."
+          },
+          {
+            "feature": "documented_status",
+            "label": "Documenti in regola",
+            "impact": -8,
+            "detail": "Registrazione UNHCR completata."
+          },
+          {
+            "feature": "health_access",
+            "label": "Accesso a cure mediche",
+            "impact": -5,
+            "detail": "Clinica del campo vicina."
+          },
+          {
+            "feature": "community_support",
+            "label": "Rete di supporto nella comunità",
+            "impact": -3,
+            "detail": "Alcuni conoscenti nel settore."
+          }
+        ]
+      },
+      "ai_assessment": {
+        "suggested_amount_usd": 600,
+        "confidence": 0.86,
+        "mitigation_plan": [
+          {
+            "action": "Verificare la tutela del minore non accompagnato",
+            "priority": "soon"
+          },
+          {
+            "action": "Sostituire l'alloggio provvisorio con una struttura più solida",
+            "priority": "soon"
+          }
+        ]
+      },
+      "human_oversight": {
+        "status": "APPROVED",
+        "final_amount": 600,
+        "reason": "",
+        "reviewed_at": "2026-09-28T15:42:00Z"
+      }
+    }
+  ]
+}
