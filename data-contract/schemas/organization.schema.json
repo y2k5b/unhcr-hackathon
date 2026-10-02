@@ -1,0 +1,308 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Paesi, uffici, operatori e supervisori",
+  "description": "Contratto v0.1 per dati dimostrativi sintetici. Le regole tra record sono in docs/02-regole-del-flusso.md.",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0"
+    },
+    "data_origin": {
+      "const": "synthetic_demo"
+    },
+    "countries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]+$"
+          },
+          "display_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "iso_alpha2": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[A-Z]{2}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "display_name",
+          "iso_alpha2"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "offices": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]+$"
+          },
+          "country_id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]+$"
+          },
+          "display_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "office_type": {
+            "enum": [
+              "country_office",
+              "field_office",
+              "field_unit",
+              "sub_office"
+            ]
+          },
+          "parent_office_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]+$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "location": {
+            "type": "object",
+            "properties": {
+              "latitude": {
+                "anyOf": [
+                  {
+                    "type": "number",
+                    "minimum": -90,
+                    "maximum": 90
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "longitude": {
+                "anyOf": [
+                  {
+                    "type": "number",
+                    "minimum": -180,
+                    "maximum": 180
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "source": {
+                "enum": [
+                  "not_provided",
+                  "verified_public_source"
+                ]
+              },
+              "source_url": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "latitude",
+              "longitude",
+              "source",
+              "source_url"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "id",
+          "country_id",
+          "display_name",
+          "office_type",
+          "parent_office_id",
+          "location"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "operators": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]+$"
+          },
+          "display_alias": {
+            "type": "string",
+            "minLength": 1
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "interviewer",
+                "eligibility_decider"
+              ]
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "assignments": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "office_id": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_-]+$"
+                },
+                "valid_from": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "valid_until": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "office_id",
+                "valid_from",
+                "valid_until"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "id",
+          "display_alias",
+          "roles",
+          "assignments"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "supervisors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]+$"
+          },
+          "display_alias": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scope": {
+            "type": "object",
+            "properties": {
+              "level": {
+                "enum": [
+                  "global",
+                  "country",
+                  "office"
+                ]
+              },
+              "country_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_-]+$"
+                },
+                "minItems": 0
+              },
+              "office_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z][a-z0-9_-]+$"
+                },
+                "minItems": 0
+              }
+            },
+            "required": [
+              "level",
+              "country_ids",
+              "office_ids"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "id",
+          "display_alias",
+          "scope"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "services": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_-]+$"
+          },
+          "display_name": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "id",
+          "display_name"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    }
+  },
+  "required": [
+    "schema_version",
+    "data_origin",
+    "countries",
+    "offices",
+    "operators",
+    "supervisors",
+    "services"
+  ],
+  "additionalProperties": false
+}

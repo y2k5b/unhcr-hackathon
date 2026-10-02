@@ -1,0 +1,344 @@
+[
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "interview-demo-01",
+    "case_id": "case-demo-01",
+    "household_id": "household-demo-01",
+    "location": {
+      "country_id": "country-mexico",
+      "office_id": "office-mexico-city"
+    },
+    "interviewer_id": "operator-maria-fernanda-rios",
+    "mode": "in_person",
+    "language": "en",
+    "started_at": "2026-10-01T14:00:00Z",
+    "completed_at": "2026-10-01T14:10:00Z",
+    "household_snapshot": {
+      "id": "snapshot-demo-01",
+      "household_size": 2,
+      "summary": "Two-person household in temporary accommodation. The interview records overdue essential expenses and no regular income in recent weeks. A contact address at an acquaintance’s home does not establish stable housing or ongoing financial support.",
+      "vulnerability_band": "unknown",
+      "evidence": [
+        {
+          "id": "evidence-demo-01",
+          "description": "The household reports irregular income, overdue housing costs and difficulty buying essentials; the address supplied is only for contact.",
+          "source": "authored_synthetic_fixture"
+        }
+      ]
+    },
+    "text_material": {
+      "id": "material-demo-01",
+      "kind": "interviewer_notes",
+      "is_simulated": true,
+      "segments": [
+        {
+          "id": "segment-demo-01",
+          "speaker": "interviewer",
+          "text": "Before we continue, can you confirm when your regular income stopped and whether the address provided is somewhere you can stay?"
+        }
+      ]
+    },
+    "sentiment_analysis": {
+      "id": "sentiment-demo-01",
+      "status": "available",
+      "analyzed_at": "2026-10-01T14:12:00Z",
+      "source_material_id": "material-demo-01",
+      "target": "interviewer_language",
+      "analyzer": {
+        "name": "sentiment-placeholder",
+        "version": "demo-0.1",
+        "status": "simulated",
+        "prompt_version": null
+      },
+      "result": {
+        "label": "neutral",
+        "polarity": 0.0,
+        "confidence": null,
+        "explanation": "The interviewer’s notes use open questions and a descriptive tone. The text sample is limited and cannot support conclusions about the overall quality of the interview.",
+        "evidence_segment_ids": [
+          "segment-demo-01"
+        ]
+      },
+      "unavailable_reason": null,
+      "limitations": [
+        "Hand-written output for the demo; no model was run.",
+        "The notes do not document the full interview or establish operator conduct.",
+        "Sentiment is neither a competence score nor a disciplinary assessment."
+      ]
+    },
+    "supersedes_interview_id": null
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "interview-demo-02",
+    "case_id": "case-demo-02",
+    "household_id": "household-demo-02",
+    "location": {
+      "country_id": "country-mexico",
+      "office_id": "office-mexico-city"
+    },
+    "interviewer_id": "operator-maria-fernanda-rios",
+    "mode": "in_person",
+    "language": "en",
+    "started_at": "2026-10-01T15:00:00Z",
+    "completed_at": "2026-10-01T15:10:00Z",
+    "household_snapshot": {
+      "id": "snapshot-demo-02",
+      "household_size": 3,
+      "summary": "Three-person household temporarily hosted by others in Mexico City. The arrangement can be withdrawn and provides no stable financial support; food and transport expenses remain partly uncovered.",
+      "vulnerability_band": "unknown",
+      "evidence": [
+        {
+          "id": "evidence-demo-02",
+          "description": "The stay is offered for a few days without a contract or promise of extension; the household reports uncovered current expenses.",
+          "source": "authored_synthetic_fixture"
+        }
+      ]
+    },
+    "text_material": {
+      "id": "material-demo-02",
+      "kind": "interviewer_notes",
+      "is_simulated": true,
+      "segments": [
+        {
+          "id": "segment-demo-02",
+          "speaker": "interviewer",
+          "text": "I have noted that the accommodation is temporary and the expenses you described. Do you have written confirmation that you may stay longer?"
+        }
+      ]
+    },
+    "sentiment_analysis": {
+      "id": "sentiment-demo-02",
+      "status": "available",
+      "analyzed_at": "2026-10-01T15:12:00Z",
+      "source_material_id": "material-demo-02",
+      "target": "interviewer_language",
+      "analyzer": {
+        "name": "sentiment-placeholder",
+        "version": "demo-0.1",
+        "status": "simulated",
+        "prompt_version": null
+      },
+      "result": {
+        "label": "neutral",
+        "polarity": 0.0,
+        "confidence": null,
+        "explanation": "The text is descriptive without strong polarity; this is a simulated assessment.",
+        "evidence_segment_ids": [
+          "segment-demo-02"
+        ]
+      },
+      "unavailable_reason": null,
+      "limitations": [
+        "Hand-written output for the demo; no model was run.",
+        "The notes do not document the full interview or establish operator conduct.",
+        "Sentiment is neither a competence score nor a disciplinary assessment."
+      ]
+    },
+    "supersedes_interview_id": null
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "interview-demo-03",
+    "case_id": "case-demo-03",
+    "household_id": "household-demo-03",
+    "location": {
+      "country_id": "country-mexico",
+      "office_id": "office-mexico-city"
+    },
+    "interviewer_id": "operator-maria-fernanda-rios",
+    "mode": "in_person",
+    "language": "en",
+    "started_at": "2026-10-01T16:00:00Z",
+    "completed_at": "2026-10-01T16:10:00Z",
+    "household_snapshot": {
+      "id": "snapshot-demo-03",
+      "household_size": 1,
+      "summary": "Single person reporting difficulty understanding the forms and insufficient resources for daily expenses. A request for language support remains pending, and the income declaration needs clarification.",
+      "vulnerability_band": "unknown",
+      "evidence": [
+        {
+          "id": "evidence-demo-03",
+          "description": "The need for language mediation is recorded; the person says they cannot complete the request unaided and reports insufficient resources.",
+          "source": "authored_synthetic_fixture"
+        }
+      ]
+    },
+    "text_material": {
+      "id": "material-demo-03",
+      "kind": "interviewer_notes",
+      "is_simulated": true,
+      "segments": [
+        {
+          "id": "segment-demo-03",
+          "speaker": "interviewer",
+          "text": "To avoid misunderstandings, I will note that you would like an interpreter before completing the financial section. I will explain the steps in a language you understand."
+        }
+      ]
+    },
+    "sentiment_analysis": {
+      "id": "sentiment-demo-03",
+      "status": "available",
+      "analyzed_at": "2026-10-01T16:12:00Z",
+      "source_material_id": "material-demo-03",
+      "target": "interviewer_language",
+      "analyzer": {
+        "name": "sentiment-placeholder",
+        "version": "demo-0.1",
+        "status": "simulated",
+        "prompt_version": null
+      },
+      "result": {
+        "label": "neutral",
+        "polarity": 0.0,
+        "confidence": null,
+        "explanation": "The text is descriptive without strong polarity; this is a simulated assessment.",
+        "evidence_segment_ids": [
+          "segment-demo-03"
+        ]
+      },
+      "unavailable_reason": null,
+      "limitations": [
+        "Hand-written output for the demo; no model was run.",
+        "The notes do not document the full interview or establish operator conduct.",
+        "Sentiment is neither a competence score nor a disciplinary assessment."
+      ]
+    },
+    "supersedes_interview_id": null
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "interview-demo-04",
+    "case_id": "case-demo-04",
+    "household_id": "household-demo-04",
+    "location": {
+      "country_id": "country-mexico",
+      "office_id": "office-mexico-city"
+    },
+    "interviewer_id": "operator-maria-fernanda-rios",
+    "mode": "in_person",
+    "language": "en",
+    "started_at": "2026-10-01T17:00:00Z",
+    "completed_at": "2026-10-01T17:10:00Z",
+    "household_snapshot": {
+      "id": "snapshot-demo-04",
+      "household_size": 4,
+      "summary": "Four-person household reporting substantial care expenses and inconsistent access to services. An informal network provides occasional help but does not cover recurring expenses recorded in the interview.",
+      "vulnerability_band": "unknown",
+      "evidence": [
+        {
+          "id": "evidence-demo-04",
+          "description": "The case distinguishes occasional help from the informal network from recurring care expenses reported by the household.",
+          "source": "authored_synthetic_fixture"
+        }
+      ]
+    },
+    "text_material": {
+      "id": "material-demo-04",
+      "kind": "interviewer_notes",
+      "is_simulated": true,
+      "segments": [
+        {
+          "id": "segment-demo-04",
+          "speaker": "interviewer",
+          "text": "You have already told me about your expenses; let us try not to repeat everything from the beginning."
+        }
+      ]
+    },
+    "sentiment_analysis": {
+      "id": "sentiment-demo-04",
+      "status": "available",
+      "analyzed_at": "2026-10-01T17:12:00Z",
+      "source_material_id": "material-demo-04",
+      "target": "interviewer_language",
+      "analyzer": {
+        "name": "sentiment-placeholder",
+        "version": "demo-0.1",
+        "status": "simulated",
+        "prompt_version": null
+      },
+      "result": {
+        "label": "negative",
+        "polarity": -0.35,
+        "confidence": null,
+        "explanation": "The wording contains a linguistic signal of impatience. This short excerpt does not establish the interviewer’s overall conduct.",
+        "evidence_segment_ids": [
+          "segment-demo-04"
+        ]
+      },
+      "unavailable_reason": null,
+      "limitations": [
+        "Hand-written output for the demo; no model was run.",
+        "The notes do not document the full interview or establish operator conduct.",
+        "Sentiment is neither a competence score nor a disciplinary assessment."
+      ]
+    },
+    "supersedes_interview_id": null
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "interview-demo-05",
+    "case_id": "case-demo-05",
+    "household_id": "household-demo-05",
+    "location": {
+      "country_id": "country-mexico",
+      "office_id": "office-mexico-city"
+    },
+    "interviewer_id": "operator-maria-fernanda-rios",
+    "mode": "in_person",
+    "language": "en",
+    "started_at": "2026-10-01T18:00:00Z",
+    "completed_at": "2026-10-01T18:10:00Z",
+    "household_snapshot": {
+      "id": "snapshot-demo-05",
+      "household_size": 2,
+      "summary": "Two-person household with housing and food expenses that have not yet been checked against an independent reference. The interview notes support a preliminary assessment but cannot establish whether the outcome is correct.",
+      "vulnerability_band": "unknown",
+      "evidence": [
+        {
+          "id": "evidence-demo-05",
+          "description": "Declared essential expenses and a request for additional documents are recorded; no independent review is available yet.",
+          "source": "authored_synthetic_fixture"
+        }
+      ]
+    },
+    "text_material": {
+      "id": "material-demo-05",
+      "kind": "interviewer_notes",
+      "is_simulated": true,
+      "segments": [
+        {
+          "id": "segment-demo-05",
+          "speaker": "interviewer",
+          "text": "De acuerdo."
+        }
+      ]
+    },
+    "sentiment_analysis": {
+      "id": "sentiment-demo-05",
+      "status": "not_assessable",
+      "analyzed_at": "2026-10-01T18:12:00Z",
+      "source_material_id": "material-demo-05",
+      "target": "interviewer_language",
+      "analyzer": {
+        "name": "sentiment-placeholder",
+        "version": "demo-0.1",
+        "status": "simulated",
+        "prompt_version": null
+      },
+      "result": null,
+      "unavailable_reason": "Text is too short for a useful assessment.",
+      "limitations": [
+        "Hand-written output for the demo; no model was run.",
+        "The notes do not document the full interview or establish operator conduct.",
+        "Sentiment is neither a competence score nor a disciplinary assessment."
+      ]
+    },
+    "supersedes_interview_id": null
+  }
+]

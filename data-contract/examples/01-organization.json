@@ -1,0 +1,132 @@
+{
+  "schema_version": "0.1.0",
+  "data_origin": "synthetic_demo",
+  "countries": [
+    {
+      "id": "country-mexico",
+      "display_name": "Mexico",
+      "iso_alpha2": "MX"
+    },
+    {
+      "id": "country-brazil",
+      "display_name": "Brazil",
+      "iso_alpha2": "BR"
+    },
+    {
+      "id": "country-syria",
+      "display_name": "Syria",
+      "iso_alpha2": "SY"
+    },
+    {
+      "id": "country-palestine",
+      "display_name": "Palestine",
+      "iso_alpha2": "PS"
+    },
+    {
+      "id": "country-ukraine",
+      "display_name": "Ukraine",
+      "iso_alpha2": "UA"
+    },
+    {
+      "id": "country-dr-congo",
+      "display_name": "Democratic Republic of the Congo",
+      "iso_alpha2": "CD"
+    }
+  ],
+  "offices": [
+    {
+      "id": "office-mexico-city",
+      "country_id": "country-mexico",
+      "display_name": "UNHCR Representation · Mexico City",
+      "office_type": "country_office",
+      "parent_office_id": null,
+      "location": {
+        "latitude": 19.4326,
+        "longitude": -99.1332,
+        "source": "verified_public_source",
+        "source_url": "https://www.unhcr.org/operational/operations/mexico"
+      }
+    },
+    {
+      "id": "office-ciudad-juarez",
+      "country_id": "country-mexico",
+      "display_name": "UNHCR Field Office · Ciudad Juárez",
+      "office_type": "field_office",
+      "parent_office_id": null,
+      "location": {
+        "latitude": 31.6904,
+        "longitude": -106.4245,
+        "source": "verified_public_source",
+        "source_url": "https://www.unhcr.org/operational/operations/mexico"
+      }
+    },
+    {
+      "id": "office-monterrey",
+      "country_id": "country-mexico",
+      "display_name": "UNHCR Sub-Office · Monterrey",
+      "office_type": "sub_office",
+      "parent_office_id": null,
+      "location": {
+        "latitude": 25.6866,
+        "longitude": -100.3161,
+        "source": "verified_public_source",
+        "source_url": "https://www.unhcr.org/operational/operations/mexico"
+      }
+    }
+  ],
+  "operators": [
+    {
+      "id": "operator-maria-fernanda-rios",
+      "display_alias": "María Fernanda Ríos",
+      "roles": [
+        "interviewer"
+      ],
+      "assignments": [
+        {
+          "office_id": "office-mexico-city",
+          "valid_from": "2026-01-01T00:00:00Z",
+          "valid_until": null
+        }
+      ]
+    },
+    {
+      "id": "operator-daniel-herrera",
+      "display_alias": "Daniel Herrera",
+      "roles": [
+        "eligibility_decider"
+      ],
+      "assignments": [
+        {
+          "office_id": "office-mexico-city",
+          "valid_from": "2026-01-01T00:00:00Z",
+          "valid_until": null
+        }
+      ]
+    }
+  ],
+  "supervisors": [
+    {
+      "id": "supervisor-demo-01",
+      "display_alias": "Global demo supervisor",
+      "scope": {
+        "level": "global",
+        "country_ids": [],
+        "office_ids": []
+      }
+    }
+  ],
+  "services": [
+    {
+      "id": "service-demo-sentiment",
+      "display_name": "Simulated sentiment analysis"
+    },
+    {
+      "id": "service-demo-cashy",
+      "display_name": "Simulated Cashy"
+    },
+    {
+      "id": "service-demo-monitor",
+      "display_name": "Simulated monitor"
+    }
+  ]
+}

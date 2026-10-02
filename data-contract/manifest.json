@@ -1,0 +1,52 @@
+{
+  "schema_version": "0.1.0",
+  "data_origin": "synthetic_demo",
+  "title": "Cashy Audit — contratto dati iniziale",
+  "created_on": "2026-10-01",
+  "brief_url": "https://maldonam.github.io/public/#tracks",
+  "fixtures_notice": "Geografia e nomi delle tre sedi messicane basati sulla pagina pubblica UNHCR; puntini sulla mappa approssimano il centro delle città, non l’indirizzo. Nomi degli operatori, nuclei, testi, output AI e riferimenti indipendenti sono fittizi. Nessun modello è stato eseguito e non si tratta di righe S8.",
+  "collections": [
+    {
+      "path": "examples/01-organization.json",
+      "schema": "schemas/organization.schema.json",
+      "shape": "object"
+    },
+    {
+      "path": "examples/02-interviews.json",
+      "schema": "schemas/interview.schema.json",
+      "shape": "array"
+    },
+    {
+      "path": "examples/03-ai-assessments.json",
+      "schema": "schemas/ai-assessment.schema.json",
+      "shape": "array"
+    },
+    {
+      "path": "examples/04-decisions.json",
+      "schema": "schemas/decision.schema.json",
+      "shape": "array"
+    },
+    {
+      "path": "examples/05-reference-reviews.json",
+      "schema": "schemas/reference-review.schema.json",
+      "shape": "array"
+    },
+    {
+      "path": "examples/06-audit-events.json",
+      "schema": "schemas/audit-event.schema.json",
+      "shape": "array"
+    },
+    {
+      "path": "examples/07-audit-issues.json",
+      "schema": "schemas/audit-issue.schema.json",
+      "shape": "array"
+    }
+  ],
+  "expected_audit_categories": {
+    "decision-demo-01": "correct_override",
+    "decision-demo-02": "over_reliance",
+    "decision-demo-03": "correct_acceptance",
+    "decision-demo-04": "under_reliance",
+    "decision-demo-05": "unverified"
+  }
+}

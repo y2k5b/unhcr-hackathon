@@ -527,13 +527,13 @@ export default function Dashboard() {
           <div className="max-w-[1440px] mx-auto px-4 sm:px-8 py-4 flex items-center justify-between gap-4">
             <Wordmark />
             <Link
-              to="/quality"
-              aria-label="Apri monitoraggio qualità delle decisioni"
+              to="/supervisor"
+              aria-label="Open supervisor dashboard"
               className="hidden sm:inline-flex items-center gap-2 rounded bg-white px-4 py-2 font-bold text-[#0072BC] hover:bg-[#EFF7FE]"
             >
               <Globe className="w-5 h-5" aria-hidden="true" />
               {META.operation ?? 'Operazione'}
-              <span className="border-l border-[#B9D6EE] pl-2 text-sm">Qualità team</span>
+              <span className="border-l border-[#B9D6EE] pl-2 text-sm">Supervisor</span>
             </Link>
           </div>
         </div>

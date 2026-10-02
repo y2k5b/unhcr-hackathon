@@ -1,0 +1,169 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Cronologia degli eventi dimostrativi",
+  "description": "Contratto v0.1 per dati dimostrativi sintetici. Le regole tra record sono in docs/02-regole-del-flusso.md.",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0"
+    },
+    "data_origin": {
+      "const": "synthetic_demo"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]+$"
+    },
+    "sequence": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "previous_event_id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]+$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "occurred_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "actor": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "operator",
+            "supervisor",
+            "service"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]+$"
+        }
+      },
+      "required": [
+        "kind",
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "action": {
+      "enum": [
+        "interview_completed",
+        "sentiment_recorded",
+        "ai_generated",
+        "case_viewed",
+        "independent_assessment_submitted",
+        "ai_revealed",
+        "reasoning_judged",
+        "answer_judged",
+        "decision_finalized",
+        "reference_review_recorded",
+        "audit_issue_opened"
+      ]
+    },
+    "entity": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "interview",
+            "ai_assessment",
+            "decision",
+            "reference_review",
+            "audit_issue"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]+$"
+        }
+      },
+      "required": [
+        "kind",
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "case_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]+$"
+    },
+    "payload": {
+      "type": "object",
+      "properties": {
+        "outcome": {
+          "anyOf": [
+            {
+              "enum": [
+                "include",
+                "exclude"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "position": {
+          "anyOf": [
+            {
+              "enum": [
+                "agree",
+                "partly_agree",
+                "disagree",
+                "cannot_assess"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "related_record_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_-]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "outcome",
+        "position",
+        "related_record_id",
+        "note"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "data_origin",
+    "id",
+    "sequence",
+    "previous_event_id",
+    "occurred_at",
+    "actor",
+    "action",
+    "entity",
+    "case_id",
+    "payload"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,28 @@
+[
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "issue-demo-01",
+    "case_id": "case-demo-02",
+    "decision_id": "decision-demo-02",
+    "reference_review_id": "review-demo-02",
+    "rule": {
+      "id": "rule-initial-correct-final-wrong",
+      "version": "demo-1"
+    },
+    "signal_type": "reviewed_over_reliance",
+    "severity": "review",
+    "status": "open",
+    "owner_supervisor_id": "supervisor-demo-01",
+    "opened_at": "2026-10-01T16:31:00Z",
+    "due_at": "2026-10-03T18:00:00Z",
+    "evidence_event_ids": [
+      "event-demo-02-independent-assessment-submitted",
+      "event-demo-02-ai-revealed",
+      "event-demo-02-decision-finalized",
+      "event-demo-02-reference-review-recorded"
+    ],
+    "description": "In this fictional scenario, the initial assessment agreed with the reference. After seeing Cashy, the operator adopted the opposite outcome. Review the rationale and context without drawing automatic conclusions about the person.",
+    "resolution": null
+  }
+]
