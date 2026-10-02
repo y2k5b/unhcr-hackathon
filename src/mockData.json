@@ -1,11 +1,10 @@
 {
   "meta": {
-    "operation": "Operazione Italia",
-    "disclaimer": "Dati fittizi a scopo dimostrativo. Nessun riferimento a persone reali.",
+    "operation": "Italy operation",
     "confidence_threshold": 0.7,
     "min_comment_length": 15,
     "model": {
-      "name": "Modello di valutazione",
+      "name": "Assessment model",
       "version": "0.3"
     }
   },
@@ -18,8 +17,8 @@
         "children_under_18": 5,
         "unaccompanied_minors": 2,
         "members_with_disability": 0,
-        "origin_country": "Siria",
-        "current_camp": "Campo Nord – Settore B",
+        "origin_country": "Syria",
+        "current_camp": "North Camp – Sector B",
         "months_displaced": 26,
         "registered_on": "2024-08-14"
       },
@@ -28,69 +27,69 @@
         "dimensions": {
           "health": {
             "level": "critical",
-            "note": "Un adulto con malattia cronica e cure discontinue."
+            "note": "One adult with a chronic illness and interrupted treatment."
           },
           "safety": {
             "level": "critical",
-            "note": "Due minori non accompagnati senza una verifica di tutela recente."
+            "note": "Two unaccompanied minors with no recent protection check."
           },
           "food": {
             "level": "attention",
-            "note": "Pasti ridotti a due al giorno."
+            "note": "Down to two meals a day."
           },
           "shelter": {
             "level": "attention",
-            "note": "Tenda condivisa da sette persone, senza isolamento dal freddo."
+            "note": "Tent shared by seven people, with no insulation from the cold."
           }
         }
       },
       "factors": [
         {
           "key": "unaccompanied_minors",
-          "label": "Minori non accompagnati accolti",
-          "detail": "Due minori senza genitori vivono con il nucleo.",
+          "label": "Hosting unaccompanied minors",
+          "detail": "Two children without parents live with the household.",
           "direction": "INCLUDE",
           "weight": 14
         },
         {
           "key": "chronic_illness",
-          "label": "Malattia cronica nel nucleo",
-          "detail": "Un adulto con diabete che richiede cure continue.",
+          "label": "Chronic illness in the household",
+          "detail": "One adult with diabetes who needs ongoing care.",
           "direction": "INCLUDE",
           "weight": 12
         },
         {
           "key": "no_income",
-          "label": "Nessuna fonte di reddito",
-          "detail": "Nessun adulto ha un lavoro regolare da oltre 6 mesi.",
+          "label": "No source of income",
+          "detail": "No adult has had regular work for over 6 months.",
           "direction": "INCLUDE",
           "weight": 9
         },
         {
           "key": "shelter_conditions",
-          "label": "Condizioni dell'alloggio",
-          "detail": "Tenda condivisa, senza isolamento dal freddo.",
+          "label": "Shelter conditions",
+          "detail": "Shared tent, with no insulation from the cold.",
           "direction": "INCLUDE",
           "weight": 8
         },
         {
           "key": "months_displaced",
-          "label": "Durata dello sfollamento",
-          "detail": "26 mesi lontano da casa.",
+          "label": "Length of displacement",
+          "detail": "26 months away from home.",
           "direction": "INCLUDE",
           "weight": 6
         },
         {
           "key": "community_support",
-          "label": "Rete di supporto nella comunità",
-          "detail": "Parenti nello stesso settore del campo.",
+          "label": "Community support network",
+          "detail": "Relatives in the same sector of the camp.",
           "direction": "EXCLUDE",
           "weight": 4
         },
         {
           "key": "recent_assistance",
-          "label": "Assistenza ricevuta di recente",
-          "detail": "Kit invernale distribuito due mesi fa.",
+          "label": "Recently received assistance",
+          "detail": "Winter kit distributed two months ago.",
           "direction": "EXCLUDE",
           "weight": 3
         }
@@ -98,7 +97,7 @@
       "ai_assessment": {
         "recommendation": "INCLUDE",
         "confidence": 0.91,
-        "comment": "Il nucleo presenta più fattori di vulnerabilità che si rafforzano a vicenda: due minori non accompagnati, un adulto con malattia cronica e nessuna entrata. I fattori protettivi, cioè la rete familiare e il kit invernale recente, sono temporanei e non compensano questa combinazione. Raccomando l'inclusione."
+        "comment": "The household has several vulnerability factors that reinforce each other: two unaccompanied minors, an adult with a chronic illness and no income. The protective factors, namely the family network and the recent winter kit, are temporary and do not offset this combination. I recommend inclusion."
       },
       "human_oversight": {
         "status": "PENDING",
@@ -118,7 +117,7 @@
         "unaccompanied_minors": 0,
         "members_with_disability": 1,
         "origin_country": "Afghanistan",
-        "current_camp": "Campo Est – Settore A",
+        "current_camp": "East Camp – Sector A",
         "months_displaced": 14,
         "registered_on": "2025-07-02"
       },
@@ -127,69 +126,69 @@
         "dimensions": {
           "health": {
             "level": "attention",
-            "note": "Un figlio con disabilità motoria: la fisioterapia è stata interrotta."
+            "note": "A son with a physical disability: his physiotherapy has been interrupted."
           },
           "safety": {
             "level": "attention",
-            "note": "Una donna sola con tre figli minori."
+            "note": "A woman on her own with three children under 18."
           },
           "food": {
             "level": "critical",
-            "note": "Spesso un solo pasto al giorno."
+            "note": "Often only one meal a day."
           },
           "shelter": {
             "level": "stable",
-            "note": "Tenda in buone condizioni."
+            "note": "Tent in good condition."
           }
         }
       },
       "factors": [
         {
           "key": "single_caregiver",
-          "label": "Un solo adulto di riferimento",
-          "detail": "Madre sola con tre figli minori.",
+          "label": "Single caregiver",
+          "detail": "Mother on her own with three children under 18.",
           "direction": "INCLUDE",
           "weight": 13
         },
         {
           "key": "food_insecurity",
-          "label": "Insicurezza alimentare",
-          "detail": "Spesso un solo pasto al giorno negli ultimi 30 giorni.",
+          "label": "Food insecurity",
+          "detail": "Often only one meal a day over the last 30 days.",
           "direction": "INCLUDE",
           "weight": 11
         },
         {
           "key": "no_income",
-          "label": "Nessuna fonte di reddito",
-          "detail": "Nessuna entrata economica dichiarata.",
+          "label": "No source of income",
+          "detail": "No declared income.",
           "direction": "INCLUDE",
           "weight": 8
         },
         {
           "key": "disability",
-          "label": "Persona con disabilità",
-          "detail": "Un figlio con disabilità motoria.",
+          "label": "Person with a disability",
+          "detail": "A son with a physical disability.",
           "direction": "INCLUDE",
           "weight": 7
         },
         {
           "key": "months_displaced",
-          "label": "Durata dello sfollamento",
-          "detail": "14 mesi lontano da casa.",
+          "label": "Length of displacement",
+          "detail": "14 months away from home.",
           "direction": "INCLUDE",
           "weight": 4
         },
         {
           "key": "recent_assistance",
-          "label": "Assistenza ricevuta di recente",
-          "detail": "Distribuzione alimentare il mese scorso.",
+          "label": "Recently received assistance",
+          "detail": "Food distribution last month.",
           "direction": "EXCLUDE",
           "weight": 5
         },
         {
           "key": "health_access",
-          "label": "Accesso a cure mediche",
-          "detail": "La clinica del campo è raggiungibile a piedi.",
+          "label": "Access to healthcare",
+          "detail": "The camp clinic is within walking distance.",
           "direction": "EXCLUDE",
           "weight": 4
         }
@@ -197,41 +196,41 @@
       "ai_assessment": {
         "recommendation": "INCLUDE",
         "confidence": 0.88,
-        "comment": "Una madre sola si prende cura di tre figli, uno dei quali con disabilità motoria, senza alcuna entrata. L'assistenza alimentare recente e la clinica vicina attenuano il quadro solo in parte. Raccomando l'inclusione."
+        "comment": "A mother on her own cares for three children, one of whom has a physical disability, with no income at all. The recent food assistance and the nearby clinic only partly ease the situation. I recommend inclusion."
       },
       "calibration": {
         "reference_decision": "INCLUDE",
         "closed_on": "2026-03-18",
         "explanation": {
-          "summary": "Il nucleo va incluso: i fattori di vulnerabilità sono strutturali e si sommano, mentre quelli a favore dell'esclusione sono temporanei o parziali.",
+          "summary": "The household should be included: its vulnerability factors are structural and add up, while those pointing towards exclusion are temporary or partial.",
           "rationale": [
-            "Il quadro è dominato da tre elementi strutturali, che non dipendono da un evento passeggero: una madre sola con tre figli minori, nessuna entrata economica e un figlio con disabilità motoria. Presi singolarmente sarebbero già rilevanti; insieme si rafforzano, perché l'unico adulto di riferimento deve provvedere da solo alla cura dei figli, al reddito e all'accompagnamento del figlio con disabilità.",
-            "I due elementi che sembrano spingere verso l'esclusione vanno letti con cautela. La distribuzione alimentare del mese scorso è un intervento una tantum: non cambia la capacità del nucleo di procurarsi il cibo nelle settimane successive, e infatti il nucleo salta ancora i pasti. La clinica vicina garantisce l'accesso alle cure di base, ma la fisioterapia del figlio risulta interrotta: la vicinanza di un servizio non equivale a una presa in carico effettiva.",
-            "In sintesi, nessun fattore a favore dell'esclusione compensa, per natura o per intensità, la combinazione di carico di cura, assenza di reddito e disabilità. La regola da ricordare è questa: un sostegno temporaneo o un servizio solo teoricamente accessibile non sono una prova di stabilità."
+            "The picture is dominated by three structural elements that do not depend on a one-off event: a mother on her own with three children, no income and a son with a physical disability. Each would matter on its own; together they reinforce each other, because the only adult has to handle childcare, income and her disabled son's appointments by herself.",
+            "The two elements that seem to point towards exclusion need to be read carefully. Last month's food distribution was a one-off: it does not change the household's ability to get food in the following weeks, and indeed the family is still skipping meals. The nearby clinic provides access to basic care, but the son's physiotherapy has stopped: having a service nearby is not the same as actually being in its care.",
+            "In short, no factor in favour of exclusion offsets, by its nature or its strength, the combination of care burden, lack of income and disability. The rule to remember: temporary support, or a service that is accessible only on paper, is not evidence of stability."
           ],
           "key_points": [
             {
-              "title": "Carico di cura su un solo adulto",
-              "text": "Una madre sola deve occuparsi di tre figli minori, di cui uno con disabilità, e al tempo stesso provvedere ai bisogni di base. Non c'è un secondo adulto che possa dividere i compiti o sostituirla in caso di necessità."
+              "title": "All care falls on one adult",
+              "text": "A mother on her own has to look after three children, one with a disability, while also covering basic needs. There is no second adult to share the work or step in when needed."
             },
             {
-              "title": "Insicurezza alimentare ancora in corso",
-              "text": "Il nucleo salta ancora i pasti. La distribuzione del mese scorso ha dato sollievo, ma non ha modificato la capacità del nucleo di garantirsi il cibo nei mesi successivi."
+              "title": "Food insecurity is ongoing",
+              "text": "The household is still skipping meals. Last month's distribution brought relief, but it did not change the household's ability to secure food in the months that followed."
             },
             {
-              "title": "Disabilità con cure interrotte",
-              "text": "La clinica è vicina, ma la fisioterapia è stata interrotta. Avere un servizio a portata di mano non significa che la persona lo stia effettivamente usando."
+              "title": "Disability with interrupted care",
+              "text": "The clinic is close by, but physiotherapy has stopped. Having a service within reach does not mean the person is actually using it."
             },
             {
-              "title": "Assenza di reddito",
-              "text": "Senza entrate e senza un secondo adulto che possa lavorare, il nucleo non ha margine per affrontare un imprevisto."
+              "title": "No income",
+              "text": "With no income and no second adult who could work, the household has no margin to cope with anything unexpected."
             }
           ],
           "pitfalls": [
-            "Contare l'assistenza ricevuta di recente come prova di stabilità: è un sostegno temporaneo, non una soluzione.",
-            "Considerare la vicinanza della clinica come accesso garantito alle cure, senza verificare che il servizio sia in corso."
+            "Counting recently received assistance as evidence of stability: it is temporary support, not a solution.",
+            "Treating the clinic's proximity as guaranteed access to care, without checking that treatment is ongoing."
           ],
-          "ai_note": "L'AI raccomandava l'inclusione. Ha riconosciuto correttamente che i fattori strutturali prevalgono su quelli temporanei."
+          "ai_note": "The AI recommended inclusion. It correctly recognised that the structural factors outweigh the temporary ones."
         }
       },
       "human_oversight": {
@@ -251,8 +250,8 @@
         "children_under_18": 6,
         "unaccompanied_minors": 1,
         "members_with_disability": 0,
-        "origin_country": "Sud Sudan",
-        "current_camp": "Campo Ovest – Settore C",
+        "origin_country": "South Sudan",
+        "current_camp": "West Camp – Sector C",
         "months_displaced": 38,
         "registered_on": "2023-07-20"
       },
@@ -261,69 +260,69 @@
         "dimensions": {
           "health": {
             "level": "stable",
-            "note": "Nessuna condizione grave segnalata."
+            "note": "No serious conditions reported."
           },
           "safety": {
             "level": "attention",
-            "note": "Un minore non accompagnato da seguire."
+            "note": "One unaccompanied minor who needs follow-up."
           },
           "food": {
             "level": "critical",
-            "note": "Le razioni non bastano per nove persone."
+            "note": "Rations are not enough for nine people."
           },
           "shelter": {
             "level": "attention",
-            "note": "Sovraffollamento: nove persone in un solo alloggio."
+            "note": "Overcrowding: nine people in a single shelter."
           }
         }
       },
       "factors": [
         {
           "key": "months_displaced",
-          "label": "Durata dello sfollamento",
-          "detail": "38 mesi lontano da casa.",
+          "label": "Length of displacement",
+          "detail": "38 months away from home.",
           "direction": "INCLUDE",
           "weight": 9
         },
         {
           "key": "large_family_size",
-          "label": "Nucleo numeroso",
-          "detail": "Nove persone con un solo alloggio.",
+          "label": "Large household",
+          "detail": "Nine people sharing a single shelter.",
           "direction": "INCLUDE",
           "weight": 9
         },
         {
           "key": "food_insecurity",
-          "label": "Insicurezza alimentare",
-          "detail": "Razioni insufficienti per la dimensione del nucleo.",
+          "label": "Food insecurity",
+          "detail": "Rations insufficient for the size of the household.",
           "direction": "INCLUDE",
           "weight": 8
         },
         {
           "key": "unaccompanied_minors",
-          "label": "Minori non accompagnati accolti",
-          "detail": "Un minore senza genitori vive con il nucleo.",
+          "label": "Hosting unaccompanied minors",
+          "detail": "One child without parents lives with the household.",
           "direction": "INCLUDE",
           "weight": 7
         },
         {
           "key": "shelter_conditions",
-          "label": "Condizioni dell'alloggio",
-          "detail": "Sovraffollamento e poca privacy.",
+          "label": "Shelter conditions",
+          "detail": "Overcrowding and little privacy.",
           "direction": "INCLUDE",
           "weight": 6
         },
         {
           "key": "community_support",
-          "label": "Rete di supporto nella comunità",
-          "detail": "Famiglia allargata presente nel campo.",
+          "label": "Community support network",
+          "detail": "Extended family present in the camp.",
           "direction": "EXCLUDE",
           "weight": 6
         },
         {
           "key": "has_income",
-          "label": "Reddito occasionale",
-          "detail": "Piccolo commercio informale.",
+          "label": "Occasional income",
+          "detail": "Small informal trading.",
           "direction": "EXCLUDE",
           "weight": 4
         }
@@ -331,7 +330,7 @@
       "ai_assessment": {
         "recommendation": "INCLUDE",
         "confidence": 0.84,
-        "comment": "Nucleo numeroso, sfollato da oltre tre anni, con razioni insufficienti. Il piccolo reddito informale e la rete familiare attenuano il quadro ma non coprono i bisogni alimentari di nove persone. Raccomando l'inclusione."
+        "comment": "A large household, displaced for over three years, with insufficient rations. The small informal income and the family network ease the situation but do not cover the food needs of nine people. I recommend inclusion."
       },
       "human_oversight": {
         "status": "PENDING",
@@ -350,8 +349,8 @@
         "children_under_18": 3,
         "unaccompanied_minors": 0,
         "members_with_disability": 0,
-        "origin_country": "Ucraina",
-        "current_camp": "Area urbana Sud",
+        "origin_country": "Ukraine",
+        "current_camp": "South urban area",
         "months_displaced": 30,
         "registered_on": "2024-04-10"
       },
@@ -360,69 +359,69 @@
         "dimensions": {
           "health": {
             "level": "stable",
-            "note": "Accesso ai servizi sanitari locali."
+            "note": "Has access to local health services."
           },
           "safety": {
             "level": "stable",
-            "note": "Nessuna segnalazione di protezione."
+            "note": "No protection concerns reported."
           },
           "food": {
             "level": "stable",
-            "note": "Nessuna carenza segnalata."
+            "note": "No shortages reported."
           },
           "shelter": {
             "level": "stable",
-            "note": "Appartamento in affitto con contratto regolare."
+            "note": "Rented flat with a formal lease."
           }
         }
       },
       "factors": [
         {
           "key": "large_family_size",
-          "label": "Nucleo numeroso",
-          "detail": "Sei persone nello stesso nucleo.",
+          "label": "Large household",
+          "detail": "Six people in the same household.",
           "direction": "INCLUDE",
           "weight": 12
         },
         {
           "key": "months_displaced",
-          "label": "Durata dello sfollamento",
-          "detail": "30 mesi lontano da casa.",
+          "label": "Length of displacement",
+          "detail": "30 months away from home.",
           "direction": "INCLUDE",
           "weight": 10
         },
         {
           "key": "elderly_dependents",
-          "label": "Persona anziana a carico",
-          "detail": "Un nonno di 72 anni, autonomo negli spostamenti.",
+          "label": "Older dependant",
+          "detail": "A 72-year-old grandfather who gets around independently.",
           "direction": "INCLUDE",
           "weight": 6
         },
         {
           "key": "regular_remittances",
-          "label": "Rimesse regolari",
-          "detail": "Un familiare invia ogni mese una somma stabile da oltre un anno.",
+          "label": "Regular remittances",
+          "detail": "A relative has sent a stable sum every month for over a year.",
           "direction": "EXCLUDE",
           "weight": 8
         },
         {
           "key": "stable_housing",
-          "label": "Alloggio stabile",
-          "detail": "Appartamento in affitto con contratto regolare.",
+          "label": "Stable housing",
+          "detail": "Rented flat with a formal lease.",
           "direction": "EXCLUDE",
           "weight": 6
         },
         {
           "key": "documented_status",
-          "label": "Documenti in regola",
-          "detail": "Registrazione e permesso di soggiorno validi.",
+          "label": "Documents in order",
+          "detail": "Valid registration and residence permit.",
           "direction": "EXCLUDE",
           "weight": 4
         },
         {
           "key": "health_access",
-          "label": "Accesso a cure mediche",
-          "detail": "Iscritti al servizio sanitario locale.",
+          "label": "Access to healthcare",
+          "detail": "Registered with the local health service.",
           "direction": "EXCLUDE",
           "weight": 4
         }
@@ -430,38 +429,38 @@
       "ai_assessment": {
         "recommendation": "INCLUDE",
         "confidence": 0.79,
-        "comment": "Nucleo numeroso e sfollato da oltre due anni e mezzo: le dimensioni e la durata indicano un rischio elevato di fragilità. Gli elementi di stabilità non sembrano sufficienti a compensare. Raccomando l'inclusione."
+        "comment": "A large household displaced for over two and a half years: its size and the length of displacement point to a high risk of vulnerability. The stabilising elements do not appear sufficient to offset this. I recommend inclusion."
       },
       "calibration": {
         "reference_decision": "EXCLUDE",
         "closed_on": "2026-02-24",
         "explanation": {
-          "summary": "Il nucleo va escluso: è numeroso e sfollato da tempo, ma ha una capacità economica e abitativa stabile che copre i bisogni di base.",
+          "summary": "The household should be excluded: it is large and has been displaced for a long time, but it has stable income and housing that cover its basic needs.",
           "rationale": [
-            "Il programma è rivolto ai nuclei che non riescono a coprire da soli i bisogni essenziali. Il test decisivo è quindi la capacità di far fronte alle difficoltà. Qui il nucleo riceve rimesse mensili stabili da oltre un anno, vive in un appartamento in affitto con contratto regolare, ha i documenti in regola e accede ai servizi sanitari locali. Questi quattro elementi insieme descrivono una situazione economica e abitativa stabile.",
-            "Le dimensioni del nucleo e la durata dello sfollamento sono fattori reali, ma sono indicatori di rischio, non di bisogno attuale. Pesano quando si accompagnano a carenze concrete su cibo, alloggio o cure; qui nessuna carenza è stata segnalata. Anche la persona anziana a carico è autonoma e non crea un carico di cura aggiuntivo.",
-            "L'errore tipico, e quello compiuto dal parere dell'AI, è dare molto peso agli indicatori di rischio e poco alla stabilità economica. Le rimesse regolari vengono spesso sottostimate perché sono difficili da rilevare nei dati: per questo la lettura attenta del fascicolo è decisiva. Resta consigliabile programmare una nuova verifica, nel caso in cui le rimesse dovessero interrompersi."
+            "The programme is aimed at households that cannot meet their essential needs on their own. The decisive test is therefore their capacity to cope. Here the household has received stable monthly remittances for over a year, lives in a rented flat with a formal lease, has its documents in order and uses local health services. Taken together, these four elements describe a stable financial and housing situation.",
+            "Household size and length of displacement are real factors, but they are indicators of risk, not of current need. They carry weight when they come with concrete shortfalls in food, shelter or care; here no shortfall has been reported. The older dependant is also independent and does not add to the care burden.",
+            "The typical mistake, and the one the AI made, is to give a lot of weight to risk indicators and too little to financial stability. Regular remittances are often underestimated because they are hard to capture in the data: that is why a careful reading of the case file is decisive. It is still advisable to schedule a follow-up check in case the remittances stop."
           ],
           "key_points": [
             {
-              "title": "Rimesse regolari e continue",
-              "text": "Un familiare invia ogni mese una somma stabile da oltre un anno. È una fonte di reddito prevedibile, che copre i bisogni di base del nucleo."
+              "title": "Regular, ongoing remittances",
+              "text": "A relative has sent a stable sum every month for over a year. It is a predictable source of income that covers the household's basic needs."
             },
             {
-              "title": "Alloggio stabile",
-              "text": "L'appartamento è in affitto con contratto regolare: il nucleo non vive in condizioni precarie e non rischia di perdere l'alloggio a breve."
+              "title": "Stable housing",
+              "text": "The flat is rented with a formal lease: the household is not living in precarious conditions and is not at risk of losing its home any time soon."
             },
             {
-              "title": "Nessuna carenza concreta segnalata",
-              "text": "Cibo, salute e sicurezza non presentano criticità. Senza una carenza attuale, dimensione del nucleo e durata dello sfollamento restano soltanto indicatori di rischio."
+              "title": "No concrete shortfalls reported",
+              "text": "Food, health and safety show no problems. Without a current shortfall, household size and length of displacement remain only indicators of risk."
             }
           ],
           "pitfalls": [
-            "Lasciarsi guidare da dimensione del nucleo e durata dello sfollamento senza verificare se esistono carenze attuali.",
-            "Dare per scontato che il parere dell'AI sia corretto: in questo caso sottostimava rimesse e alloggio stabile.",
-            "Escludere senza prevedere una nuova verifica nel caso in cui la situazione cambi."
+            "Being led by household size and length of displacement without checking whether there are current shortfalls.",
+            "Assuming the AI opinion is correct: in this case it underestimated the remittances and the stable housing.",
+            "Excluding without planning a follow-up check in case the situation changes."
           ],
-          "ai_note": "L'AI raccomandava l'inclusione, con un'affidabilità del 79%. Un'affidabilità alta non garantisce un parere corretto: qui il modello ha dato troppo peso a dimensione del nucleo e durata dello sfollamento, e troppo poco a rimesse e alloggio stabile."
+          "ai_note": "The AI recommended inclusion, with 79% confidence. High confidence does not guarantee a correct opinion: here the model gave too much weight to household size and length of displacement, and too little to remittances and stable housing."
         }
       },
       "human_oversight": {
@@ -482,7 +481,7 @@
         "unaccompanied_minors": 0,
         "members_with_disability": 1,
         "origin_country": "Sudan",
-        "current_camp": "Campo Nord – Settore A",
+        "current_camp": "North Camp – Sector A",
         "months_displaced": 5,
         "registered_on": "2026-04-30"
       },
@@ -491,62 +490,215 @@
         "dimensions": {
           "health": {
             "level": "critical",
-            "note": "Donna di 74 anni con malattia cronica e mobilità ridotta."
+            "note": "74-year-old woman with a chronic illness and reduced mobility."
           },
           "safety": {
             "level": "attention",
-            "note": "Vive sola, senza una rete di supporto."
+            "note": "Lives alone, with no support network."
           },
           "food": {
             "level": "attention",
-            "note": "Dipende dai pasti distribuiti nel campo."
+            "note": "Relies on meals distributed in the camp."
           },
           "shelter": {
             "level": "stable",
-            "note": "Tenda in una zona protetta del campo."
+            "note": "Tent in a protected area of the camp."
           }
         }
+      },
+      "dossier": {
+        "household": [
+          {
+            "label": "Members",
+            "value": "1 person"
+          },
+          {
+            "label": "Head of household",
+            "value": "Woman, 74, widowed"
+          },
+          {
+            "label": "Language",
+            "value": "Sudanese Arabic. Cannot read."
+          },
+          {
+            "label": "Relatives in the camp",
+            "value": "None"
+          },
+          {
+            "label": "Relatives elsewhere",
+            "value": "A son in Sudan. No contact since March 2026."
+          }
+        ],
+        "health": [
+          {
+            "label": "Chronic conditions",
+            "value": "Hypertension and heart failure"
+          },
+          {
+            "label": "Treatment",
+            "value": "Daily medication. Supply enough for about 10 days.",
+            "flag": "verify"
+          },
+          {
+            "label": "Last medical visit",
+            "value": "12 August 2026, camp clinic"
+          },
+          {
+            "label": "Mobility",
+            "value": "Walks with a cane, no more than 200 metres without stopping"
+          },
+          {
+            "label": "Functional difficulties",
+            "value": "A lot of difficulty walking and climbing steps"
+          },
+          {
+            "label": "Distance to the clinic",
+            "value": "1.4 km"
+          }
+        ],
+        "safety": [
+          {
+            "label": "Lives alone",
+            "value": "Yes"
+          },
+          {
+            "label": "Contact persons",
+            "value": "None"
+          },
+          {
+            "label": "Accompaniment to services",
+            "value": "Occasional, by volunteers in the sector"
+          },
+          {
+            "label": "Protection reports",
+            "value": "None"
+          }
+        ],
+        "food": [
+          {
+            "label": "Food source",
+            "value": "Meals distributed in the camp"
+          },
+          {
+            "label": "Meals per day",
+            "value": "2"
+          },
+          {
+            "label": "Ration collection",
+            "value": "Missed 2 out of 6 times in the last 3 months: cannot reach the distribution point",
+            "flag": "verify"
+          },
+          {
+            "label": "Cooking facilities",
+            "value": "No stove"
+          }
+        ],
+        "shelter": [
+          {
+            "label": "Type of shelter",
+            "value": "Single tent"
+          },
+          {
+            "label": "Location",
+            "value": "Protected area of the camp"
+          },
+          {
+            "label": "Condition",
+            "value": "Good"
+          },
+          {
+            "label": "Distance to sanitation",
+            "value": "150 metres"
+          }
+        ],
+        "economy": [
+          {
+            "label": "Income",
+            "value": "None"
+          },
+          {
+            "label": "Remittances",
+            "value": "None"
+          },
+          {
+            "label": "Assets",
+            "value": "None"
+          },
+          {
+            "label": "Debts",
+            "value": "Not declared"
+          }
+        ],
+        "assistance": [
+          {
+            "label": "Distributions received",
+            "value": "Arrival kit, May 2026"
+          },
+          {
+            "label": "Cash",
+            "value": "Never received"
+          },
+          {
+            "label": "Other programmes",
+            "value": "None"
+          }
+        ],
+        "documents": [
+          {
+            "label": "UNHCR registration",
+            "value": "Completed on 30 April 2026"
+          },
+          {
+            "label": "Identity document",
+            "value": "Available"
+          },
+          {
+            "label": "Home visit",
+            "value": "Not yet carried out",
+            "flag": "verify"
+          }
+        ]
       },
       "factors": [
         {
           "key": "chronic_illness",
-          "label": "Malattia cronica",
-          "detail": "Donna di 74 anni con ipertensione e problemi cardiaci.",
+          "label": "Chronic illness",
+          "detail": "74-year-old woman with hypertension and heart problems.",
           "direction": "INCLUDE",
           "weight": 10
         },
         {
           "key": "no_support_network",
-          "label": "Nessuna rete di supporto",
-          "detail": "Nessun parente né conoscente nel campo.",
+          "label": "No support network",
+          "detail": "No relatives or acquaintances in the camp.",
           "direction": "INCLUDE",
           "weight": 9
         },
         {
           "key": "no_income",
-          "label": "Nessuna fonte di reddito",
-          "detail": "Nessuna entrata economica dichiarata.",
+          "label": "No source of income",
+          "detail": "No declared income.",
           "direction": "INCLUDE",
           "weight": 6
         },
         {
           "key": "reduced_mobility",
-          "label": "Mobilità ridotta",
-          "detail": "Si sposta con difficoltà e con un bastone.",
+          "label": "Reduced mobility",
+          "detail": "Moves with difficulty and with a cane.",
           "direction": "INCLUDE",
           "weight": 6
         },
         {
           "key": "small_household",
-          "label": "Nucleo di una sola persona",
-          "detail": "Una persona, senza altri componenti da sostenere.",
+          "label": "Single-person household",
+          "detail": "One person, with no other members to support.",
           "direction": "EXCLUDE",
           "weight": 7
         },
         {
           "key": "documented_status",
-          "label": "Documenti in regola",
-          "detail": "Registrazione UNHCR completata.",
+          "label": "Documents in order",
+          "detail": "UNHCR registration completed.",
           "direction": "EXCLUDE",
           "weight": 6
         }
@@ -554,38 +706,38 @@
       "ai_assessment": {
         "recommendation": "EXCLUDE",
         "confidence": 0.58,
-        "comment": "Nucleo di una sola persona con documenti in regola. Gli elementi a favore dell'inclusione e quelli a favore dell'esclusione si equilibrano e l'affidabilità del parere è bassa."
+        "comment": "Single-person household with documents in order. The elements in favour of inclusion and those in favour of exclusion balance out, and confidence in the opinion is low."
       },
       "calibration": {
         "reference_decision": "INCLUDE",
         "closed_on": "2026-04-09",
         "explanation": {
-          "summary": "Il nucleo va incluso: pur essendo piccolo e con i documenti in regola, la persona è anziana, malata, sola e senza rete di supporto.",
+          "summary": "The household should be included: although it is small and its documents are in order, the person is elderly, ill, alone and without a support network.",
           "rationale": [
-            "I nuclei di una sola persona vengono spesso considerati meno prioritari, perché hanno meno bisogni «in quantità». Qui conta però la qualità del bisogno. Una donna di 74 anni con una malattia cronica e mobilità ridotta, sola e senza rete, non può ritirare da sola i beni, accedere con regolarità alle cure né chiedere aiuto in caso di emergenza.",
-            "I documenti in regola e la registrazione completata sono un elemento positivo, ma riguardano l'accesso formale ai servizi, non la capacità concreta di usarli. Senza nessuno che la accompagni o la sostenga, l'accesso formale non si traduce in un'assistenza effettiva. Per lo stesso motivo la breve durata dello sfollamento non è rassicurante: il bisogno non dipende dal tempo trascorso, ma dalla condizione di fragilità.",
-            "Questo caso era contrassegnato come complicato proprio perché gli indicatori standard puntano in direzioni opposte. Quando succede, il parere automatico non è affidabile e la lettura attenta del fascicolo da parte dell'operatore è l'unica fonte su cui basarsi. Il criterio da applicare è la capacità della persona di provvedere ai propri bisogni di base senza aiuto, e qui non c'è."
+            "Single-person households are often seen as a lower priority because they have fewer needs “in quantity”. Here, though, what matters is the nature of the need. A 74-year-old woman with a chronic illness and reduced mobility, alone and without a network, cannot collect goods on her own, access care regularly or ask for help in an emergency.",
+            "Having her documents in order and her registration completed is positive, but it concerns formal access to services, not the practical ability to use them. With no one to accompany or support her, formal access does not turn into actual assistance. For the same reason the short length of displacement is not reassuring: need depends on her fragility, not on how much time has passed.",
+            "This case was marked as complicated precisely because the standard indicators point in opposite directions. When that happens, the automated opinion is not reliable and the caseworker's careful reading of the file is the only thing to rely on. The criterion to apply is whether the person can meet her basic needs without help, and here she cannot."
           ],
           "key_points": [
             {
-              "title": "Isolamento sociale",
-              "text": "Nessun parente o conoscente nel campo: in caso di malore o difficoltà non c'è nessuno a cui chiedere aiuto."
+              "title": "Social isolation",
+              "text": "No relatives or acquaintances in the camp: if she falls ill or runs into difficulty, there is no one to ask for help."
             },
             {
-              "title": "Salute e mobilità",
-              "text": "Malattia cronica e mobilità ridotta rendono difficile raggiungere da sola i punti di distribuzione e la clinica."
+              "title": "Health and mobility",
+              "text": "A chronic illness and reduced mobility make it hard for her to reach the distribution points and the clinic on her own."
             },
             {
-              "title": "Dipendenza dall'assistenza",
-              "text": "Senza reddito né aiuto familiare, dipende interamente dai servizi per i bisogni di base."
+              "title": "Dependence on assistance",
+              "text": "With no income and no family help, she depends entirely on services for her basic needs."
             }
           ],
           "pitfalls": [
-            "Trattare la dimensione ridotta del nucleo come sinonimo di minore bisogno.",
-            "Considerare i documenti in regola come una garanzia di accesso effettivo ai servizi.",
-            "Sottovalutare la segnalazione di caso complicato: richiede una lettura attenta di tutto il fascicolo, non una decisione veloce."
+            "Treating a small household as a synonym for lower need.",
+            "Taking documents in order as a guarantee of actual access to services.",
+            "Underestimating the complicated-case label: it calls for a careful reading of the whole file, not a quick decision."
           ],
-          "ai_note": "Per questo caso il parere dell'AI non era disponibile, perché la sua affidabilità era troppo bassa. È una situazione tipica in cui conta soprattutto la tua lettura del fascicolo."
+          "ai_note": "The AI opinion was not available for this case because its confidence was too low. This is a typical situation in which your reading of the case file matters most."
         }
       },
       "human_oversight": {
@@ -606,7 +758,7 @@
         "unaccompanied_minors": 0,
         "members_with_disability": 0,
         "origin_country": "Eritrea",
-        "current_camp": "Campo Est – Settore B",
+        "current_camp": "East Camp – Sector B",
         "months_displaced": 9,
         "registered_on": "2026-01-22"
       },
@@ -615,55 +767,184 @@
         "dimensions": {
           "health": {
             "level": "attention",
-            "note": "Un bambino con sintomi non ancora valutati."
+            "note": "A child with symptoms not yet assessed."
           },
           "safety": {
             "level": "stable",
-            "note": "Nessuna segnalazione di protezione."
+            "note": "No protection concerns reported."
           },
           "food": {
             "level": "attention",
-            "note": "Dichiarazioni discordanti sulle razioni ricevute."
+            "note": "Conflicting statements about the rations received."
           },
           "shelter": {
             "level": "stable",
-            "note": "Alloggio condiviso con parenti."
+            "note": "Shelter shared with relatives."
           }
         }
+      },
+      "dossier": {
+        "household": [
+          {
+            "label": "Members",
+            "value": "5 people"
+          },
+          {
+            "label": "Adults",
+            "value": "Father, 38. Mother, 33."
+          },
+          {
+            "label": "Children",
+            "value": "3: aged 10, 6 and 2"
+          },
+          {
+            "label": "Living with",
+            "value": "The family of the father's brother (4 people)"
+          }
+        ],
+        "health": [
+          {
+            "label": "2-year-old child",
+            "value": "Recurring fever and weight loss, reported by the mother"
+          },
+          {
+            "label": "Medical visit",
+            "value": "Not yet carried out. No appointment booked.",
+            "flag": "verify"
+          },
+          {
+            "label": "Nutrition screening",
+            "value": "Not carried out",
+            "flag": "verify"
+          },
+          {
+            "label": "Other members",
+            "value": "No conditions reported"
+          }
+        ],
+        "safety": [
+          {
+            "label": "Protection reports",
+            "value": "None"
+          },
+          {
+            "label": "School attendance",
+            "value": "1 of the 2 school-age children attends school"
+          }
+        ],
+        "food": [
+          {
+            "label": "January registration",
+            "value": "3 meals a day, sufficient rations",
+            "flag": "discordant"
+          },
+          {
+            "label": "August update",
+            "value": "1 or 2 meals a day, rations shared with relatives",
+            "flag": "discordant"
+          },
+          {
+            "label": "Food source",
+            "value": "Camp rations and small purchases"
+          }
+        ],
+        "shelter": [
+          {
+            "label": "Type of shelter",
+            "value": "Brick building, shared"
+          },
+          {
+            "label": "People in the shelter",
+            "value": "9"
+          },
+          {
+            "label": "Rooms",
+            "value": "2"
+          }
+        ],
+        "economy": [
+          {
+            "label": "January registration",
+            "value": "Father's day labour, about 3 days a week",
+            "flag": "discordant"
+          },
+          {
+            "label": "August update",
+            "value": "No income",
+            "flag": "discordant"
+          },
+          {
+            "label": "Assets sold",
+            "value": "Mobile phone, July 2026"
+          },
+          {
+            "label": "Debts",
+            "value": "With a shopkeeper in the camp, amount not declared"
+          }
+        ],
+        "assistance": [
+          {
+            "label": "Food distributions",
+            "value": "Regular since registration"
+          },
+          {
+            "label": "Cash",
+            "value": "One instalment in February 2026"
+          },
+          {
+            "label": "Other programmes",
+            "value": "None"
+          }
+        ],
+        "documents": [
+          {
+            "label": "UNHCR registration",
+            "value": "Completed on 22 January 2026"
+          },
+          {
+            "label": "Update",
+            "value": "August 2026, collected by a different caseworker"
+          },
+          {
+            "label": "Home visit",
+            "value": "Not yet carried out",
+            "flag": "verify"
+          }
+        ]
       },
       "factors": [
         {
           "key": "food_insecurity",
-          "label": "Insicurezza alimentare",
-          "detail": "Due registrazioni riportano situazioni diverse.",
+          "label": "Food insecurity",
+          "detail": "Two records describe different situations.",
           "direction": "INCLUDE",
           "weight": 7
         },
         {
           "key": "health_concern",
-          "label": "Preoccupazione per la salute di un minore",
-          "detail": "Un bambino con sintomi non ancora valutati.",
+          "label": "Concern about a child's health",
+          "detail": "A child with symptoms not yet assessed.",
           "direction": "INCLUDE",
           "weight": 6
         },
         {
           "key": "months_displaced",
-          "label": "Durata dello sfollamento",
-          "detail": "9 mesi lontano da casa.",
+          "label": "Length of displacement",
+          "detail": "9 months away from home.",
           "direction": "INCLUDE",
           "weight": 3
         },
         {
           "key": "reported_income",
-          "label": "Reddito dichiarato in modo incoerente",
-          "detail": "Due registrazioni riportano entrate diverse.",
+          "label": "Inconsistently reported income",
+          "detail": "Two records report different income.",
           "direction": "EXCLUDE",
           "weight": 7
         },
         {
           "key": "community_support",
-          "label": "Rete di supporto nella comunità",
-          "detail": "Alloggio condiviso con parenti.",
+          "label": "Community support network",
+          "detail": "Shelter shared with relatives.",
           "direction": "EXCLUDE",
           "weight": 5
         }
@@ -671,7 +952,7 @@
       "ai_assessment": {
         "recommendation": "INCLUDE",
         "confidence": 0.64,
-        "comment": "I dati del fascicolo sono incompleti e in parte contraddittori. L'affidabilità del parere è bassa."
+        "comment": "The case file data are incomplete and partly contradictory. Confidence in the opinion is low."
       },
       "human_oversight": {
         "status": "PENDING",
@@ -691,7 +972,7 @@
         "unaccompanied_minors": 0,
         "members_with_disability": 0,
         "origin_country": "Venezuela",
-        "current_camp": "Centro di accoglienza Sud",
+        "current_camp": "South reception centre",
         "months_displaced": 11,
         "registered_on": "2025-10-08"
       },
@@ -700,69 +981,69 @@
         "dimensions": {
           "health": {
             "level": "stable",
-            "note": "Nessuna condizione segnalata."
+            "note": "No conditions reported."
           },
           "safety": {
             "level": "stable",
-            "note": "Nessuna segnalazione di protezione."
+            "note": "No protection concerns reported."
           },
           "food": {
             "level": "attention",
-            "note": "Qualche pasto saltato a fine mese."
+            "note": "Some meals skipped at the end of the month."
           },
           "shelter": {
             "level": "stable",
-            "note": "Alloggio stabile."
+            "note": "Stable housing."
           }
         }
       },
       "factors": [
         {
           "key": "no_income",
-          "label": "Nessuna fonte di reddito",
-          "detail": "Entrambi in cerca di lavoro.",
+          "label": "No source of income",
+          "detail": "Both looking for work.",
           "direction": "INCLUDE",
           "weight": 5
         },
         {
           "key": "months_displaced",
-          "label": "Durata dello sfollamento",
-          "detail": "11 mesi lontano da casa.",
+          "label": "Length of displacement",
+          "detail": "11 months away from home.",
           "direction": "INCLUDE",
           "weight": 4
         },
         {
           "key": "food_insecurity",
-          "label": "Insicurezza alimentare",
-          "detail": "Qualche pasto saltato a fine mese.",
+          "label": "Food insecurity",
+          "detail": "Some meals skipped at the end of the month.",
           "direction": "INCLUDE",
           "weight": 3
         },
         {
           "key": "community_support",
-          "label": "Rete di supporto nella comunità",
-          "detail": "Amici e connazionali nel centro.",
+          "label": "Community support network",
+          "detail": "Friends and fellow nationals in the centre.",
           "direction": "EXCLUDE",
           "weight": 8
         },
         {
           "key": "documented_status",
-          "label": "Documenti in regola",
-          "detail": "Registrazione e permesso validi.",
+          "label": "Documents in order",
+          "detail": "Valid registration and permit.",
           "direction": "EXCLUDE",
           "weight": 6
         },
         {
           "key": "stable_housing",
-          "label": "Alloggio stabile",
-          "detail": "Camera assegnata da oltre sei mesi.",
+          "label": "Stable housing",
+          "detail": "Room assigned for over six months.",
           "direction": "EXCLUDE",
           "weight": 5
         },
         {
           "key": "health_access",
-          "label": "Accesso a cure mediche",
-          "detail": "Iscritti al servizio sanitario locale.",
+          "label": "Access to healthcare",
+          "detail": "Registered with the local health service.",
           "direction": "EXCLUDE",
           "weight": 5
         }
@@ -770,7 +1051,7 @@
       "ai_assessment": {
         "recommendation": "EXCLUDE",
         "confidence": 0.81,
-        "comment": "Due adulti in salute, con documenti in regola, alloggio stabile e una buona rete di conoscenti. L'assenza di reddito è legata alla ricerca di lavoro e appare temporanea. Raccomando l'esclusione, con una nuova verifica tra tre mesi."
+        "comment": "Two healthy adults with documents in order, stable housing and a good network of acquaintances. The lack of income is linked to their job search and appears temporary. I recommend exclusion, with a follow-up check in three months."
       },
       "human_oversight": {
         "status": "PENDING",
@@ -790,7 +1071,7 @@
         "unaccompanied_minors": 0,
         "members_with_disability": 1,
         "origin_country": "Somalia",
-        "current_camp": "Campo Est – Settore D",
+        "current_camp": "East Camp – Sector D",
         "months_displaced": 31,
         "registered_on": "2024-02-27"
       },
@@ -799,69 +1080,69 @@
         "dimensions": {
           "health": {
             "level": "attention",
-            "note": "Un figlio con disabilità che necessita di assistenza."
+            "note": "A son with a disability who needs support."
           },
           "safety": {
             "level": "stable",
-            "note": "Nessuna segnalazione di protezione."
+            "note": "No protection concerns reported."
           },
           "food": {
             "level": "critical",
-            "note": "Razioni insufficienti da diverse settimane."
+            "note": "Insufficient rations for several weeks."
           },
           "shelter": {
             "level": "attention",
-            "note": "Tenda con infiltrazioni."
+            "note": "Tent with leaks."
           }
         }
       },
       "factors": [
         {
           "key": "food_insecurity",
-          "label": "Insicurezza alimentare",
-          "detail": "Razioni insufficienti da diverse settimane.",
+          "label": "Food insecurity",
+          "detail": "Insufficient rations for several weeks.",
           "direction": "INCLUDE",
           "weight": 12
         },
         {
           "key": "months_displaced",
-          "label": "Durata dello sfollamento",
-          "detail": "31 mesi lontano da casa.",
+          "label": "Length of displacement",
+          "detail": "31 months away from home.",
           "direction": "INCLUDE",
           "weight": 9
         },
         {
           "key": "single_caregiver",
-          "label": "Un solo adulto di riferimento",
-          "detail": "Madre sola con quattro figli.",
+          "label": "Single caregiver",
+          "detail": "Mother on her own with four children.",
           "direction": "INCLUDE",
           "weight": 8
         },
         {
           "key": "disability",
-          "label": "Persona con disabilità",
-          "detail": "Un figlio con disabilità.",
+          "label": "Person with a disability",
+          "detail": "A son with a disability.",
           "direction": "INCLUDE",
           "weight": 7
         },
         {
           "key": "no_income",
-          "label": "Nessuna fonte di reddito",
-          "detail": "Nessuna entrata economica.",
+          "label": "No source of income",
+          "detail": "No income.",
           "direction": "INCLUDE",
           "weight": 6
         },
         {
           "key": "community_support",
-          "label": "Rete di supporto nella comunità",
-          "detail": "Sorelle nel campo che aiutano con i bambini.",
+          "label": "Community support network",
+          "detail": "Sisters in the camp who help with the children.",
           "direction": "EXCLUDE",
           "weight": 6
         },
         {
           "key": "recent_assistance",
-          "label": "Assistenza ricevuta di recente",
-          "detail": "Distribuzione alimentare straordinaria.",
+          "label": "Recently received assistance",
+          "detail": "Extraordinary food distribution.",
           "direction": "EXCLUDE",
           "weight": 5
         }
@@ -869,12 +1150,12 @@
       "ai_assessment": {
         "recommendation": "INCLUDE",
         "confidence": 0.9,
-        "comment": "Una madre sola con quattro figli, uno con disabilità, sfollata da oltre due anni. L'aiuto straordinario recente e la rete di sorelle non bastano a compensare la carenza di cibo. Raccomando l'inclusione."
+        "comment": "A mother on her own with four children, one with a disability, displaced for over two years. The recent extraordinary aid and her sisters' support are not enough to make up for the lack of food. I recommend inclusion."
       },
       "human_oversight": {
         "status": "COMPLETED",
         "initial_decision": "INCLUDE",
-        "initial_comment": "Madre sola con quattro figli, uno con disabilità, e razioni insufficienti da settimane. L'aiuto straordinario recente è temporaneo.",
+        "initial_comment": "Mother on her own with four children, one with a disability, and insufficient rations for weeks. The recent extraordinary aid is temporary.",
         "ai_agreement": "AGREE",
         "final_decision": "INCLUDE",
         "reviewed_at": "2026-09-29T10:14:00Z"
@@ -888,8 +1169,8 @@
         "children_under_18": 3,
         "unaccompanied_minors": 1,
         "members_with_disability": 0,
-        "origin_country": "Repubblica Democratica del Congo",
-        "current_camp": "Campo Ovest – Settore A",
+        "origin_country": "Democratic Republic of the Congo",
+        "current_camp": "West Camp – Sector A",
         "months_displaced": 19,
         "registered_on": "2025-02-12"
       },
@@ -898,76 +1179,76 @@
         "dimensions": {
           "health": {
             "level": "stable",
-            "note": "Nessuna condizione segnalata."
+            "note": "No conditions reported."
           },
           "safety": {
             "level": "attention",
-            "note": "Un minore non accompagnato da seguire."
+            "note": "One unaccompanied minor who needs follow-up."
           },
           "food": {
             "level": "attention",
-            "note": "Accesso alimentare irregolare."
+            "note": "Irregular access to food."
           },
           "shelter": {
             "level": "attention",
-            "note": "Alloggio provvisorio."
+            "note": "Temporary shelter."
           }
         }
       },
       "factors": [
         {
           "key": "shelter_conditions",
-          "label": "Condizioni dell'alloggio",
-          "detail": "Alloggio provvisorio in materiali leggeri.",
+          "label": "Shelter conditions",
+          "detail": "Temporary shelter made of light materials.",
           "direction": "INCLUDE",
           "weight": 9
         },
         {
           "key": "no_income",
-          "label": "Nessuna fonte di reddito",
-          "detail": "Nessuna entrata economica dichiarata.",
+          "label": "No source of income",
+          "detail": "No declared income.",
           "direction": "INCLUDE",
           "weight": 8
         },
         {
           "key": "unaccompanied_minors",
-          "label": "Minori non accompagnati accolti",
-          "detail": "Un minore senza genitori vive con il nucleo.",
+          "label": "Hosting unaccompanied minors",
+          "detail": "One child without parents lives with the household.",
           "direction": "INCLUDE",
           "weight": 8
         },
         {
           "key": "months_displaced",
-          "label": "Durata dello sfollamento",
-          "detail": "19 mesi lontano da casa.",
+          "label": "Length of displacement",
+          "detail": "19 months away from home.",
           "direction": "INCLUDE",
           "weight": 6
         },
         {
           "key": "food_insecurity",
-          "label": "Insicurezza alimentare",
-          "detail": "Accesso alimentare irregolare.",
+          "label": "Food insecurity",
+          "detail": "Irregular access to food.",
           "direction": "INCLUDE",
           "weight": 5
         },
         {
           "key": "documented_status",
-          "label": "Documenti in regola",
-          "detail": "Registrazione UNHCR completata.",
+          "label": "Documents in order",
+          "detail": "UNHCR registration completed.",
           "direction": "EXCLUDE",
           "weight": 8
         },
         {
           "key": "health_access",
-          "label": "Accesso a cure mediche",
-          "detail": "Clinica del campo vicina.",
+          "label": "Access to healthcare",
+          "detail": "Camp clinic nearby.",
           "direction": "EXCLUDE",
           "weight": 5
         },
         {
           "key": "community_support",
-          "label": "Rete di supporto nella comunità",
-          "detail": "Alcuni conoscenti nel settore.",
+          "label": "Community support network",
+          "detail": "A few acquaintances in the sector.",
           "direction": "EXCLUDE",
           "weight": 3
         }
@@ -975,12 +1256,12 @@
       "ai_assessment": {
         "recommendation": "INCLUDE",
         "confidence": 0.86,
-        "comment": "Il nucleo accoglie un minore non accompagnato, non ha reddito e vive in un alloggio provvisorio. I documenti e le cure in ordine non compensano queste carenze. Raccomando l'inclusione."
+        "comment": "The household hosts an unaccompanied minor, has no income and lives in temporary shelter. Having documents and healthcare in order does not make up for these gaps. I recommend inclusion."
       },
       "human_oversight": {
         "status": "COMPLETED",
         "initial_decision": "EXCLUDE",
-        "initial_comment": "Documenti e cure in ordine: la situazione mi sembra gestibile con i servizi già attivi nel settore.",
+        "initial_comment": "Documents and healthcare in order: the situation seems manageable with the services already active in the sector.",
         "ai_agreement": "DISAGREE",
         "final_decision": "EXCLUDE",
         "reviewed_at": "2026-09-28T15:42:00Z"
