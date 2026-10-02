@@ -1,0 +1,212 @@
+[
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "ai-demo-01",
+    "case_id": "case-demo-01",
+    "interview_id": "interview-demo-01",
+    "input_snapshot_id": "snapshot-demo-01",
+    "generated_at": "2026-10-01T14:14:00Z",
+    "answer": {
+      "engine": {
+        "name": "cashy-answer-placeholder",
+        "version": "demo-0.1",
+        "status": "simulated",
+        "prompt_version": null
+      },
+      "recommendation": "exclude",
+      "predicted_score": null,
+      "vulnerability_band": "unknown",
+      "uncertainty": {
+        "status": "not_available",
+        "probability_inclusion": null,
+        "calibration_reference": null,
+        "note": "No invented probability: the recommendation was written by hand for this demo."
+      }
+    },
+    "reasoning": {
+      "engine": {
+        "name": "cashy-reasoning-placeholder",
+        "version": "demo-0.1",
+        "status": "simulated",
+        "prompt_version": null
+      },
+      "text": "Cashy identifies a contact address at an acquaintance’s home and, in this simulation, treats it as evidence of stable accommodation. On that basis it infers lower risk of deprivation and recommends exclusion. This overlooks that the address is for correspondence only and the household has documented overdue essential expenses: an intentionally flawed inference.",
+      "evidence_ids": [
+        "evidence-demo-01"
+      ],
+      "limitations": [
+        "Fictional explanation with no operational validity.",
+        "A plausible explanation does not guarantee a correct recommendation."
+      ]
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "ai-demo-02",
+    "case_id": "case-demo-02",
+    "interview_id": "interview-demo-02",
+    "input_snapshot_id": "snapshot-demo-02",
+    "generated_at": "2026-10-01T15:14:00Z",
+    "answer": {
+      "engine": {
+        "name": "cashy-answer-placeholder",
+        "version": "demo-0.1",
+        "status": "simulated",
+        "prompt_version": null
+      },
+      "recommendation": "exclude",
+      "predicted_score": null,
+      "vulnerability_band": "unknown",
+      "uncertainty": {
+        "status": "not_available",
+        "probability_inclusion": null,
+        "calibration_reference": null,
+        "note": "No invented probability: the recommendation was written by hand for this demo."
+      }
+    },
+    "reasoning": {
+      "engine": {
+        "name": "cashy-reasoning-placeholder",
+        "version": "demo-0.1",
+        "status": "simulated",
+        "prompt_version": null
+      },
+      "text": "Cashy treats temporary accommodation offered by others as a stabilising factor and assumes material support will be available throughout the assessment period. It therefore recommends exclusion. The premise is weak: the case states that the offer can be withdrawn and includes no financial contribution, so the conclusion ignores decisive evidence.",
+      "evidence_ids": [
+        "evidence-demo-02"
+      ],
+      "limitations": [
+        "Fictional explanation with no operational validity.",
+        "A plausible explanation does not guarantee a correct recommendation."
+      ]
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "ai-demo-03",
+    "case_id": "case-demo-03",
+    "interview_id": "interview-demo-03",
+    "input_snapshot_id": "snapshot-demo-03",
+    "generated_at": "2026-10-01T16:14:00Z",
+    "answer": {
+      "engine": {
+        "name": "cashy-answer-placeholder",
+        "version": "demo-0.1",
+        "status": "simulated",
+        "prompt_version": null
+      },
+      "recommendation": "include",
+      "predicted_score": null,
+      "vulnerability_band": "unknown",
+      "uncertainty": {
+        "status": "not_available",
+        "probability_inclusion": null,
+        "calibration_reference": null,
+        "note": "No invented probability: the recommendation was written by hand for this demo."
+      }
+    },
+    "reasoning": {
+      "engine": {
+        "name": "cashy-reasoning-placeholder",
+        "version": "demo-0.1",
+        "status": "simulated",
+        "prompt_version": null
+      },
+      "text": "Cashy links reported insufficient resources with the pending language-support request and recommends inclusion so a procedural gap does not exclude the case. It correctly identifies the risk of understating need, but does not clearly separate unverified financial information from an obstacle to gathering that information.",
+      "evidence_ids": [
+        "evidence-demo-03"
+      ],
+      "limitations": [
+        "Fictional explanation with no operational validity.",
+        "A plausible explanation does not guarantee a correct recommendation."
+      ]
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "ai-demo-04",
+    "case_id": "case-demo-04",
+    "interview_id": "interview-demo-04",
+    "input_snapshot_id": "snapshot-demo-04",
+    "generated_at": "2026-10-01T17:14:00Z",
+    "answer": {
+      "engine": {
+        "name": "cashy-answer-placeholder",
+        "version": "demo-0.1",
+        "status": "simulated",
+        "prompt_version": null
+      },
+      "recommendation": "include",
+      "predicted_score": null,
+      "vulnerability_band": "unknown",
+      "uncertainty": {
+        "status": "not_available",
+        "probability_inclusion": null,
+        "calibration_reference": null,
+        "note": "No invented probability: the recommendation was written by hand for this demo."
+      }
+    },
+    "reasoning": {
+      "engine": {
+        "name": "cashy-reasoning-placeholder",
+        "version": "demo-0.1",
+        "status": "simulated",
+        "prompt_version": null
+      },
+      "text": "Cashy separates occasional help from recurring care expenses and notes that the former does not prove the latter are covered. It therefore recommends inclusion. The explanation stays within the available evidence and does not invent stable contributions from the informal network.",
+      "evidence_ids": [
+        "evidence-demo-04"
+      ],
+      "limitations": [
+        "Fictional explanation with no operational validity.",
+        "A plausible explanation does not guarantee a correct recommendation."
+      ]
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "ai-demo-05",
+    "case_id": "case-demo-05",
+    "interview_id": "interview-demo-05",
+    "input_snapshot_id": "snapshot-demo-05",
+    "generated_at": "2026-10-01T18:14:00Z",
+    "answer": {
+      "engine": {
+        "name": "cashy-answer-placeholder",
+        "version": "demo-0.1",
+        "status": "simulated",
+        "prompt_version": null
+      },
+      "recommendation": "include",
+      "predicted_score": null,
+      "vulnerability_band": "unknown",
+      "uncertainty": {
+        "status": "not_available",
+        "probability_inclusion": null,
+        "calibration_reference": null,
+        "note": "No invented probability: the recommendation was written by hand for this demo."
+      }
+    },
+    "reasoning": {
+      "engine": {
+        "name": "cashy-reasoning-placeholder",
+        "version": "demo-0.1",
+        "status": "simulated",
+        "prompt_version": null
+      },
+      "text": "Cashy compares essential expenses in the notes with the household’s reported resources and recommends inclusion. It flags possible financial insufficiency, but lacks supporting documents and cannot independently establish whether the outcome is correct.",
+      "evidence_ids": [
+        "evidence-demo-05"
+      ],
+      "limitations": [
+        "Fictional explanation with no operational validity.",
+        "A plausible explanation does not guarantee a correct recommendation."
+      ]
+    }
+  }
+]

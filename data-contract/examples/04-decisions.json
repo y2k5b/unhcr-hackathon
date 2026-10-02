@@ -1,0 +1,362 @@
+[
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "decision-demo-01",
+    "case_id": "case-demo-01",
+    "interview_id": "interview-demo-01",
+    "operator_id": "operator-daniel-herrera",
+    "location": {
+      "country_id": "country-mexico",
+      "office_id": "office-mexico-city"
+    },
+    "assessment_mode": "audit_exercise",
+    "status": "finalized",
+    "context": {
+      "policy_version": "demo-policy-v1",
+      "funding_context_id": "demo-funding-2026-10",
+      "administrative_context_id": "demo-admin-v1",
+      "context_note": "Shared fictional case context; it does not represent UNHCR rules or funding. No real eligibility assessment."
+    },
+    "independent_assessment": {
+      "snapshot_id": "snapshot-demo-01",
+      "viewed_at": "2026-10-01T14:15:00Z",
+      "view_event_id": "event-demo-01-case-viewed",
+      "outcome": "include",
+      "justification": {
+        "codes": [
+          "household_evidence"
+        ],
+        "text": "Based on the case information, I propose inclusion in this demo programme: the lack of regular income and uncovered essential expenses indicate immediate need. The address at a third party’s home is recorded solely as contact information and does not establish available housing or financial support.",
+        "evidence_ids": [
+          "evidence-demo-01"
+        ]
+      },
+      "self_confidence": 3,
+      "submitted_at": "2026-10-01T14:17:00Z",
+      "event_id": "event-demo-01-independent-assessment-submitted"
+    },
+    "ai_exposure": {
+      "ai_assessment_id": "ai-demo-01",
+      "first_revealed_at": "2026-10-01T14:18:00Z",
+      "event_id": "event-demo-01-ai-revealed"
+    },
+    "reasoning_judgment": {
+      "position": "disagree",
+      "correctness_rating": 2,
+      "explanation": "I disagree with the leap from a contact address to presumed housing. The case evidence does not support that conclusion.",
+      "submitted_at": "2026-10-01T14:19:00Z",
+      "event_id": "event-demo-01-reasoning-judged"
+    },
+    "answer_judgment": {
+      "position": "disagree",
+      "correctness_rating": 1,
+      "explanation": "The proposed exclusion is not supported by the available financial and housing information.",
+      "submitted_at": "2026-10-01T14:20:00Z",
+      "event_id": "event-demo-01-answer-judged"
+    },
+    "final_assessment": {
+      "outcome": "include",
+      "justification": {
+        "codes": [
+          "ai_evidence_rejected"
+        ],
+        "text": "I confirm inclusion after reviewing Cashy’s recommendation. The automated reasoning gives the contact address a housing-stability meaning that the documents do not support. My assessment remains grounded in uncovered essential expenses and the lack of reliable income, both recorded before AI exposure.",
+        "evidence_ids": [
+          "evidence-demo-01"
+        ]
+      },
+      "submitted_at": "2026-10-01T14:22:00Z",
+      "event_id": "event-demo-01-decision-finalized"
+    },
+    "supersedes_decision_id": null
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "decision-demo-02",
+    "case_id": "case-demo-02",
+    "interview_id": "interview-demo-02",
+    "operator_id": "operator-daniel-herrera",
+    "location": {
+      "country_id": "country-mexico",
+      "office_id": "office-mexico-city"
+    },
+    "assessment_mode": "audit_exercise",
+    "status": "finalized",
+    "context": {
+      "policy_version": "demo-policy-v1",
+      "funding_context_id": "demo-funding-2026-10",
+      "administrative_context_id": "demo-admin-v1",
+      "context_note": "Shared fictional case context; it does not represent UNHCR rules or funding. No real eligibility assessment."
+    },
+    "independent_assessment": {
+      "snapshot_id": "snapshot-demo-02",
+      "viewed_at": "2026-10-01T15:15:00Z",
+      "view_event_id": "event-demo-02-case-viewed",
+      "outcome": "include",
+      "justification": {
+        "codes": [
+          "household_evidence"
+        ],
+        "text": "I provisionally recommend inclusion because the stay with a third party is temporary and there is no evidence of regular financial support. Reported food and transport costs warrant consideration for assistance in this scenario.",
+        "evidence_ids": [
+          "evidence-demo-02"
+        ]
+      },
+      "self_confidence": 3,
+      "submitted_at": "2026-10-01T15:17:00Z",
+      "event_id": "event-demo-02-independent-assessment-submitted"
+    },
+    "ai_exposure": {
+      "ai_assessment_id": "ai-demo-02",
+      "first_revealed_at": "2026-10-01T15:18:00Z",
+      "event_id": "event-demo-02-ai-revealed"
+    },
+    "reasoning_judgment": {
+      "position": "agree",
+      "correctness_rating": 4,
+      "explanation": "The reference to temporary hosting is relevant, but I gave it too much weight without establishing its duration or actual material support.",
+      "submitted_at": "2026-10-01T15:19:00Z",
+      "event_id": "event-demo-02-reasoning-judged"
+    },
+    "answer_judgment": {
+      "position": "agree",
+      "correctness_rating": 4,
+      "explanation": "I accepted Cashy’s proposed exclusion despite unresolved uncertainty about how long the accommodation will last.",
+      "submitted_at": "2026-10-01T15:20:00Z",
+      "event_id": "event-demo-02-answer-judged"
+    },
+    "final_assessment": {
+      "outcome": "exclude",
+      "justification": {
+        "codes": [
+          "ai_evidence_accepted"
+        ],
+        "text": "I change my preliminary assessment and record exclusion in this simulated case. I followed Cashy’s recommendation because I believed temporary hosting reduced short-term need. However, I did not obtain confirmation of how long that stay could continue. This gap requires an independent case review.",
+        "evidence_ids": [
+          "evidence-demo-02"
+        ]
+      },
+      "submitted_at": "2026-10-01T15:22:00Z",
+      "event_id": "event-demo-02-decision-finalized"
+    },
+    "supersedes_decision_id": null
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "decision-demo-03",
+    "case_id": "case-demo-03",
+    "interview_id": "interview-demo-03",
+    "operator_id": "operator-daniel-herrera",
+    "location": {
+      "country_id": "country-mexico",
+      "office_id": "office-mexico-city"
+    },
+    "assessment_mode": "audit_exercise",
+    "status": "finalized",
+    "context": {
+      "policy_version": "demo-policy-v1",
+      "funding_context_id": "demo-funding-2026-10",
+      "administrative_context_id": "demo-admin-v1",
+      "context_note": "Shared fictional case context; it does not represent UNHCR rules or funding. No real eligibility assessment."
+    },
+    "independent_assessment": {
+      "snapshot_id": "snapshot-demo-03",
+      "viewed_at": "2026-10-01T16:15:00Z",
+      "view_event_id": "event-demo-03-case-viewed",
+      "outcome": "exclude",
+      "justification": {
+        "codes": [
+          "household_evidence"
+        ],
+        "text": "I provisionally recommend exclusion from the demo programme because the key financial information is incomplete. My confidence is low, and this recommendation requires later verification with language mediation.",
+        "evidence_ids": [
+          "evidence-demo-03"
+        ]
+      },
+      "self_confidence": 3,
+      "submitted_at": "2026-10-01T16:17:00Z",
+      "event_id": "event-demo-03-independent-assessment-submitted"
+    },
+    "ai_exposure": {
+      "ai_assessment_id": "ai-demo-03",
+      "first_revealed_at": "2026-10-01T16:18:00Z",
+      "event_id": "event-demo-03-ai-revealed"
+    },
+    "reasoning_judgment": {
+      "position": "partly_agree",
+      "correctness_rating": 3,
+      "explanation": "I agree that potential need matters, but the explanation should spell out how the language barrier reduces the reliability of financial information.",
+      "submitted_at": "2026-10-01T16:19:00Z",
+      "event_id": "event-demo-03-reasoning-judged"
+    },
+    "answer_judgment": {
+      "position": "agree",
+      "correctness_rating": 4,
+      "explanation": "I accept inclusion in this scenario because the case records uncovered needs and a procedural barrier requiring support.",
+      "submitted_at": "2026-10-01T16:20:00Z",
+      "event_id": "event-demo-03-answer-judged"
+    },
+    "final_assessment": {
+      "outcome": "include",
+      "justification": {
+        "codes": [
+          "ai_evidence_accepted"
+        ],
+        "text": "I revise my initial proposal and record inclusion, taking account of the already documented language barrier and reported daily needs. Cashy highlighted an element I had treated only as an administrative omission. I do not consider its reasoning complete, however, because it does not explain the effect of the missing language mediation.",
+        "evidence_ids": [
+          "evidence-demo-03"
+        ]
+      },
+      "submitted_at": "2026-10-01T16:22:00Z",
+      "event_id": "event-demo-03-decision-finalized"
+    },
+    "supersedes_decision_id": null
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "decision-demo-04",
+    "case_id": "case-demo-04",
+    "interview_id": "interview-demo-04",
+    "operator_id": "operator-daniel-herrera",
+    "location": {
+      "country_id": "country-mexico",
+      "office_id": "office-mexico-city"
+    },
+    "assessment_mode": "audit_exercise",
+    "status": "finalized",
+    "context": {
+      "policy_version": "demo-policy-v1",
+      "funding_context_id": "demo-funding-2026-10",
+      "administrative_context_id": "demo-admin-v1",
+      "context_note": "Shared fictional case context; it does not represent UNHCR rules or funding. No real eligibility assessment."
+    },
+    "independent_assessment": {
+      "snapshot_id": "snapshot-demo-04",
+      "viewed_at": "2026-10-01T17:15:00Z",
+      "view_event_id": "event-demo-04-case-viewed",
+      "outcome": "exclude",
+      "justification": {
+        "codes": [
+          "household_evidence"
+        ],
+        "text": "My preliminary recommendation is exclusion in this demo sample. I considered the support network a possible way to cover the household’s needs. This is a cautious assessment and requires checking the frequency and amount of help received.",
+        "evidence_ids": [
+          "evidence-demo-04"
+        ]
+      },
+      "self_confidence": 3,
+      "submitted_at": "2026-10-01T17:17:00Z",
+      "event_id": "event-demo-04-independent-assessment-submitted"
+    },
+    "ai_exposure": {
+      "ai_assessment_id": "ai-demo-04",
+      "first_revealed_at": "2026-10-01T17:18:00Z",
+      "event_id": "event-demo-04-ai-revealed"
+    },
+    "reasoning_judgment": {
+      "position": "disagree",
+      "correctness_rating": 2,
+      "explanation": "I disagree with the weight placed on recurring expenses; I consider support from the informal network possible, though there is no documented evidence of continuity.",
+      "submitted_at": "2026-10-01T17:19:00Z",
+      "event_id": "event-demo-04-reasoning-judged"
+    },
+    "answer_judgment": {
+      "position": "disagree",
+      "correctness_rating": 1,
+      "explanation": "I reject the proposed inclusion because I retained my initial assessment of the support network.",
+      "submitted_at": "2026-10-01T17:20:00Z",
+      "event_id": "event-demo-04-answer-judged"
+    },
+    "final_assessment": {
+      "outcome": "exclude",
+      "justification": {
+        "codes": [
+          "ai_evidence_rejected"
+        ],
+        "text": "I maintain exclusion despite Cashy’s opposing recommendation. In my immediate review I still considered the informal network sufficient, but the case does not quantify any continuing contribution. The disagreement with AI and the uncertainty in the evidence must be recorded for independent review.",
+        "evidence_ids": [
+          "evidence-demo-04"
+        ]
+      },
+      "submitted_at": "2026-10-01T17:22:00Z",
+      "event_id": "event-demo-04-decision-finalized"
+    },
+    "supersedes_decision_id": null
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "decision-demo-05",
+    "case_id": "case-demo-05",
+    "interview_id": "interview-demo-05",
+    "operator_id": "operator-daniel-herrera",
+    "location": {
+      "country_id": "country-mexico",
+      "office_id": "office-mexico-city"
+    },
+    "assessment_mode": "audit_exercise",
+    "status": "finalized",
+    "context": {
+      "policy_version": "demo-policy-v1",
+      "funding_context_id": "demo-funding-2026-10",
+      "administrative_context_id": "demo-admin-v1",
+      "context_note": "Shared fictional case context; it does not represent UNHCR rules or funding. No real eligibility assessment."
+    },
+    "independent_assessment": {
+      "snapshot_id": "snapshot-demo-05",
+      "viewed_at": "2026-10-01T18:15:00Z",
+      "view_event_id": "event-demo-05-case-viewed",
+      "outcome": "include",
+      "justification": {
+        "codes": [
+          "household_evidence"
+        ],
+        "text": "I provisionally recommend inclusion because reported essential expenses exceed the household’s stated resources. Supporting documents are still pending, so this is not a final verification.",
+        "evidence_ids": [
+          "evidence-demo-05"
+        ]
+      },
+      "self_confidence": 3,
+      "submitted_at": "2026-10-01T18:17:00Z",
+      "event_id": "event-demo-05-independent-assessment-submitted"
+    },
+    "ai_exposure": {
+      "ai_assessment_id": "ai-demo-05",
+      "first_revealed_at": "2026-10-01T18:18:00Z",
+      "event_id": "event-demo-05-ai-revealed"
+    },
+    "reasoning_judgment": {
+      "position": "agree",
+      "correctness_rating": 4,
+      "explanation": "I agree with the reading of declared expenses, subject to the missing supporting documentation.",
+      "submitted_at": "2026-10-01T18:19:00Z",
+      "event_id": "event-demo-05-reasoning-judged"
+    },
+    "answer_judgment": {
+      "position": "agree",
+      "correctness_rating": 4,
+      "explanation": "I agree with the preliminary proposal for inclusion, subject to later independent verification.",
+      "submitted_at": "2026-10-01T18:20:00Z",
+      "event_id": "event-demo-05-answer-judged"
+    },
+    "final_assessment": {
+      "outcome": "include",
+      "justification": {
+        "codes": [
+          "ai_evidence_accepted"
+        ],
+        "text": "I confirm the proposal for inclusion after seeing Cashy’s recommendation. It is consistent with my initial reading of essential expenses, but the lack of an independent reference prevents classification of this decision as correct or incorrect.",
+        "evidence_ids": [
+          "evidence-demo-05"
+        ]
+      },
+      "submitted_at": "2026-10-01T18:22:00Z",
+      "event_id": "event-demo-05-decision-finalized"
+    },
+    "supersedes_decision_id": null
+  }
+]

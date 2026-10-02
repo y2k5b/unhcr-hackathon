@@ -1,0 +1,1202 @@
+[
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-01-interview-completed",
+    "sequence": 1,
+    "previous_event_id": null,
+    "occurred_at": "2026-10-01T14:10:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-maria-fernanda-rios"
+    },
+    "action": "interview_completed",
+    "entity": {
+      "kind": "interview",
+      "id": "interview-demo-01"
+    },
+    "case_id": "case-demo-01",
+    "payload": {
+      "outcome": null,
+      "position": null,
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-01-sentiment-recorded",
+    "sequence": 2,
+    "previous_event_id": "event-demo-01-interview-completed",
+    "occurred_at": "2026-10-01T14:12:00Z",
+    "actor": {
+      "kind": "service",
+      "id": "service-demo-sentiment"
+    },
+    "action": "sentiment_recorded",
+    "entity": {
+      "kind": "interview",
+      "id": "interview-demo-01"
+    },
+    "case_id": "case-demo-01",
+    "payload": {
+      "outcome": null,
+      "position": null,
+      "related_record_id": "sentiment-demo-01",
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-01-ai-generated",
+    "sequence": 3,
+    "previous_event_id": "event-demo-01-sentiment-recorded",
+    "occurred_at": "2026-10-01T14:14:00Z",
+    "actor": {
+      "kind": "service",
+      "id": "service-demo-cashy"
+    },
+    "action": "ai_generated",
+    "entity": {
+      "kind": "ai_assessment",
+      "id": "ai-demo-01"
+    },
+    "case_id": "case-demo-01",
+    "payload": {
+      "outcome": null,
+      "position": null,
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-01-case-viewed",
+    "sequence": 4,
+    "previous_event_id": "event-demo-01-ai-generated",
+    "occurred_at": "2026-10-01T14:15:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-daniel-herrera"
+    },
+    "action": "case_viewed",
+    "entity": {
+      "kind": "decision",
+      "id": "decision-demo-01"
+    },
+    "case_id": "case-demo-01",
+    "payload": {
+      "outcome": null,
+      "position": null,
+      "related_record_id": "snapshot-demo-01",
+      "note": "Only case facts shown; no Cashy output available to the operator."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-01-independent-assessment-submitted",
+    "sequence": 5,
+    "previous_event_id": "event-demo-01-case-viewed",
+    "occurred_at": "2026-10-01T14:17:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-daniel-herrera"
+    },
+    "action": "independent_assessment_submitted",
+    "entity": {
+      "kind": "decision",
+      "id": "decision-demo-01"
+    },
+    "case_id": "case-demo-01",
+    "payload": {
+      "outcome": "include",
+      "position": null,
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-01-ai-revealed",
+    "sequence": 6,
+    "previous_event_id": "event-demo-01-independent-assessment-submitted",
+    "occurred_at": "2026-10-01T14:18:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-daniel-herrera"
+    },
+    "action": "ai_revealed",
+    "entity": {
+      "kind": "decision",
+      "id": "decision-demo-01"
+    },
+    "case_id": "case-demo-01",
+    "payload": {
+      "outcome": null,
+      "position": null,
+      "related_record_id": "ai-demo-01",
+      "note": "First view of the recommendation and reasoning in separate panels."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-01-reasoning-judged",
+    "sequence": 7,
+    "previous_event_id": "event-demo-01-ai-revealed",
+    "occurred_at": "2026-10-01T14:19:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-daniel-herrera"
+    },
+    "action": "reasoning_judged",
+    "entity": {
+      "kind": "decision",
+      "id": "decision-demo-01"
+    },
+    "case_id": "case-demo-01",
+    "payload": {
+      "outcome": null,
+      "position": "disagree",
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-01-answer-judged",
+    "sequence": 8,
+    "previous_event_id": "event-demo-01-reasoning-judged",
+    "occurred_at": "2026-10-01T14:20:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-daniel-herrera"
+    },
+    "action": "answer_judged",
+    "entity": {
+      "kind": "decision",
+      "id": "decision-demo-01"
+    },
+    "case_id": "case-demo-01",
+    "payload": {
+      "outcome": null,
+      "position": "disagree",
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-01-decision-finalized",
+    "sequence": 9,
+    "previous_event_id": "event-demo-01-answer-judged",
+    "occurred_at": "2026-10-01T14:22:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-daniel-herrera"
+    },
+    "action": "decision_finalized",
+    "entity": {
+      "kind": "decision",
+      "id": "decision-demo-01"
+    },
+    "case_id": "case-demo-01",
+    "payload": {
+      "outcome": "include",
+      "position": null,
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-02-interview-completed",
+    "sequence": 10,
+    "previous_event_id": "event-demo-01-decision-finalized",
+    "occurred_at": "2026-10-01T15:10:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-maria-fernanda-rios"
+    },
+    "action": "interview_completed",
+    "entity": {
+      "kind": "interview",
+      "id": "interview-demo-02"
+    },
+    "case_id": "case-demo-02",
+    "payload": {
+      "outcome": null,
+      "position": null,
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-02-sentiment-recorded",
+    "sequence": 11,
+    "previous_event_id": "event-demo-02-interview-completed",
+    "occurred_at": "2026-10-01T15:12:00Z",
+    "actor": {
+      "kind": "service",
+      "id": "service-demo-sentiment"
+    },
+    "action": "sentiment_recorded",
+    "entity": {
+      "kind": "interview",
+      "id": "interview-demo-02"
+    },
+    "case_id": "case-demo-02",
+    "payload": {
+      "outcome": null,
+      "position": null,
+      "related_record_id": "sentiment-demo-02",
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-02-ai-generated",
+    "sequence": 12,
+    "previous_event_id": "event-demo-02-sentiment-recorded",
+    "occurred_at": "2026-10-01T15:14:00Z",
+    "actor": {
+      "kind": "service",
+      "id": "service-demo-cashy"
+    },
+    "action": "ai_generated",
+    "entity": {
+      "kind": "ai_assessment",
+      "id": "ai-demo-02"
+    },
+    "case_id": "case-demo-02",
+    "payload": {
+      "outcome": null,
+      "position": null,
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-02-case-viewed",
+    "sequence": 13,
+    "previous_event_id": "event-demo-02-ai-generated",
+    "occurred_at": "2026-10-01T15:15:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-daniel-herrera"
+    },
+    "action": "case_viewed",
+    "entity": {
+      "kind": "decision",
+      "id": "decision-demo-02"
+    },
+    "case_id": "case-demo-02",
+    "payload": {
+      "outcome": null,
+      "position": null,
+      "related_record_id": "snapshot-demo-02",
+      "note": "Only case facts shown; no Cashy output available to the operator."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-02-independent-assessment-submitted",
+    "sequence": 14,
+    "previous_event_id": "event-demo-02-case-viewed",
+    "occurred_at": "2026-10-01T15:17:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-daniel-herrera"
+    },
+    "action": "independent_assessment_submitted",
+    "entity": {
+      "kind": "decision",
+      "id": "decision-demo-02"
+    },
+    "case_id": "case-demo-02",
+    "payload": {
+      "outcome": "include",
+      "position": null,
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-02-ai-revealed",
+    "sequence": 15,
+    "previous_event_id": "event-demo-02-independent-assessment-submitted",
+    "occurred_at": "2026-10-01T15:18:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-daniel-herrera"
+    },
+    "action": "ai_revealed",
+    "entity": {
+      "kind": "decision",
+      "id": "decision-demo-02"
+    },
+    "case_id": "case-demo-02",
+    "payload": {
+      "outcome": null,
+      "position": null,
+      "related_record_id": "ai-demo-02",
+      "note": "First view of the recommendation and reasoning in separate panels."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-02-reasoning-judged",
+    "sequence": 16,
+    "previous_event_id": "event-demo-02-ai-revealed",
+    "occurred_at": "2026-10-01T15:19:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-daniel-herrera"
+    },
+    "action": "reasoning_judged",
+    "entity": {
+      "kind": "decision",
+      "id": "decision-demo-02"
+    },
+    "case_id": "case-demo-02",
+    "payload": {
+      "outcome": null,
+      "position": "agree",
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-02-answer-judged",
+    "sequence": 17,
+    "previous_event_id": "event-demo-02-reasoning-judged",
+    "occurred_at": "2026-10-01T15:20:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-daniel-herrera"
+    },
+    "action": "answer_judged",
+    "entity": {
+      "kind": "decision",
+      "id": "decision-demo-02"
+    },
+    "case_id": "case-demo-02",
+    "payload": {
+      "outcome": null,
+      "position": "agree",
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-02-decision-finalized",
+    "sequence": 18,
+    "previous_event_id": "event-demo-02-answer-judged",
+    "occurred_at": "2026-10-01T15:22:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-daniel-herrera"
+    },
+    "action": "decision_finalized",
+    "entity": {
+      "kind": "decision",
+      "id": "decision-demo-02"
+    },
+    "case_id": "case-demo-02",
+    "payload": {
+      "outcome": "exclude",
+      "position": null,
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-01-reference-review-recorded",
+    "sequence": 19,
+    "previous_event_id": "event-demo-02-decision-finalized",
+    "occurred_at": "2026-10-01T15:30:00Z",
+    "actor": {
+      "kind": "supervisor",
+      "id": "supervisor-demo-01"
+    },
+    "action": "reference_review_recorded",
+    "entity": {
+      "kind": "reference_review",
+      "id": "review-demo-01"
+    },
+    "case_id": "case-demo-01",
+    "payload": {
+      "outcome": "include",
+      "position": null,
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-03-interview-completed",
+    "sequence": 20,
+    "previous_event_id": "event-demo-01-reference-review-recorded",
+    "occurred_at": "2026-10-01T16:10:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-maria-fernanda-rios"
+    },
+    "action": "interview_completed",
+    "entity": {
+      "kind": "interview",
+      "id": "interview-demo-03"
+    },
+    "case_id": "case-demo-03",
+    "payload": {
+      "outcome": null,
+      "position": null,
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-03-sentiment-recorded",
+    "sequence": 21,
+    "previous_event_id": "event-demo-03-interview-completed",
+    "occurred_at": "2026-10-01T16:12:00Z",
+    "actor": {
+      "kind": "service",
+      "id": "service-demo-sentiment"
+    },
+    "action": "sentiment_recorded",
+    "entity": {
+      "kind": "interview",
+      "id": "interview-demo-03"
+    },
+    "case_id": "case-demo-03",
+    "payload": {
+      "outcome": null,
+      "position": null,
+      "related_record_id": "sentiment-demo-03",
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-03-ai-generated",
+    "sequence": 22,
+    "previous_event_id": "event-demo-03-sentiment-recorded",
+    "occurred_at": "2026-10-01T16:14:00Z",
+    "actor": {
+      "kind": "service",
+      "id": "service-demo-cashy"
+    },
+    "action": "ai_generated",
+    "entity": {
+      "kind": "ai_assessment",
+      "id": "ai-demo-03"
+    },
+    "case_id": "case-demo-03",
+    "payload": {
+      "outcome": null,
+      "position": null,
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-03-case-viewed",
+    "sequence": 23,
+    "previous_event_id": "event-demo-03-ai-generated",
+    "occurred_at": "2026-10-01T16:15:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-daniel-herrera"
+    },
+    "action": "case_viewed",
+    "entity": {
+      "kind": "decision",
+      "id": "decision-demo-03"
+    },
+    "case_id": "case-demo-03",
+    "payload": {
+      "outcome": null,
+      "position": null,
+      "related_record_id": "snapshot-demo-03",
+      "note": "Only case facts shown; no Cashy output available to the operator."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-03-independent-assessment-submitted",
+    "sequence": 24,
+    "previous_event_id": "event-demo-03-case-viewed",
+    "occurred_at": "2026-10-01T16:17:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-daniel-herrera"
+    },
+    "action": "independent_assessment_submitted",
+    "entity": {
+      "kind": "decision",
+      "id": "decision-demo-03"
+    },
+    "case_id": "case-demo-03",
+    "payload": {
+      "outcome": "exclude",
+      "position": null,
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-03-ai-revealed",
+    "sequence": 25,
+    "previous_event_id": "event-demo-03-independent-assessment-submitted",
+    "occurred_at": "2026-10-01T16:18:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-daniel-herrera"
+    },
+    "action": "ai_revealed",
+    "entity": {
+      "kind": "decision",
+      "id": "decision-demo-03"
+    },
+    "case_id": "case-demo-03",
+    "payload": {
+      "outcome": null,
+      "position": null,
+      "related_record_id": "ai-demo-03",
+      "note": "First view of the recommendation and reasoning in separate panels."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-03-reasoning-judged",
+    "sequence": 26,
+    "previous_event_id": "event-demo-03-ai-revealed",
+    "occurred_at": "2026-10-01T16:19:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-daniel-herrera"
+    },
+    "action": "reasoning_judged",
+    "entity": {
+      "kind": "decision",
+      "id": "decision-demo-03"
+    },
+    "case_id": "case-demo-03",
+    "payload": {
+      "outcome": null,
+      "position": "partly_agree",
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-03-answer-judged",
+    "sequence": 27,
+    "previous_event_id": "event-demo-03-reasoning-judged",
+    "occurred_at": "2026-10-01T16:20:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-daniel-herrera"
+    },
+    "action": "answer_judged",
+    "entity": {
+      "kind": "decision",
+      "id": "decision-demo-03"
+    },
+    "case_id": "case-demo-03",
+    "payload": {
+      "outcome": null,
+      "position": "agree",
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-03-decision-finalized",
+    "sequence": 28,
+    "previous_event_id": "event-demo-03-answer-judged",
+    "occurred_at": "2026-10-01T16:22:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-daniel-herrera"
+    },
+    "action": "decision_finalized",
+    "entity": {
+      "kind": "decision",
+      "id": "decision-demo-03"
+    },
+    "case_id": "case-demo-03",
+    "payload": {
+      "outcome": "include",
+      "position": null,
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-02-reference-review-recorded",
+    "sequence": 29,
+    "previous_event_id": "event-demo-03-decision-finalized",
+    "occurred_at": "2026-10-01T16:30:00Z",
+    "actor": {
+      "kind": "supervisor",
+      "id": "supervisor-demo-01"
+    },
+    "action": "reference_review_recorded",
+    "entity": {
+      "kind": "reference_review",
+      "id": "review-demo-02"
+    },
+    "case_id": "case-demo-02",
+    "payload": {
+      "outcome": "include",
+      "position": null,
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-02-audit-issue-opened",
+    "sequence": 30,
+    "previous_event_id": "event-demo-02-reference-review-recorded",
+    "occurred_at": "2026-10-01T16:31:00Z",
+    "actor": {
+      "kind": "service",
+      "id": "service-demo-monitor"
+    },
+    "action": "audit_issue_opened",
+    "entity": {
+      "kind": "audit_issue",
+      "id": "issue-demo-01"
+    },
+    "case_id": "case-demo-02",
+    "payload": {
+      "outcome": null,
+      "position": null,
+      "related_record_id": "review-demo-02",
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-04-interview-completed",
+    "sequence": 31,
+    "previous_event_id": "event-demo-02-audit-issue-opened",
+    "occurred_at": "2026-10-01T17:10:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-maria-fernanda-rios"
+    },
+    "action": "interview_completed",
+    "entity": {
+      "kind": "interview",
+      "id": "interview-demo-04"
+    },
+    "case_id": "case-demo-04",
+    "payload": {
+      "outcome": null,
+      "position": null,
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-04-sentiment-recorded",
+    "sequence": 32,
+    "previous_event_id": "event-demo-04-interview-completed",
+    "occurred_at": "2026-10-01T17:12:00Z",
+    "actor": {
+      "kind": "service",
+      "id": "service-demo-sentiment"
+    },
+    "action": "sentiment_recorded",
+    "entity": {
+      "kind": "interview",
+      "id": "interview-demo-04"
+    },
+    "case_id": "case-demo-04",
+    "payload": {
+      "outcome": null,
+      "position": null,
+      "related_record_id": "sentiment-demo-04",
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-04-ai-generated",
+    "sequence": 33,
+    "previous_event_id": "event-demo-04-sentiment-recorded",
+    "occurred_at": "2026-10-01T17:14:00Z",
+    "actor": {
+      "kind": "service",
+      "id": "service-demo-cashy"
+    },
+    "action": "ai_generated",
+    "entity": {
+      "kind": "ai_assessment",
+      "id": "ai-demo-04"
+    },
+    "case_id": "case-demo-04",
+    "payload": {
+      "outcome": null,
+      "position": null,
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-04-case-viewed",
+    "sequence": 34,
+    "previous_event_id": "event-demo-04-ai-generated",
+    "occurred_at": "2026-10-01T17:15:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-daniel-herrera"
+    },
+    "action": "case_viewed",
+    "entity": {
+      "kind": "decision",
+      "id": "decision-demo-04"
+    },
+    "case_id": "case-demo-04",
+    "payload": {
+      "outcome": null,
+      "position": null,
+      "related_record_id": "snapshot-demo-04",
+      "note": "Only case facts shown; no Cashy output available to the operator."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-04-independent-assessment-submitted",
+    "sequence": 35,
+    "previous_event_id": "event-demo-04-case-viewed",
+    "occurred_at": "2026-10-01T17:17:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-daniel-herrera"
+    },
+    "action": "independent_assessment_submitted",
+    "entity": {
+      "kind": "decision",
+      "id": "decision-demo-04"
+    },
+    "case_id": "case-demo-04",
+    "payload": {
+      "outcome": "exclude",
+      "position": null,
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-04-ai-revealed",
+    "sequence": 36,
+    "previous_event_id": "event-demo-04-independent-assessment-submitted",
+    "occurred_at": "2026-10-01T17:18:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-daniel-herrera"
+    },
+    "action": "ai_revealed",
+    "entity": {
+      "kind": "decision",
+      "id": "decision-demo-04"
+    },
+    "case_id": "case-demo-04",
+    "payload": {
+      "outcome": null,
+      "position": null,
+      "related_record_id": "ai-demo-04",
+      "note": "First view of the recommendation and reasoning in separate panels."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-04-reasoning-judged",
+    "sequence": 37,
+    "previous_event_id": "event-demo-04-ai-revealed",
+    "occurred_at": "2026-10-01T17:19:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-daniel-herrera"
+    },
+    "action": "reasoning_judged",
+    "entity": {
+      "kind": "decision",
+      "id": "decision-demo-04"
+    },
+    "case_id": "case-demo-04",
+    "payload": {
+      "outcome": null,
+      "position": "disagree",
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-04-answer-judged",
+    "sequence": 38,
+    "previous_event_id": "event-demo-04-reasoning-judged",
+    "occurred_at": "2026-10-01T17:20:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-daniel-herrera"
+    },
+    "action": "answer_judged",
+    "entity": {
+      "kind": "decision",
+      "id": "decision-demo-04"
+    },
+    "case_id": "case-demo-04",
+    "payload": {
+      "outcome": null,
+      "position": "disagree",
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-04-decision-finalized",
+    "sequence": 39,
+    "previous_event_id": "event-demo-04-answer-judged",
+    "occurred_at": "2026-10-01T17:22:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-daniel-herrera"
+    },
+    "action": "decision_finalized",
+    "entity": {
+      "kind": "decision",
+      "id": "decision-demo-04"
+    },
+    "case_id": "case-demo-04",
+    "payload": {
+      "outcome": "exclude",
+      "position": null,
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-03-reference-review-recorded",
+    "sequence": 40,
+    "previous_event_id": "event-demo-04-decision-finalized",
+    "occurred_at": "2026-10-01T17:30:00Z",
+    "actor": {
+      "kind": "supervisor",
+      "id": "supervisor-demo-01"
+    },
+    "action": "reference_review_recorded",
+    "entity": {
+      "kind": "reference_review",
+      "id": "review-demo-03"
+    },
+    "case_id": "case-demo-03",
+    "payload": {
+      "outcome": "include",
+      "position": null,
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-05-interview-completed",
+    "sequence": 41,
+    "previous_event_id": "event-demo-03-reference-review-recorded",
+    "occurred_at": "2026-10-01T18:10:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-maria-fernanda-rios"
+    },
+    "action": "interview_completed",
+    "entity": {
+      "kind": "interview",
+      "id": "interview-demo-05"
+    },
+    "case_id": "case-demo-05",
+    "payload": {
+      "outcome": null,
+      "position": null,
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-05-sentiment-recorded",
+    "sequence": 42,
+    "previous_event_id": "event-demo-05-interview-completed",
+    "occurred_at": "2026-10-01T18:12:00Z",
+    "actor": {
+      "kind": "service",
+      "id": "service-demo-sentiment"
+    },
+    "action": "sentiment_recorded",
+    "entity": {
+      "kind": "interview",
+      "id": "interview-demo-05"
+    },
+    "case_id": "case-demo-05",
+    "payload": {
+      "outcome": null,
+      "position": null,
+      "related_record_id": "sentiment-demo-05",
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-05-ai-generated",
+    "sequence": 43,
+    "previous_event_id": "event-demo-05-sentiment-recorded",
+    "occurred_at": "2026-10-01T18:14:00Z",
+    "actor": {
+      "kind": "service",
+      "id": "service-demo-cashy"
+    },
+    "action": "ai_generated",
+    "entity": {
+      "kind": "ai_assessment",
+      "id": "ai-demo-05"
+    },
+    "case_id": "case-demo-05",
+    "payload": {
+      "outcome": null,
+      "position": null,
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-05-case-viewed",
+    "sequence": 44,
+    "previous_event_id": "event-demo-05-ai-generated",
+    "occurred_at": "2026-10-01T18:15:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-daniel-herrera"
+    },
+    "action": "case_viewed",
+    "entity": {
+      "kind": "decision",
+      "id": "decision-demo-05"
+    },
+    "case_id": "case-demo-05",
+    "payload": {
+      "outcome": null,
+      "position": null,
+      "related_record_id": "snapshot-demo-05",
+      "note": "Only case facts shown; no Cashy output available to the operator."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-05-independent-assessment-submitted",
+    "sequence": 45,
+    "previous_event_id": "event-demo-05-case-viewed",
+    "occurred_at": "2026-10-01T18:17:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-daniel-herrera"
+    },
+    "action": "independent_assessment_submitted",
+    "entity": {
+      "kind": "decision",
+      "id": "decision-demo-05"
+    },
+    "case_id": "case-demo-05",
+    "payload": {
+      "outcome": "include",
+      "position": null,
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-05-ai-revealed",
+    "sequence": 46,
+    "previous_event_id": "event-demo-05-independent-assessment-submitted",
+    "occurred_at": "2026-10-01T18:18:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-daniel-herrera"
+    },
+    "action": "ai_revealed",
+    "entity": {
+      "kind": "decision",
+      "id": "decision-demo-05"
+    },
+    "case_id": "case-demo-05",
+    "payload": {
+      "outcome": null,
+      "position": null,
+      "related_record_id": "ai-demo-05",
+      "note": "First view of the recommendation and reasoning in separate panels."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-05-reasoning-judged",
+    "sequence": 47,
+    "previous_event_id": "event-demo-05-ai-revealed",
+    "occurred_at": "2026-10-01T18:19:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-daniel-herrera"
+    },
+    "action": "reasoning_judged",
+    "entity": {
+      "kind": "decision",
+      "id": "decision-demo-05"
+    },
+    "case_id": "case-demo-05",
+    "payload": {
+      "outcome": null,
+      "position": "agree",
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-05-answer-judged",
+    "sequence": 48,
+    "previous_event_id": "event-demo-05-reasoning-judged",
+    "occurred_at": "2026-10-01T18:20:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-daniel-herrera"
+    },
+    "action": "answer_judged",
+    "entity": {
+      "kind": "decision",
+      "id": "decision-demo-05"
+    },
+    "case_id": "case-demo-05",
+    "payload": {
+      "outcome": null,
+      "position": "agree",
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-05-decision-finalized",
+    "sequence": 49,
+    "previous_event_id": "event-demo-05-answer-judged",
+    "occurred_at": "2026-10-01T18:22:00Z",
+    "actor": {
+      "kind": "operator",
+      "id": "operator-daniel-herrera"
+    },
+    "action": "decision_finalized",
+    "entity": {
+      "kind": "decision",
+      "id": "decision-demo-05"
+    },
+    "case_id": "case-demo-05",
+    "payload": {
+      "outcome": "include",
+      "position": null,
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "event-demo-04-reference-review-recorded",
+    "sequence": 50,
+    "previous_event_id": "event-demo-05-decision-finalized",
+    "occurred_at": "2026-10-01T18:30:00Z",
+    "actor": {
+      "kind": "supervisor",
+      "id": "supervisor-demo-01"
+    },
+    "action": "reference_review_recorded",
+    "entity": {
+      "kind": "reference_review",
+      "id": "review-demo-04"
+    },
+    "case_id": "case-demo-04",
+    "payload": {
+      "outcome": "include",
+      "position": null,
+      "related_record_id": null,
+      "note": "Fictional event used to verify the workflow."
+    }
+  }
+]

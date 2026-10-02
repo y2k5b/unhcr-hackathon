@@ -1,0 +1,388 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Fase 4 — giudizio prima dell’AI, confronto e decisione finale",
+  "description": "Contratto v0.1 per dati dimostrativi sintetici. Le regole tra record sono in docs/02-regole-del-flusso.md.",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0"
+    },
+    "data_origin": {
+      "const": "synthetic_demo"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]+$"
+    },
+    "case_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]+$"
+    },
+    "interview_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]+$"
+    },
+    "operator_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]+$"
+    },
+    "location": {
+      "type": "object",
+      "properties": {
+        "country_id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]+$"
+        },
+        "office_id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]+$"
+        }
+      },
+      "required": [
+        "country_id",
+        "office_id"
+      ],
+      "additionalProperties": false
+    },
+    "assessment_mode": {
+      "enum": [
+        "audit_exercise",
+        "production"
+      ]
+    },
+    "status": {
+      "const": "finalized"
+    },
+    "context": {
+      "type": "object",
+      "properties": {
+        "policy_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "funding_context_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "administrative_context_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "context_note": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "policy_version",
+        "funding_context_id",
+        "administrative_context_id",
+        "context_note"
+      ],
+      "additionalProperties": false
+    },
+    "independent_assessment": {
+      "type": "object",
+      "properties": {
+        "snapshot_id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]+$"
+        },
+        "viewed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "view_event_id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]+$"
+        },
+        "outcome": {
+          "enum": [
+            "include",
+            "exclude"
+          ]
+        },
+        "justification": {
+          "type": "object",
+          "properties": {
+            "codes": {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "household_evidence",
+                  "administrative_criterion",
+                  "funding_constraint",
+                  "ai_evidence_accepted",
+                  "ai_evidence_rejected",
+                  "missing_information",
+                  "other"
+                ]
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            },
+            "text": {
+              "type": "string",
+              "minLength": 1
+            },
+            "evidence_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]+$"
+              },
+              "minItems": 0,
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "codes",
+            "text",
+            "evidence_ids"
+          ],
+          "additionalProperties": false
+        },
+        "self_confidence": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "submitted_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "event_id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]+$"
+        }
+      },
+      "required": [
+        "snapshot_id",
+        "viewed_at",
+        "view_event_id",
+        "outcome",
+        "justification",
+        "self_confidence",
+        "submitted_at",
+        "event_id"
+      ],
+      "additionalProperties": false
+    },
+    "ai_exposure": {
+      "type": "object",
+      "properties": {
+        "ai_assessment_id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]+$"
+        },
+        "first_revealed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "event_id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]+$"
+        }
+      },
+      "required": [
+        "ai_assessment_id",
+        "first_revealed_at",
+        "event_id"
+      ],
+      "additionalProperties": false
+    },
+    "reasoning_judgment": {
+      "type": "object",
+      "properties": {
+        "position": {
+          "enum": [
+            "agree",
+            "partly_agree",
+            "disagree",
+            "cannot_assess"
+          ]
+        },
+        "correctness_rating": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "explanation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "submitted_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "event_id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]+$"
+        }
+      },
+      "required": [
+        "position",
+        "correctness_rating",
+        "explanation",
+        "submitted_at",
+        "event_id"
+      ],
+      "additionalProperties": false
+    },
+    "answer_judgment": {
+      "type": "object",
+      "properties": {
+        "position": {
+          "enum": [
+            "agree",
+            "partly_agree",
+            "disagree",
+            "cannot_assess"
+          ]
+        },
+        "correctness_rating": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "explanation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "submitted_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "event_id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]+$"
+        }
+      },
+      "required": [
+        "position",
+        "correctness_rating",
+        "explanation",
+        "submitted_at",
+        "event_id"
+      ],
+      "additionalProperties": false
+    },
+    "final_assessment": {
+      "type": "object",
+      "properties": {
+        "outcome": {
+          "enum": [
+            "include",
+            "exclude"
+          ]
+        },
+        "justification": {
+          "type": "object",
+          "properties": {
+            "codes": {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "household_evidence",
+                  "administrative_criterion",
+                  "funding_constraint",
+                  "ai_evidence_accepted",
+                  "ai_evidence_rejected",
+                  "missing_information",
+                  "other"
+                ]
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            },
+            "text": {
+              "type": "string",
+              "minLength": 1
+            },
+            "evidence_ids": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]+$"
+              },
+              "minItems": 0,
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "codes",
+            "text",
+            "evidence_ids"
+          ],
+          "additionalProperties": false
+        },
+        "submitted_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "event_id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]+$"
+        }
+      },
+      "required": [
+        "outcome",
+        "justification",
+        "submitted_at",
+        "event_id"
+      ],
+      "additionalProperties": false
+    },
+    "supersedes_decision_id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]+$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "data_origin",
+    "id",
+    "case_id",
+    "interview_id",
+    "operator_id",
+    "location",
+    "assessment_mode",
+    "status",
+    "context",
+    "independent_assessment",
+    "ai_exposure",
+    "reasoning_judgment",
+    "answer_judgment",
+    "final_assessment",
+    "supersedes_decision_id"
+  ],
+  "additionalProperties": false
+}

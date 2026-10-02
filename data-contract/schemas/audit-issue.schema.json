@@ -1,0 +1,169 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Segnalazione con responsabile e presa in carico",
+  "description": "Contratto v0.1 per dati dimostrativi sintetici. Le regole tra record sono in docs/02-regole-del-flusso.md.",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0"
+    },
+    "data_origin": {
+      "const": "synthetic_demo"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]+$"
+    },
+    "case_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]+$"
+    },
+    "decision_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]+$"
+    },
+    "reference_review_id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]+$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "rule": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]+$"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "signal_type": {
+      "enum": [
+        "reviewed_over_reliance",
+        "sentiment_review_requested",
+        "override_rate_drop"
+      ]
+    },
+    "severity": {
+      "enum": [
+        "info",
+        "review",
+        "urgent"
+      ]
+    },
+    "status": {
+      "enum": [
+        "open",
+        "in_review",
+        "closed"
+      ]
+    },
+    "owner_supervisor_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]+$"
+    },
+    "opened_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "due_at": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "evidence_event_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_-]+$"
+      },
+      "minItems": 1
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "resolution": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "resolved_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "resolved_by": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_-]+$"
+            },
+            "outcome": {
+              "enum": [
+                "confirmed",
+                "dismissed",
+                "insufficient_evidence"
+              ]
+            },
+            "explanation": {
+              "type": "string",
+              "minLength": 1
+            },
+            "follow_up": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "resolved_at",
+            "resolved_by",
+            "outcome",
+            "explanation",
+            "follow_up"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "data_origin",
+    "id",
+    "case_id",
+    "decision_id",
+    "reference_review_id",
+    "rule",
+    "signal_type",
+    "severity",
+    "status",
+    "owner_supervisor_id",
+    "opened_at",
+    "due_at",
+    "evidence_event_ids",
+    "description",
+    "resolution"
+  ],
+  "additionalProperties": false
+}

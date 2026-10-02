@@ -1,0 +1,368 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Fase 1 — intervista in loco e sentiment",
+  "description": "Contratto v0.1 per dati dimostrativi sintetici. Le regole tra record sono in docs/02-regole-del-flusso.md.",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0"
+    },
+    "data_origin": {
+      "const": "synthetic_demo"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]+$"
+    },
+    "case_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]+$"
+    },
+    "household_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]+$"
+    },
+    "location": {
+      "type": "object",
+      "properties": {
+        "country_id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]+$"
+        },
+        "office_id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]+$"
+        }
+      },
+      "required": [
+        "country_id",
+        "office_id"
+      ],
+      "additionalProperties": false
+    },
+    "interviewer_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]+$"
+    },
+    "mode": {
+      "const": "in_person"
+    },
+    "language": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Codice della lingua dei contenuti."
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "household_snapshot": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]+$"
+        },
+        "household_size": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "vulnerability_band": {
+          "enum": [
+            "low",
+            "moderate",
+            "high",
+            "severe",
+            "unknown"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]+$"
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source": {
+                "const": "authored_synthetic_fixture"
+              }
+            },
+            "required": [
+              "id",
+              "description",
+              "source"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "id",
+        "household_size",
+        "summary",
+        "vulnerability_band",
+        "evidence"
+      ],
+      "additionalProperties": false
+    },
+    "text_material": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]+$"
+        },
+        "kind": {
+          "enum": [
+            "interviewer_notes",
+            "interview_transcript"
+          ]
+        },
+        "is_simulated": {
+          "const": true
+        },
+        "segments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]+$"
+              },
+              "speaker": {
+                "enum": [
+                  "interviewer",
+                  "household_member",
+                  "interpreter"
+                ]
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "speaker",
+              "text"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "is_simulated",
+        "segments"
+      ],
+      "additionalProperties": false
+    },
+    "sentiment_analysis": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]+$"
+        },
+        "status": {
+          "enum": [
+            "available",
+            "pending",
+            "not_assessable",
+            "error"
+          ]
+        },
+        "analyzed_at": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_material_id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]+$"
+        },
+        "target": {
+          "const": "interviewer_language"
+        },
+        "analyzer": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "version": {
+              "type": "string",
+              "minLength": 1
+            },
+            "status": {
+              "enum": [
+                "simulated",
+                "model_output"
+              ]
+            },
+            "prompt_version": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "name",
+            "version",
+            "status",
+            "prompt_version"
+          ],
+          "additionalProperties": false
+        },
+        "result": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "enum": [
+                    "positive",
+                    "neutral",
+                    "negative",
+                    "mixed"
+                  ]
+                },
+                "polarity": {
+                  "type": "number",
+                  "minimum": -1,
+                  "maximum": 1
+                },
+                "confidence": {
+                  "anyOf": [
+                    {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "explanation": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "evidence_segment_ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_-]+$"
+                  },
+                  "minItems": 1
+                }
+              },
+              "required": [
+                "label",
+                "polarity",
+                "confidence",
+                "explanation",
+                "evidence_segment_ids"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "unavailable_reason": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "id",
+        "status",
+        "analyzed_at",
+        "source_material_id",
+        "target",
+        "analyzer",
+        "result",
+        "unavailable_reason",
+        "limitations"
+      ],
+      "additionalProperties": false
+    },
+    "supersedes_interview_id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]+$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "data_origin",
+    "id",
+    "case_id",
+    "household_id",
+    "location",
+    "interviewer_id",
+    "mode",
+    "language",
+    "started_at",
+    "completed_at",
+    "household_snapshot",
+    "text_material",
+    "sentiment_analysis",
+    "supersedes_interview_id"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,90 @@
+[
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "review-demo-01",
+    "case_id": "case-demo-01",
+    "decision_id": "decision-demo-01",
+    "reviewer_id": "supervisor-demo-01",
+    "recorded_at": "2026-10-01T15:30:00Z",
+    "reference_standard": {
+      "kind": "simulated_adjudication",
+      "source_id": "demo-scenario-spec-01",
+      "version": "1",
+      "outcome": "include",
+      "policy_version": "demo-policy-v1",
+      "funding_context_id": "demo-funding-2026-10",
+      "administrative_context_id": "demo-admin-v1",
+      "is_independent_of_final_decision": true,
+      "note": "Predetermined outcome in this fictional scenario, revealed after the decision. It is not a real UNHCR determination or a statement of truth about need."
+    },
+    "rationale": "The fictional reference for this scenario is inclusion; it is used only to verify the audit classification.",
+    "supersedes_review_id": null
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "review-demo-02",
+    "case_id": "case-demo-02",
+    "decision_id": "decision-demo-02",
+    "reviewer_id": "supervisor-demo-01",
+    "recorded_at": "2026-10-01T16:30:00Z",
+    "reference_standard": {
+      "kind": "simulated_adjudication",
+      "source_id": "demo-scenario-spec-02",
+      "version": "1",
+      "outcome": "include",
+      "policy_version": "demo-policy-v1",
+      "funding_context_id": "demo-funding-2026-10",
+      "administrative_context_id": "demo-admin-v1",
+      "is_independent_of_final_decision": true,
+      "note": "Predetermined outcome in this fictional scenario, revealed after the decision. It is not a real UNHCR determination or a statement of truth about need."
+    },
+    "rationale": "The fictional reference for this scenario is inclusion; it is used only to verify the audit classification.",
+    "supersedes_review_id": null
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "review-demo-03",
+    "case_id": "case-demo-03",
+    "decision_id": "decision-demo-03",
+    "reviewer_id": "supervisor-demo-01",
+    "recorded_at": "2026-10-01T17:30:00Z",
+    "reference_standard": {
+      "kind": "simulated_adjudication",
+      "source_id": "demo-scenario-spec-03",
+      "version": "1",
+      "outcome": "include",
+      "policy_version": "demo-policy-v1",
+      "funding_context_id": "demo-funding-2026-10",
+      "administrative_context_id": "demo-admin-v1",
+      "is_independent_of_final_decision": true,
+      "note": "Predetermined outcome in this fictional scenario, revealed after the decision. It is not a real UNHCR determination or a statement of truth about need."
+    },
+    "rationale": "The fictional reference for this scenario is inclusion; it is used only to verify the audit classification.",
+    "supersedes_review_id": null
+  },
+  {
+    "schema_version": "0.1.0",
+    "data_origin": "synthetic_demo",
+    "id": "review-demo-04",
+    "case_id": "case-demo-04",
+    "decision_id": "decision-demo-04",
+    "reviewer_id": "supervisor-demo-01",
+    "recorded_at": "2026-10-01T18:30:00Z",
+    "reference_standard": {
+      "kind": "simulated_adjudication",
+      "source_id": "demo-scenario-spec-04",
+      "version": "1",
+      "outcome": "include",
+      "policy_version": "demo-policy-v1",
+      "funding_context_id": "demo-funding-2026-10",
+      "administrative_context_id": "demo-admin-v1",
+      "is_independent_of_final_decision": true,
+      "note": "Predetermined outcome in this fictional scenario, revealed after the decision. It is not a real UNHCR determination or a statement of truth about need."
+    },
+    "rationale": "The fictional reference for this scenario is inclusion; it is used only to verify the audit classification.",
+    "supersedes_review_id": null
+  }
+]

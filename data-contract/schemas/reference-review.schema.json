@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Riferimento indipendente per classificare la reliance",
+  "description": "Contratto v0.1 per dati dimostrativi sintetici. Le regole tra record sono in docs/02-regole-del-flusso.md.",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0"
+    },
+    "data_origin": {
+      "const": "synthetic_demo"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]+$"
+    },
+    "case_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]+$"
+    },
+    "decision_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]+$"
+    },
+    "reviewer_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]+$"
+    },
+    "recorded_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "reference_standard": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "simulated_adjudication"
+        },
+        "source_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "outcome": {
+          "enum": [
+            "include",
+            "exclude"
+          ]
+        },
+        "policy_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "funding_context_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "administrative_context_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "is_independent_of_final_decision": {
+          "const": true
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "kind",
+        "source_id",
+        "version",
+        "outcome",
+        "policy_version",
+        "funding_context_id",
+        "administrative_context_id",
+        "is_independent_of_final_decision",
+        "note"
+      ],
+      "additionalProperties": false
+    },
+    "rationale": {
+      "type": "string",
+      "minLength": 1
+    },
+    "supersedes_review_id": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]+$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "data_origin",
+    "id",
+    "case_id",
+    "decision_id",
+    "reviewer_id",
+    "recorded_at",
+    "reference_standard",
+    "rationale",
+    "supersedes_review_id"
+  ],
+  "additionalProperties": false
+}
