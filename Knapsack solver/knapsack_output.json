@@ -1,0 +1,438 @@
+{
+  "summary": {
+    "alpha": 12.0,
+    "budget": 6000.0,
+    "total_cost": 5946.0,
+    "budget_remaining": 54.0,
+    "total_v_index": 1012.0,
+    "total_exp_value": 440927.0082,
+    "total_people": 58,
+    "families_total": 60,
+    "families_included": 12,
+    "families_rejected": 48
+  },
+  "included": [
+    {
+      "case_id": "REQ-2026-143",
+      "v_index": 100.0,
+      "cost": 303,
+      "family_size": 4,
+      "exp_value": 162754.7914
+    },
+    {
+      "case_id": "REQ-2026-127",
+      "v_index": 91.0,
+      "cost": 279,
+      "family_size": 4,
+      "exp_value": 55270.7989
+    },
+    {
+      "case_id": "REQ-2026-142",
+      "v_index": 89.0,
+      "cost": 359,
+      "family_size": 5,
+      "exp_value": 43477.5504
+    },
+    {
+      "case_id": "REQ-2026-120",
+      "v_index": 88.0,
+      "cost": 532,
+      "family_size": 7,
+      "exp_value": 38561.1279
+    },
+    {
+      "case_id": "REQ-2026-105",
+      "v_index": 87.0,
+      "cost": 631,
+      "family_size": 7,
+      "exp_value": 34200.6524
+    },
+    {
+      "case_id": "REQ-2026-123",
+      "v_index": 85.0,
+      "cost": 452,
+      "family_size": 5,
+      "exp_value": 26903.1861
+    },
+    {
+      "case_id": "REQ-2026-098",
+      "v_index": 83.0,
+      "cost": 1435,
+      "family_size": 3,
+      "exp_value": 21162.7957
+    },
+    {
+      "case_id": "REQ-2026-149",
+      "v_index": 81.0,
+      "cost": 394,
+      "family_size": 5,
+      "exp_value": 16647.2447
+    },
+    {
+      "case_id": "REQ-2026-144",
+      "v_index": 79.0,
+      "cost": 194,
+      "family_size": 1,
+      "exp_value": 13095.1865
+    },
+    {
+      "case_id": "REQ-2026-146",
+      "v_index": 78.0,
+      "cost": 586,
+      "family_size": 8,
+      "exp_value": 11614.3885
+    },
+    {
+      "case_id": "REQ-2026-096",
+      "v_index": 76.0,
+      "cost": 377,
+      "family_size": 5,
+      "exp_value": 9136.2016
+    },
+    {
+      "case_id": "REQ-2026-099",
+      "v_index": 75.0,
+      "cost": 404,
+      "family_size": 4,
+      "exp_value": 8103.0839
+    }
+  ],
+  "rejected": [
+    {
+      "case_id": "REQ-2026-141",
+      "v_index": 75.0,
+      "cost": 581,
+      "family_size": 7,
+      "exp_value": 8103.0839
+    },
+    {
+      "case_id": "REQ-2026-131",
+      "v_index": 72.0,
+      "cost": 282,
+      "family_size": 2,
+      "exp_value": 5653.3298
+    },
+    {
+      "case_id": "REQ-2026-135",
+      "v_index": 71.0,
+      "cost": 954,
+      "family_size": 5,
+      "exp_value": 5014.0538
+    },
+    {
+      "case_id": "REQ-2026-116",
+      "v_index": 68.0,
+      "cost": 297,
+      "family_size": 3,
+      "exp_value": 3498.1866
+    },
+    {
+      "case_id": "REQ-2026-111",
+      "v_index": 68.0,
+      "cost": 391,
+      "family_size": 4,
+      "exp_value": 3498.1866
+    },
+    {
+      "case_id": "REQ-2026-137",
+      "v_index": 67.0,
+      "cost": 351,
+      "family_size": 6,
+      "exp_value": 3102.6132
+    },
+    {
+      "case_id": "REQ-2026-108",
+      "v_index": 67.0,
+      "cost": 532,
+      "family_size": 6,
+      "exp_value": 3102.6132
+    },
+    {
+      "case_id": "REQ-2026-128",
+      "v_index": 66.0,
+      "cost": 413,
+      "family_size": 7,
+      "exp_value": 2751.771
+    },
+    {
+      "case_id": "REQ-2026-104",
+      "v_index": 65.0,
+      "cost": 432,
+      "family_size": 4,
+      "exp_value": 2440.602
+    },
+    {
+      "case_id": "REQ-2026-124",
+      "v_index": 64.0,
+      "cost": 279,
+      "family_size": 3,
+      "exp_value": 2164.6198
+    },
+    {
+      "case_id": "REQ-2026-125",
+      "v_index": 64.0,
+      "cost": 388,
+      "family_size": 4,
+      "exp_value": 2164.6198
+    },
+    {
+      "case_id": "REQ-2026-095",
+      "v_index": 64.0,
+      "cost": 478,
+      "family_size": 5,
+      "exp_value": 2164.6198
+    },
+    {
+      "case_id": "REQ-2026-119",
+      "v_index": 64.0,
+      "cost": 924,
+      "family_size": 2,
+      "exp_value": 2164.6198
+    },
+    {
+      "case_id": "REQ-2026-130",
+      "v_index": 63.0,
+      "cost": 340,
+      "family_size": 2,
+      "exp_value": 1919.8455
+    },
+    {
+      "case_id": "REQ-2026-110",
+      "v_index": 62.0,
+      "cost": 381,
+      "family_size": 5,
+      "exp_value": 1702.7502
+    },
+    {
+      "case_id": "REQ-2026-145",
+      "v_index": 61.0,
+      "cost": 218,
+      "family_size": 1,
+      "exp_value": 1510.204
+    },
+    {
+      "case_id": "REQ-2026-117",
+      "v_index": 60.0,
+      "cost": 235,
+      "family_size": 3,
+      "exp_value": 1339.4308
+    },
+    {
+      "case_id": "REQ-2026-134",
+      "v_index": 60.0,
+      "cost": 341,
+      "family_size": 3,
+      "exp_value": 1339.4308
+    },
+    {
+      "case_id": "REQ-2026-102",
+      "v_index": 59.0,
+      "cost": 271,
+      "family_size": 1,
+      "exp_value": 1187.9685
+    },
+    {
+      "case_id": "REQ-2026-092",
+      "v_index": 59.0,
+      "cost": 423,
+      "family_size": 4,
+      "exp_value": 1187.9685
+    },
+    {
+      "case_id": "REQ-2026-122",
+      "v_index": 58.0,
+      "cost": 229,
+      "family_size": 1,
+      "exp_value": 1053.6336
+    },
+    {
+      "case_id": "REQ-2026-106",
+      "v_index": 57.0,
+      "cost": 380,
+      "family_size": 3,
+      "exp_value": 934.4891
+    },
+    {
+      "case_id": "REQ-2026-101",
+      "v_index": 55.0,
+      "cost": 384,
+      "family_size": 4,
+      "exp_value": 735.0952
+    },
+    {
+      "case_id": "REQ-2026-093",
+      "v_index": 55.0,
+      "cost": 954,
+      "family_size": 4,
+      "exp_value": 735.0952
+    },
+    {
+      "case_id": "REQ-2026-097",
+      "v_index": 53.0,
+      "cost": 309,
+      "family_size": 4,
+      "exp_value": 578.2464
+    },
+    {
+      "case_id": "REQ-2026-140",
+      "v_index": 53.0,
+      "cost": 354,
+      "family_size": 4,
+      "exp_value": 578.2464
+    },
+    {
+      "case_id": "REQ-2026-126",
+      "v_index": 48.0,
+      "cost": 323,
+      "family_size": 3,
+      "exp_value": 317.3483
+    },
+    {
+      "case_id": "REQ-2026-103",
+      "v_index": 48.0,
+      "cost": 443,
+      "family_size": 5,
+      "exp_value": 317.3483
+    },
+    {
+      "case_id": "REQ-2026-138",
+      "v_index": 48.0,
+      "cost": 1111,
+      "family_size": 3,
+      "exp_value": 317.3483
+    },
+    {
+      "case_id": "REQ-2026-139",
+      "v_index": 46.0,
+      "cost": 374,
+      "family_size": 4,
+      "exp_value": 249.635
+    },
+    {
+      "case_id": "REQ-2026-121",
+      "v_index": 45.0,
+      "cost": 313,
+      "family_size": 6,
+      "exp_value": 221.4064
+    },
+    {
+      "case_id": "REQ-2026-107",
+      "v_index": 43.0,
+      "cost": 1372,
+      "family_size": 6,
+      "exp_value": 174.1645
+    },
+    {
+      "case_id": "REQ-2026-100",
+      "v_index": 42.0,
+      "cost": 345,
+      "family_size": 3,
+      "exp_value": 154.47
+    },
+    {
+      "case_id": "REQ-2026-147",
+      "v_index": 42.0,
+      "cost": 370,
+      "family_size": 4,
+      "exp_value": 154.47
+    },
+    {
+      "case_id": "REQ-2026-132",
+      "v_index": 41.0,
+      "cost": 167,
+      "family_size": 1,
+      "exp_value": 137.0026
+    },
+    {
+      "case_id": "REQ-2026-118",
+      "v_index": 39.0,
+      "cost": 442,
+      "family_size": 4,
+      "exp_value": 107.7701
+    },
+    {
+      "case_id": "REQ-2026-112",
+      "v_index": 38.0,
+      "cost": 693,
+      "family_size": 8,
+      "exp_value": 95.5835
+    },
+    {
+      "case_id": "REQ-2026-150",
+      "v_index": 34.0,
+      "cost": 412,
+      "family_size": 6,
+      "exp_value": 59.1455
+    },
+    {
+      "case_id": "REQ-2026-148",
+      "v_index": 34.0,
+      "cost": 424,
+      "family_size": 4,
+      "exp_value": 59.1455
+    },
+    {
+      "case_id": "REQ-2026-115",
+      "v_index": 33.0,
+      "cost": 248,
+      "family_size": 2,
+      "exp_value": 52.4573
+    },
+    {
+      "case_id": "REQ-2026-091",
+      "v_index": 33.0,
+      "cost": 285,
+      "family_size": 2,
+      "exp_value": 52.4573
+    },
+    {
+      "case_id": "REQ-2026-109",
+      "v_index": 33.0,
+      "cost": 391,
+      "family_size": 3,
+      "exp_value": 52.4573
+    },
+    {
+      "case_id": "REQ-2026-113",
+      "v_index": 31.0,
+      "cost": 508,
+      "family_size": 7,
+      "exp_value": 41.2644
+    },
+    {
+      "case_id": "REQ-2026-129",
+      "v_index": 27.0,
+      "cost": 286,
+      "family_size": 5,
+      "exp_value": 25.5337
+    },
+    {
+      "case_id": "REQ-2026-094",
+      "v_index": 22.0,
+      "cost": 1231,
+      "family_size": 2,
+      "exp_value": 14.0132
+    },
+    {
+      "case_id": "REQ-2026-133",
+      "v_index": 21.0,
+      "cost": 309,
+      "family_size": 3,
+      "exp_value": 12.4286
+    },
+    {
+      "case_id": "REQ-2026-114",
+      "v_index": 21.0,
+      "cost": 411,
+      "family_size": 6,
+      "exp_value": 12.4286
+    },
+    {
+      "case_id": "REQ-2026-136",
+      "v_index": 21.0,
+      "cost": 478,
+      "family_size": 6,
+      "exp_value": 12.4286
+    }
+  ]
+}

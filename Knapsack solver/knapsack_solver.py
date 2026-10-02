@@ -2,24 +2,26 @@
 """
 Selezione famiglie tramite 0/1 knapsack.
 
-Con il budget totale (default 6000$) come vincolo, massimizza a scelta:
-  - la somma dei v_index (vulnerability index, 0-100)      [--maximize v_index]
-  - il numero totale di persone assistite                  [--maximize people]
+Con il budget totale (default 6000$) come vincolo, massimizza la somma dei
+v_index pesati in modo ESPONENZIALE:
+        valore = exp(alpha * v_index / 100)
+        più alpha è alto, più si privilegiano le famiglie con v_index alto
 
-Input  : CSV con colonne  case_id, v_index, cost  (+ family_size)
-         family_size è obbligatoria solo con --maximize people.
+Input  : CSV con colonne  case_id, v_index, cost
+         (family_size è opzionale: se presente viene solo riportata nell'output)
 Output : knapsack_output.json (creato se non esiste, sovrascritto se esiste)
          con famiglie incluse e respinte, ordinate per v_index decrescente.
 
 Uso:
-    python knapsack_families.py famiglie.csv
-    python knapsack_families.py famiglie.csv --maximize people
-    python knapsack_families.py famiglie.csv --maximize v_index --budget 6000
+    python knapsack_solver.py famiglie_demo.csv
+    python knapsack_solver.py famiglie_demo.csv --alpha 8
+    python knapsack_solver.py famiglie_demo.csv --budget 6000
 """
 
 import argparse
 import csv
 import json
+import math
 import sys
 from decimal import Decimal, InvalidOperation
 
@@ -28,9 +30,10 @@ import numpy as np
 REQUIRED_COLUMNS = {"case_id", "v_index", "cost"}
 SIZE_COLUMN = "family_size"
 DEFAULT_OUTPUT = "knapsack_output.json"
+DEFAULT_ALPHA = 12.0  # forte priorità ai casi gravi: v_index 100 vale ~400x un v_index 50, ~20x un v_index 75
 
 
-def load_families(path, need_size):
+def load_families(path):
     """Legge il CSV e restituisce una lista di dict validati."""
     families = []
     seen = set()
@@ -42,10 +45,7 @@ def load_families(path, need_size):
         reader.fieldnames = [c.strip().lower() for c in reader.fieldnames]
         columns = set(reader.fieldnames)
 
-        required = set(REQUIRED_COLUMNS)
-        if need_size:
-            required.add(SIZE_COLUMN)
-        missing = required - columns
+        missing = REQUIRED_COLUMNS - columns
         if missing:
             sys.exit(f"Errore: colonne mancanti nel CSV: {', '.join(sorted(missing))}")
         has_size = SIZE_COLUMN in columns
@@ -84,18 +84,18 @@ def load_families(path, need_size):
     return families
 
 
-def knapsack(families, budget, objective):
+def knapsack(families, budget):
     """
     0/1 knapsack con DP. I costi vengono convertiti in interi:
     dollari interi se possibile, altrimenti centesimi.
-    `objective` è la chiave da massimizzare ("v_index" o "family_size").
+    Il valore di ogni famiglia è il suo "exp_value".
     Restituisce l'insieme degli indici selezionati.
     """
     use_cents = any(f["cost"] != f["cost"].to_integral_value() for f in families)
     scale = 100 if use_cents else 1
     W = int(Decimal(str(budget)) * scale)
     weights = [int(f["cost"] * scale) for f in families]
-    values = [float(f[objective]) for f in families]
+    values = [float(f["exp_value"]) for f in families]
     n = len(families)
 
     if n * (W + 1) > 400_000_000:
@@ -132,22 +132,29 @@ def to_output(f):
     }
     if "family_size" in f:
         out["family_size"] = f["family_size"]
+    if "exp_value" in f:
+        out["exp_value"] = round(f["exp_value"], 4)
     return out
 
 
 def main():
     parser = argparse.ArgumentParser(description="Selezione famiglie via knapsack.")
-    parser.add_argument("input_csv", help="CSV con colonne case_id, v_index, cost[, family_size]")
+    parser.add_argument("input_csv", help="CSV con colonne case_id, v_index, cost")
     parser.add_argument("-o", "--output", default=DEFAULT_OUTPUT,
                         help=f"JSON di output (default: {DEFAULT_OUTPUT}; sovrascritto se esiste)")
     parser.add_argument("-b", "--budget", type=float, default=6000, help="Budget totale ($)")
-    parser.add_argument("-m", "--maximize", choices=["v_index", "people"], default="v_index",
-                        help="Cosa massimizzare: somma dei v_index oppure numero di persone")
+    parser.add_argument("-a", "--alpha", type=float, default=DEFAULT_ALPHA,
+                        help="Ripidità dell'esponenziale exp(alpha * v_index/100); "
+                             f"(default: {DEFAULT_ALPHA})")
     args = parser.parse_args()
 
-    objective = "v_index" if args.maximize == "v_index" else "family_size"
-    families = load_families(args.input_csv, need_size=(objective == "family_size"))
-    selected_idx = knapsack(families, args.budget, objective)
+    if args.alpha < 0:
+        sys.exit("Errore: --alpha deve essere >= 0.")
+
+    families = load_families(args.input_csv)
+    for f in families:
+        f["exp_value"] = math.exp(args.alpha * f["v_index"] / 100)
+    selected_idx = knapsack(families, args.budget)
 
     # ordinamento: v_index decrescente (a parità, costo crescente)
     sort_key = lambda f: (-f["v_index"], f["cost"])
@@ -156,13 +163,14 @@ def main():
 
     total_cost = sum(f["cost"] for f in included)
     summary = {
-        "maximized": args.maximize,
+        "alpha": args.alpha,
         "budget": args.budget,
         "total_cost": float(total_cost),
         "budget_remaining": float(Decimal(str(args.budget)) - total_cost),
         "total_v_index": round(sum(f["v_index"] for f in included), 6),
     }
-    if "family_size" in families[0] if families else False:
+    summary["total_exp_value"] = round(sum(f["exp_value"] for f in included), 4)
+    if families and "family_size" in families[0]:
         summary["total_people"] = sum(f["family_size"] for f in included)
     summary.update({
         "families_total": len(families),
@@ -181,10 +189,11 @@ def main():
         json.dump(result, out, indent=2, ensure_ascii=False)
 
     people = f" | Persone: {summary['total_people']}" if "total_people" in summary else ""
-    print(f"Obiettivo: {args.maximize} | Incluse: {summary['families_included']} | "
+    print(f"alpha: {args.alpha} | Incluse: {summary['families_included']} | "
           f"Respinte: {summary['families_rejected']} | "
           f"Costo: {summary['total_cost']:.2f}$ / {args.budget:.2f}$ | "
-          f"V totale: {summary['total_v_index']}{people}")
+          f"V totale: {summary['total_v_index']} | "
+          f"V medio: {summary['total_v_index'] / max(1, summary['families_included']):.1f}{people}")
     print(f"Output scritto in {args.output}")
 
 

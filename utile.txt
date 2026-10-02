@@ -1,0 +1,35 @@
+v_index per indicizzare la vulnerabilità
+
+
+git clone https://github.com/utente/nome-repo.git
+cd nome-repo
+2. La repo è già sul tuo computer
+
+Entra nella cartella e controlla lo stato:
+cd percorso/della/repo
+git status
+git pull
+
+
+Flusso di lavoro consigliato
+
+Crea un branch per le tue modifiche, così non lavori direttamente su main:
+
+'
+git checkout -b agne  # oppure: git switch -c nome-tuo-branch
+'
+
+Modifica i file, poi controlla cosa è cambiato e salva:
+
+'
+git status
+git diff
+git add file-modificato.txt       # oppure git add . per tutto
+git commit -m "Descrizione chiara della modifica"
+'
+
+Infine invia il branch al remoto:
+
+'
+git push -u origin agne
+'
