@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Beneficiary from "./pages/Beneficiary";
+import QualityDashboard from "./pages/QualityDashboard";
 
 function SiteHeader() {
   const location = useLocation();
@@ -20,6 +21,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/mobile" element={<Beneficiary />} />
+            <Route path="/quality" element={<QualityDashboard />} />
           </Routes>
         </main>
       </div>

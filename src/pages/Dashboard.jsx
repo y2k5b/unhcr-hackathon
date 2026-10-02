@@ -1,4 +1,5 @@
 import React, { useMemo, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import mockData from '../mockData.json';
 import {
   Users,
@@ -525,10 +526,15 @@ export default function Dashboard() {
         <div className="bg-[#0072BC] border-b-2 border-[#005a96]">
           <div className="max-w-[1440px] mx-auto px-4 sm:px-8 py-4 flex items-center justify-between gap-4">
             <Wordmark />
-            <div className="hidden sm:inline-flex items-center gap-2 rounded bg-white px-4 py-2 font-bold text-[#0072BC]">
+            <Link
+              to="/quality"
+              aria-label="Apri monitoraggio qualità delle decisioni"
+              className="hidden sm:inline-flex items-center gap-2 rounded bg-white px-4 py-2 font-bold text-[#0072BC] hover:bg-[#EFF7FE]"
+            >
               <Globe className="w-5 h-5" aria-hidden="true" />
               {META.operation ?? 'Operazione'}
-            </div>
+              <span className="border-l border-[#B9D6EE] pl-2 text-sm">Qualità team</span>
+            </Link>
           </div>
         </div>
  
