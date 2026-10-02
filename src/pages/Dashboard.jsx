@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import mockData from '../mockData.json';
 import {
   Users,
@@ -18,8 +18,10 @@ import {
   Globe,
   CalendarDays,
   Search,
-  Wand2,
-  ClipboardList,
+  Plus,
+  Minus,
+  Sparkles,
+  ArrowRight,
 } from 'lucide-react';
  
 /* ========================================================================== */
@@ -41,24 +43,24 @@ const FOCUS =
   'focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#18375F]';
  
 /* ========================================================================== */
-/*  Configurazione letta da mockData.json                                     */
+/*  Configurazione                                                            */
 /* ========================================================================== */
  
 const META = mockData.meta ?? {};
-const TOTAL_FUND = META.fund?.total_usd ?? 0;
-const MAX_BUDGET = META.budget?.max_usd ?? 1500;
-const STEP = META.budget?.step_usd ?? 50;
-const THRESHOLDS = {
-  high: META.score_thresholds?.high ?? 75,
-  medium: META.score_thresholds?.medium ?? 50,
-};
-const LOW_CONFIDENCE = 0.75;
+ 
+// Sotto questa soglia il parere dell'AI non viene mostrato e il caso è "complicato".
+const CONFIDENCE_THRESHOLD = META.confidence_threshold ?? 0.7;
+ 
+// Lunghezza minima del commento richiesto prima di inviare la decisione.
+const MIN_COMMENT = META.min_comment_length ?? 15;
+ 
+// Nei casi complicati nascondi anche gli elementi estratti dal modello
+// (considerati parte del suo parere). Metti false per mostrarli comunque.
+const HIDE_FACTORS_WHEN_LOW_CONFIDENCE = true;
  
 /* ========================================================================== */
 /*  Helper e dizionari                                                        */
 /* ========================================================================== */
- 
-const usd = (n) => `$${Number(n || 0).toLocaleString('it-IT')}`;
  
 const humanize = (s) => {
   const t = String(s).replace(/_/g, ' ');
@@ -70,32 +72,24 @@ const fmtDate = (iso) =>
     ? new Date(iso).toLocaleDateString('it-IT', { day: 'numeric', month: 'short', year: 'numeric' })
     : '';
  
-const byScore = (a, b) =>
-  b.vulnerability_profile.overall_score - a.vulnerability_profile.overall_score;
+const opposite = (d) => (d === 'INCLUDE' ? 'EXCLUDE' : 'INCLUDE');
  
-const LEVELS = {
-  high: {
-    short: 'Alta',
-    long: 'Priorità alta',
-    hint: 'Richiede un intervento rapido.',
-    chip: 'bg-[#FDECEA] text-[#8A1C12] border-[#F1B5AE]',
-  },
-  medium: {
-    short: 'Media',
-    long: 'Priorità media',
-    hint: 'Da valutare a breve.',
-    chip: 'bg-[#FFF3C4] text-[#6B4E00] border-[#E6BF00]',
-  },
-  standard: {
-    short: 'Standard',
-    long: 'Priorità standard',
-    hint: 'Situazione più stabile.',
+const DECISIONS = {
+  INCLUDE: {
+    label: 'Inclusione',
+    verb: 'Includere il nucleo',
+    desc: 'Il nucleo entra nel programma di assistenza.',
+    icon: Plus,
     chip: 'bg-[#EFF7FE] text-[#00538A] border-[#7DB2DC]',
   },
+  EXCLUDE: {
+    label: 'Esclusione',
+    verb: 'Escludere il nucleo',
+    desc: 'Il nucleo non rientra nel programma in questo momento.',
+    icon: Minus,
+    chip: 'bg-[#EDEDED] text-[#1A1A1A] border-[#9E9E9E]',
+  },
 };
- 
-const getLevel = (score) =>
-  score >= THRESHOLDS.high ? LEVELS.high : score >= THRESHOLDS.medium ? LEVELS.medium : LEVELS.standard;
  
 const DIMENSIONS = {
   health: { label: 'Salute', icon: HeartPulse },
@@ -108,12 +102,6 @@ const DIM_LEVELS = {
   critical: { label: 'Critico', icon: AlertTriangle, box: 'bg-[#FDECEA] border-[#F1B5AE]', text: 'text-[#8A1C12]' },
   attention: { label: 'Da monitorare', icon: AlertCircle, box: 'bg-[#FFF799] border-[#E6BF00]', text: 'text-[#4A3B00]' },
   stable: { label: 'Stabile', icon: CheckCircle2, box: 'bg-[#E8F5EC] border-[#A9D8BA]', text: 'text-[#1D5E36]' },
-};
- 
-const PRIORITIES = {
-  urgent: { label: 'Urgente', chip: LEVELS.high.chip },
-  soon: { label: 'A breve', chip: LEVELS.medium.chip },
-  routine: { label: 'Di routine', chip: LEVELS.standard.chip },
 };
  
 /* ========================================================================== */
@@ -129,7 +117,7 @@ function Wordmark() {
         <div className="text-[10px] font-semibold mt-1">The UN Refugee Agency</div>
       </div>
       <span className="h-9 w-px bg-white/70" aria-hidden="true" />
-      <span className="text-2xl font-semibold">Aiuti in denaro</span>
+      <span className="text-2xl font-semibold">Valutazione dei casi</span>
     </div>
   );
 }
@@ -137,9 +125,7 @@ function Wordmark() {
 /* Box di avviso giallo, come "All UNHCR services are FREE of charge". */
 function Notice({ title, children, variant = 'warning' }) {
   const styles =
-    variant === 'info'
-      ? 'bg-[#EFF7FE] border-[#7DB2DC]'
-      : 'bg-[#FFF799] border-[#E6BF00]';
+    variant === 'info' ? 'bg-[#EFF7FE] border-[#7DB2DC]' : 'bg-[#FFF799] border-[#E6BF00]';
   return (
     <div role="note" className={`flex gap-3 rounded border p-4 text-[#1A1A1A] ${styles}`}>
       <Info className="w-5 h-5 mt-0.5 shrink-0 text-[#18375F]" aria-hidden="true" />
@@ -152,10 +138,9 @@ function Notice({ title, children, variant = 'warning' }) {
 }
  
 /* Titolo di sezione con linea sotto, come "Help by topic". */
-function SectionTitle({ icon: Icon, children, id }) {
+function SectionTitle({ children, id }) {
   return (
-    <h3 id={id} className="flex items-center gap-2.5 text-2xl font-bold text-[#1A1A1A] border-b-2 border-[#1A1A1A] pb-3">
-      {Icon && <Icon className="w-6 h-6 text-[#18375F]" aria-hidden="true" />}
+    <h3 id={id} className="text-2xl font-bold text-[#1A1A1A] border-b-2 border-[#1A1A1A] pb-3">
       {children}
     </h3>
   );
@@ -179,50 +164,60 @@ function Fact({ icon: Icon, label, value, warn = false }) {
   );
 }
  
+function DecisionTag({ decision, large = false }) {
+  const d = DECISIONS[decision];
+  if (!d) return null;
+  const Icon = d.icon;
+  return (
+    <span
+      className={`inline-flex items-center gap-1.5 rounded border font-bold ${d.chip} ${
+        large ? 'px-3 py-1.5 text-lg' : 'px-2 py-0.5 text-sm'
+      }`}
+    >
+      <Icon className={large ? 'w-5 h-5' : 'w-4 h-4'} aria-hidden="true" />
+      {d.label}
+    </span>
+  );
+}
+ 
 /* ========================================================================== */
-/*  Barra del fondo (barra secondaria blu scuro)                              */
+/*  Barra di avanzamento (barra secondaria blu scuro)                         */
 /* ========================================================================== */
  
-function FundBar({ total, allocated, selection }) {
-  const pct = (v) => (total > 0 ? Math.min(100, Math.max(0, (v / total) * 100)) : 0);
-  const sel = Math.min(selection, Math.max(total - allocated, 0));
-  const available = Math.max(total - allocated - sel, 0);
- 
+function ProgressBar({ done, total }) {
+  const pct = total > 0 ? (done / total) * 100 : 0;
   return (
     <div className="w-full text-white">
       <div className="flex flex-wrap items-baseline justify-between gap-x-4">
-        <span className="font-bold">Fondo di assistenza</span>
+        <span className="font-bold">Avanzamento</span>
         <span className="tabular-nums">
-          <b>{usd(allocated)}</b> assegnati su {usd(total)}
+          <b>{done}</b> di {total} casi valutati
         </span>
       </div>
       <div
-        className="mt-2 h-3 rounded-sm bg-[#3B5F8A] overflow-hidden flex"
+        className="mt-2 h-3 rounded-sm bg-[#3B5F8A] overflow-hidden"
         role="progressbar"
-        aria-label="Fondo assegnato"
+        aria-label="Casi valutati"
         aria-valuemin={0}
         aria-valuemax={total}
-        aria-valuenow={allocated}
+        aria-valuenow={done}
       >
-        <div className="h-full bg-white transition-[width] duration-300 motion-reduce:transition-none" style={{ width: `${pct(allocated)}%` }} />
-        <div className="h-full bg-[#FFD100] transition-[width] duration-300 motion-reduce:transition-none" style={{ width: `${pct(sel)}%` }} />
-      </div>
-      <div className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-xs">
-        <span className="inline-flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-white" />Già assegnato</span>
-        <span className="inline-flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-[#FFD100]" />Questa erogazione</span>
-        <span className="inline-flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-[#3B5F8A] border border-white/40" />Disponibile {usd(available)}</span>
+        <div
+          className="h-full bg-white transition-[width] duration-300 motion-reduce:transition-none"
+          style={{ width: `${pct}%` }}
+        />
       </div>
     </div>
   );
 }
  
 /* ========================================================================== */
-/*  Coda di triage                                                            */
+/*  Coda: nessun punteggio, nessuna priorità, nessun indizio sul parere AI    */
 /* ========================================================================== */
  
-function CaseRow({ req, selected, draft, onSelect }) {
-  const level = getLevel(req.vulnerability_profile.overall_score);
-  const pending = req.human_oversight.status === 'PENDING';
+function CaseRow({ req, selected, inProgress, onSelect }) {
+  const ho = req.human_oversight;
+  const completed = ho.status === 'COMPLETED';
  
   return (
     <button
@@ -230,16 +225,16 @@ function CaseRow({ req, selected, draft, onSelect }) {
       aria-current={selected ? 'true' : undefined}
       className={`w-full text-left rounded border-2 px-4 py-3.5 transition-colors ${FOCUS} ${
         selected
-          ? 'bg-white border-[#0072BC] shadow-[inset_6px_0_0_#0072BC] pl-6'
+          ? 'bg-white border-[#0072BC] shadow-[inset_6px_0_0_#0072BC]'
           : 'bg-[#EFF7FE] border-[#B9D6EE] hover:border-[#0072BC]'
       }`}
     >
       <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0">
+        <div className="min-w-0 pl-1">
           <div className="font-bold text-[#0072BC] text-lg leading-tight">{req.case_id}</div>
           <div className="mt-1.5 flex items-center gap-2 text-[#4D4D4D]">
             <Users className="w-4 h-4 shrink-0" aria-hidden="true" />
-            <span>{req.demographics.family_size} persone</span>
+            <span>{req.demographics.family_size} {req.demographics.family_size === 1 ? 'persona' : 'persone'}</span>
           </div>
           <div className="mt-0.5 flex items-center gap-2 text-[#4D4D4D]">
             <Globe className="w-4 h-4 shrink-0" aria-hidden="true" />
@@ -247,24 +242,14 @@ function CaseRow({ req, selected, draft, onSelect }) {
           </div>
         </div>
  
-        <div className="flex flex-col items-end gap-2 shrink-0">
-          {pending ? (
-            <span className={`inline-flex items-baseline gap-1.5 rounded border px-2 py-1 font-bold ${level.chip}`}>
-              {req.vulnerability_profile.overall_score}
-              <span className="text-xs font-semibold">{level.short}</span>
-              <span className="sr-only">, {level.long}</span>
+        <div className="shrink-0">
+          {completed ? (
+            <DecisionTag decision={ho.final_decision} />
+          ) : inProgress ? (
+            <span className="inline-block rounded border border-[#7DB2DC] bg-white px-2 py-0.5 text-sm font-bold text-[#00538A]">
+              Da confermare
             </span>
-          ) : (
-            <span className="inline-flex items-center gap-1 rounded border border-[#A9D8BA] bg-[#E8F5EC] px-2 py-1 text-sm font-bold text-[#1D5E36]">
-              <CheckCircle2 className="w-4 h-4" aria-hidden="true" />
-              {usd(req.human_oversight.final_amount)}
-            </span>
-          )}
-          {pending && draft !== undefined && (
-            <span className="rounded bg-[#FFF799] border border-[#E6BF00] px-2 py-0.5 text-xs font-bold text-[#4A3B00]">
-              Bozza {usd(draft)}
-            </span>
-          )}
+          ) : null}
         </div>
       </div>
     </button>
@@ -272,95 +257,185 @@ function CaseRow({ req, selected, draft, onSelect }) {
 }
  
 /* ========================================================================== */
-/*  Valutazione AI                                                            */
+/*  Elementi a favore dell'inclusione / dell'esclusione                       */
+/*  (estratti dal modello, ma la UI non lo dichiara)                          */
 /* ========================================================================== */
  
-function ScoreScale({ score }) {
-  const { high, medium } = THRESHOLDS;
+function FactorColumn({ title, icon: Icon, tile, bar, items }) {
   return (
-    <div className="mt-6">
-      <div className="relative">
-        <div className="flex h-4 overflow-hidden rounded-sm border border-[#1A1A1A]/40">
-          <div className="bg-[#CFE3F4]" style={{ width: `${medium}%` }} />
-          <div className="bg-[#FFE98A]" style={{ width: `${high - medium}%` }} />
-          <div className="bg-[#F5B7B0]" style={{ width: `${100 - high}%` }} />
-        </div>
-        <div
-          className="absolute -top-1.5 h-7 w-1.5 -translate-x-1/2 rounded-sm bg-[#18375F] outline outline-2 outline-white"
-          style={{ left: `${score}%` }}
-          aria-hidden="true"
-        />
-      </div>
-      <div className="mt-2 flex text-xs font-semibold text-[#4D4D4D]">
-        <div style={{ width: `${medium}%` }} className="whitespace-nowrap">Standard 0–{medium - 1}</div>
-        <div style={{ width: `${high - medium}%` }} className="whitespace-nowrap">Media {medium}–{high - 1}</div>
-        <div style={{ width: `${100 - high}%` }} className="whitespace-nowrap">Alta {high}–100</div>
-      </div>
+    <div>
+      <h4 className="flex items-center gap-2.5 text-lg font-bold">
+        <span className={`w-8 h-8 rounded flex items-center justify-center ${tile}`}>
+          <Icon className="w-5 h-5" aria-hidden="true" />
+        </span>
+        {title}
+        <span className="text-[#4D4D4D] font-normal">({items.length})</span>
+      </h4>
+      {items.length === 0 ? (
+        <p className="mt-3 text-[#4D4D4D]">Nessun elemento rilevato.</p>
+      ) : (
+        <ul className="mt-3 space-y-3">
+          {items.map((f) => (
+            <li key={f.key} className={`rounded border border-l-[6px] border-[#D9D9D9] bg-white p-4 ${bar}`}>
+              <p className="font-bold">{f.label ?? humanize(f.key)}</p>
+              {f.detail && <p className="mt-1 text-sm text-[#4D4D4D] leading-relaxed">{f.detail}</p>}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
  
-/* Grafico divergente: fattori negativi a sinistra, positivi a destra. */
-function FactorBars({ features, baseline, score }) {
-  const sorted = [...features].sort((a, b) => Math.abs(b.impact) - Math.abs(a.impact));
-  const max = Math.max(...sorted.map((f) => Math.abs(f.impact)), 1);
+/* ========================================================================== */
+/*  Parere dell'AI (mostrato solo dopo l'invio della valutazione)             */
+/* ========================================================================== */
+ 
+function AiOpinion({ ai, score }) {
+  return (
+    <div className="rounded border-2 border-[#18375F] bg-white p-5">
+      <div className="flex items-center gap-2 font-bold text-[#18375F]">
+        <Sparkles className="w-5 h-5" aria-hidden="true" />
+        Parere dell&apos;AI
+      </div>
+      <div className="mt-3 flex flex-wrap items-center gap-3">
+        <span className="text-[#4D4D4D]">Raccomanda</span>
+        <DecisionTag decision={ai.recommendation} large />
+      </div>
+      <p className="mt-4 leading-relaxed">{ai.comment}</p>
+      <dl className="mt-4 grid grid-cols-2 gap-3 border-t border-[#D9D9D9] pt-4">
+        <div>
+          <dt className="text-sm text-[#4D4D4D]">Indice di vulnerabilità</dt>
+          <dd className="text-xl font-black text-[#18375F] tabular-nums">
+            {score}
+            <span className="text-sm font-semibold text-[#4D4D4D]"> su 100</span>
+          </dd>
+        </div>
+        <div>
+          <dt className="text-sm text-[#4D4D4D]">Affidabilità</dt>
+          <dd className="text-xl font-black text-[#18375F] tabular-nums">{Math.round(ai.confidence * 100)}%</dd>
+        </div>
+      </dl>
+      {META.model && (
+        <p className="mt-3 text-xs text-[#4D4D4D]">
+          {META.model.name}, versione {META.model.version}.
+        </p>
+      )}
+    </div>
+  );
+}
+ 
+/* ========================================================================== */
+/*  Feedback sull'esercitazione (caso già chiuso)                             */
+/* ========================================================================== */
+ 
+function Feedback({ cal, ho, ai, aiAvailable }) {
+  const ex = cal.explanation;
+  const reference = cal.reference_decision;
+  const correct = ho.final_decision === reference;
+  const changedFromCorrect = ho.initial_decision === reference && ho.final_decision !== reference;
+  const agreedWithWrongAi = aiAvailable && ho.ai_agreement === 'AGREE' && ai.recommendation !== reference;
+  const aiCorrect = aiAvailable && ai.recommendation === reference;
  
   return (
-    <div>
-      <p className="text-[#4D4D4D] leading-relaxed max-w-2xl">
-        Si parte da <b className="text-[#1A1A1A]">{baseline} punti</b>, la media dei nuclei valutati. Ogni
-        fattore aggiunge o toglie punti. Un fattore &quot;positivo&quot; non è un giudizio sulla famiglia:
-        indica quanto pesa sulla priorità di intervento.
-      </p>
+    <section aria-labelledby="fb-title" className="rounded border-2 border-[#18375F] bg-white overflow-hidden">
+      <div className={`p-5 sm:p-6 border-b-2 border-[#18375F] ${correct ? 'bg-[#E8F5EC]' : 'bg-[#FFF799]'}`}>
+        <p className="text-sm font-bold text-[#18375F]">
+          Esercitazione: caso già chiuso il {fmtDate(cal.closed_on)}
+        </p>
+        <h3 id="fb-title" className="mt-1 flex items-center gap-2 text-2xl font-bold">
+          {correct ? (
+            <CheckCircle2 className="w-7 h-7 text-[#1D5E36]" aria-hidden="true" />
+          ) : (
+            <AlertCircle className="w-7 h-7 text-[#4A3B00]" aria-hidden="true" />
+          )}
+          {correct ? 'Risposta corretta' : 'Risposta non corretta'}
+        </h3>
+        <p className="mt-2 leading-relaxed">
+          Questo caso era già stato deciso e inserito tra quelli reali a scopo di formazione. {ex.summary}
+        </p>
  
-      <div className="mt-6 grid grid-cols-2 gap-6 text-sm font-bold">
-        <div className="flex items-center gap-2 text-[#1D5E36]">
-          <span className="w-3 h-3 rounded-sm bg-[#1B8A5A]" aria-hidden="true" />
-          Fattori negativi
-          <span className="font-normal text-[#4D4D4D] hidden sm:inline">(riducono)</span>
-        </div>
-        <div className="flex items-center justify-end gap-2 text-[#00538A] text-right">
-          <span className="font-normal text-[#4D4D4D] hidden sm:inline">(aumentano)</span>
-          Fattori positivi
-          <span className="w-3 h-3 rounded-sm bg-[#0072BC]" aria-hidden="true" />
+        <div className="mt-4 flex flex-wrap gap-x-8 gap-y-3">
+          <div>
+            <div className="text-xs text-[#4D4D4D]">Valutazione iniziale</div>
+            <div className="mt-1"><DecisionTag decision={ho.initial_decision} /></div>
+          </div>
+          <div>
+            <div className="text-xs text-[#4D4D4D]">Decisione finale</div>
+            <div className="mt-1"><DecisionTag decision={ho.final_decision} /></div>
+          </div>
+          <div>
+            <div className="text-xs text-[#4D4D4D]">Risposta corretta</div>
+            <div className="mt-1"><DecisionTag decision={reference} /></div>
+          </div>
         </div>
       </div>
  
-      <ul className="mt-4 space-y-5">
-        {sorted.map((f) => {
-          const positive = f.impact > 0;
-          const width = `${(Math.abs(f.impact) / max) * 100}%`;
-          return (
-            <li key={f.feature}>
-              <div className="flex items-baseline justify-between gap-4">
-                <span className="font-bold text-[#1A1A1A]">{f.label ?? humanize(f.feature)}</span>
-                <span className={`shrink-0 font-bold tabular-nums ${positive ? 'text-[#00538A]' : 'text-[#1D5E36]'}`}>
-                  {positive ? '+' : '−'}
-                  {Math.abs(f.impact)} punti
-                </span>
-              </div>
-              {f.detail && <p className="text-sm text-[#4D4D4D] mt-0.5">{f.detail}</p>}
-              <div className="relative mt-2 grid grid-cols-2 h-3">
-                <span className="absolute left-1/2 -top-1 -bottom-1 w-0.5 -translate-x-1/2 bg-[#1A1A1A]" aria-hidden="true" />
-                <div className="bg-[#EAEFF4] rounded-l-sm flex justify-end overflow-hidden">
-                  {!positive && <div className="h-full bg-[#1B8A5A]" style={{ width }} />}
-                </div>
-                <div className="bg-[#EAEFF4] rounded-r-sm overflow-hidden">
-                  {positive && <div className="h-full bg-[#0072BC]" style={{ width }} />}
-                </div>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
+      <div className="p-5 sm:p-6 space-y-8">
+        {(changedFromCorrect || agreedWithWrongAi) && (
+          <Notice
+            title={
+              changedFromCorrect
+                ? 'La tua valutazione iniziale era corretta'
+                : "Hai concordato con un parere dell'AI non corretto"
+            }
+          >
+            {changedFromCorrect
+              ? "Dopo aver visto il parere dell'AI hai cambiato decisione. Prima di cambiare idea, verifica quali elementi nuovi giustificano il cambio."
+              : "Quando il parere dell'AI e la tua lettura del fascicolo divergono, riesamina gli elementi prima di concordare."}
+          </Notice>
+        )}
  
-      <div className="mt-6 flex items-baseline justify-between border-t-2 border-[#1A1A1A] pt-3">
-        <span className="font-bold">Punteggio finale</span>
-        <span className="text-2xl font-black text-[#18375F] tabular-nums">
-          {score} <span className="text-base font-semibold text-[#4D4D4D]">su 100</span>
-        </span>
+        <div>
+          <h4 className="text-lg font-bold">Perché questa è la risposta corretta</h4>
+          <div className="mt-3 space-y-4 leading-relaxed max-w-3xl">
+            {ex.rationale.map((p) => (
+              <p key={p.slice(0, 40)}>{p}</p>
+            ))}
+          </div>
+        </div>
+ 
+        <div>
+          <h4 className="text-lg font-bold">Gli elementi decisivi</h4>
+          <ul className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3">
+            {ex.key_points.map((k) => (
+              <li key={k.title} className="rounded border border-[#7DB2DC] bg-[#EFF7FE] p-4">
+                <p className="font-bold text-[#18375F]">{k.title}</p>
+                <p className="mt-1 text-sm leading-relaxed">{k.text}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+ 
+        <div>
+          <h4 className="text-lg font-bold">Errori da evitare</h4>
+          <ul className="mt-3 space-y-2">
+            {ex.pitfalls.map((p) => (
+              <li key={p} className="flex items-start gap-3 leading-relaxed">
+                <span className="mt-2.5 w-1.5 h-1.5 rounded-full bg-[#18375F] shrink-0" aria-hidden="true" />
+                {p}
+              </li>
+            ))}
+          </ul>
+        </div>
+ 
+        <div>
+          <h4 className="text-lg font-bold">E il parere dell&apos;AI?</h4>
+          {aiAvailable && (
+            <p
+              className={`mt-3 inline-block rounded border px-3 py-1 text-sm font-bold ${
+                aiCorrect
+                  ? 'bg-[#E8F5EC] border-[#A9D8BA] text-[#1D5E36]'
+                  : 'bg-[#FFF799] border-[#E6BF00] text-[#4A3B00]'
+              }`}
+            >
+              {aiCorrect ? "Il parere dell'AI era corretto" : "Il parere dell'AI non era corretto"}
+            </p>
+          )}
+          <p className="mt-3 leading-relaxed max-w-3xl">{ex.ai_note}</p>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
  
@@ -369,62 +444,81 @@ function FactorBars({ features, baseline, score }) {
 /* ========================================================================== */
  
 export default function Dashboard() {
-  const firstCase = mockData.cases[0];
+  const firstPending = mockData.cases.find((c) => c.human_oversight.status === 'PENDING');
  
   const [cases, setCases] = useState(mockData.cases);
-  const [selectedId, setSelectedId] = useState(firstCase?.case_id);
+  const [selectedId, setSelectedId] = useState((firstPending ?? mockData.cases[0])?.case_id);
   const [tab, setTab] = useState('PENDING');
   const [query, setQuery] = useState('');
-  const [drafts, setDrafts] = useState({}); // bozze create da "Distribuisci fondi"
-  const [notice, setNotice] = useState(null);
  
-  // Human-in-the-loop
-  const [manualBudget, setManualBudget] = useState(firstCase?.ai_assessment.suggested_amount_usd ?? 0);
-  const [manualReason, setManualReason] = useState('');
+  // Bozza di valutazione prima dell'invio: { [caseId]: { decision, comment } }
+  const [inputs, setInputs] = useState({});
+  // Valutazione inviata e BLOCCATA, in attesa che l'operatore risponda al parere dell'AI:
+  // { [caseId]: { decision, comment } }
+  const [submitted, setSubmitted] = useState({});
+  const [focusId, setFocusId] = useState(null);
  
   const detailRef = useRef(null);
+  const completionRef = useRef(null);
  
   const activeCase = cases.find((c) => c.case_id === selectedId);
-  const isPending = activeCase?.human_oversight.status === 'PENDING';
+ 
+  /* -- liste ---------------------------------------------------------------- */
  
   const pendingCases = useMemo(
-    () => cases.filter((c) => c.human_oversight.status === 'PENDING').sort(byScore),
+    () => cases.filter((c) => c.human_oversight.status === 'PENDING'),
     [cases]
   );
-  const approvedCases = useMemo(
-    () => cases.filter((c) => c.human_oversight.status !== 'PENDING').sort(byScore),
+  const completedCases = useMemo(
+    () =>
+      cases
+        .filter((c) => c.human_oversight.status === 'COMPLETED')
+        .sort((a, b) => (b.human_oversight.reviewed_at ?? '').localeCompare(a.human_oversight.reviewed_at ?? '')),
     [cases]
   );
  
   const visibleCases = useMemo(() => {
-    const list = tab === 'PENDING' ? pendingCases : approvedCases;
+    const list = tab === 'PENDING' ? pendingCases : completedCases;
     const q = query.trim().toLowerCase();
     if (!q) return list;
     return list.filter((c) =>
-      [c.case_id, c.demographics.name_hash, c.demographics.origin_country]
-        .join(' ')
-        .toLowerCase()
-        .includes(q)
+      [c.case_id, c.demographics.name_hash, c.demographics.origin_country].join(' ').toLowerCase().includes(q)
     );
-  }, [tab, query, pendingCases, approvedCases]);
+  }, [tab, query, pendingCases, completedCases]);
  
-  const allocated = approvedCases.reduce((s, c) => s + (c.human_oversight.final_amount || 0), 0);
-  const remaining = TOTAL_FUND - allocated;
+  /* -- stato del caso attivo ------------------------------------------------ */
  
-  const suggested = activeCase?.ai_assessment.suggested_amount_usd ?? 0;
-  const differs = manualBudget !== suggested;
-  const overBudget = manualBudget > remaining;
-  const reasonMissing = differs && !manualReason.trim();
-  const canConfirm = isPending && !reasonMissing && !overBudget;
+  const ho = activeCase?.human_oversight;
+  const ai = activeCase?.ai_assessment;
+  const completed = ho?.status === 'COMPLETED';
+  const aiAvailable = !!ai && ai.confidence >= CONFIDENCE_THRESHOLD;
+  const complicated = !!ai && !aiAvailable;
+ 
+  const sub = completed
+    ? { decision: ho.initial_decision, comment: ho.initial_comment }
+    : submitted[selectedId];
+ 
+  // DECIDE: valutazione cieca  |  REVIEW: parere AI visibile, in attesa di concordare  |  DONE
+  const stage = completed ? 'DONE' : sub ? 'REVIEW' : 'DECIDE';
+ 
+  const input = inputs[selectedId] ?? { decision: null, comment: '' };
+  const commentLength = input.comment.trim().length;
+  const canSubmit = stage === 'DECIDE' && !!input.decision && commentLength >= MIN_COMMENT;
+ 
+  const factors = activeCase?.factors ?? [];
+  const byWeight = (a, b) => b.weight - a.weight;
+  const proInclude = factors.filter((f) => f.direction === 'INCLUDE').sort(byWeight);
+  const proExclude = factors.filter((f) => f.direction === 'EXCLUDE').sort(byWeight);
+  const showFactors = factors.length > 0 && (!complicated || !HIDE_FACTORS_WHEN_LOW_CONFIDENCE);
+ 
+  const dimensions = Object.entries(activeCase?.vulnerability_profile.dimensions ?? {});
+  const minors = activeCase?.demographics.unaccompanied_minors ?? 0;
+  const cal = activeCase?.calibration;
  
   /* -- azioni --------------------------------------------------------------- */
  
   const selectCase = (id) => {
-    const c = cases.find((x) => x.case_id === id);
     setSelectedId(id);
-    setManualBudget(drafts[id] ?? c?.ai_assessment.suggested_amount_usd ?? 0);
-    setManualReason('');
-    setNotice(null);
  
     // Su schermi stretti il dettaglio sta sotto la lista: portaci l'utente.
     if (typeof window !== 'undefined' && !window.matchMedia('(min-width: 1024px)').matches) {
@@ -435,92 +529,74 @@ export default function Dashboard() {
     }
   };
  
-  const handleAllocation = () => {
-    if (!canConfirm) return;
+  const setInput = (patch) =>
+    setInputs((all) => ({ ...all, [selectedId]: { ...input, ...patch } }));
  
-    const updated = cases.map((c) =>
-      c.case_id === selectedId
-        ? {
-            ...c,
-            human_oversight: {
-              status: 'APPROVED',
-              final_amount: manualBudget,
-              reason: manualReason.trim(),
-              reviewed_at: new Date().toISOString(),
-            },
-          }
-        : c
+  const finalize = (id, evaluation, finalDecision, agreement) => {
+    setCases((all) =>
+      all.map((c) =>
+        c.case_id === id
+          ? {
+              ...c,
+              human_oversight: {
+                status: 'COMPLETED',
+                initial_decision: evaluation.decision,
+                initial_comment: evaluation.comment,
+                ai_agreement: agreement,
+                final_decision: finalDecision,
+                reviewed_at: new Date().toISOString(),
+              },
+            }
+          : c
+      )
     );
-    setCases(updated);
-    setDrafts((d) => {
-      const next = { ...d };
-      delete next[selectedId];
+    const drop = (obj) => {
+      const next = { ...obj };
+      delete next[id];
       return next;
-    });
+    };
+    setSubmitted(drop);
+    setInputs(drop);
+    setFocusId(id);
+  };
  
-    // Passa al nucleo successivo più urgente
-    const next = updated.filter((c) => c.human_oversight.status === 'PENDING').sort(byScore)[0];
-    if (next) {
-      setSelectedId(next.case_id);
-      setManualBudget(drafts[next.case_id] ?? next.ai_assessment.suggested_amount_usd);
-      setManualReason('');
+  // 1) L'operatore invia decisione + commento. Da qui la valutazione iniziale non è più modificabile.
+  const submitEvaluation = () => {
+    if (!canSubmit) return;
+    const evaluation = { decision: input.decision, comment: input.comment.trim() };
+    if (!aiAvailable) {
+      // Caso complicato: nessun parere dell'AI, la decisione è definitiva.
+      finalize(selectedId, evaluation, evaluation.decision, 'NOT_AVAILABLE');
+    } else {
+      setSubmitted((s) => ({ ...s, [selectedId]: evaluation }));
     }
-    setNotice({ title: `Erogazione di ${usd(manualBudget)} confermata per ${selectedId}.` });
   };
  
-  // Non approva nulla: prepara bozze che l'operatore conferma caso per caso.
-  const autoDistribute = () => {
-    if (!pendingCases.length) return;
-    const totalSuggested = pendingCases.reduce((s, c) => s + c.ai_assessment.suggested_amount_usd, 0);
-    const scale = totalSuggested <= remaining ? 1 : Math.max(remaining, 0) / totalSuggested;
- 
-    const next = {};
-    pendingCases.forEach((c) => {
-      const raw = c.ai_assessment.suggested_amount_usd * scale;
-      next[c.case_id] = Math.min(MAX_BUDGET, scale === 1 ? raw : Math.floor(raw / STEP) * STEP);
-    });
-    setDrafts(next);
-    if (isPending && next[selectedId] !== undefined) setManualBudget(next[selectedId]);
- 
-    setNotice(
-      scale === 1
-        ? {
-            title: `Bozze create per ${pendingCases.length} nuclei`,
-            text: 'Le raccomandazioni dell\'AI rientrano nel fondo disponibile. Conferma ogni caso per erogare.',
-          }
-        : {
-            title: `Bozze create per ${pendingCases.length} nuclei`,
-            text: `Le raccomandazioni superano il fondo disponibile (${usd(remaining)}), quindi sono state ridotte in proporzione. Conferma ogni caso per erogare.`,
-          }
-    );
+  // 2) Dopo aver visto il parere dell'AI, l'operatore concorda o no.
+  const answerAgreement = (agree) => {
+    const finalDecision = agree ? ai.recommendation : opposite(ai.recommendation);
+    finalize(selectedId, sub, finalDecision, agree ? 'AGREE' : 'DISAGREE');
   };
  
-  /* -- dati derivati per il caso attivo ------------------------------------- */
+  // Dopo la conferma sposta il focus sul riepilogo (o sul feedback dell'esercitazione).
+  useEffect(() => {
+    if (!focusId) return;
+    completionRef.current?.focus();
+    setFocusId(null);
+  }, [focusId, cases]);
  
-  const score = activeCase?.vulnerability_profile.overall_score ?? 0;
-  const level = getLevel(score);
-  const features = activeCase?.xai_explanation.feature_importances ?? [];
-  const dimensions = Object.entries(activeCase?.vulnerability_profile.dimensions ?? {});
-  const plan = activeCase?.ai_assessment.mitigation_plan ?? [];
-  const confidence = activeCase?.ai_assessment.confidence;
-  const delta = manualBudget - suggested;
-  const suggestedPct = (suggested / MAX_BUDGET) * 100;
-  const budgetPct = (manualBudget / MAX_BUDGET) * 100;
-  const minors = activeCase?.demographics.unaccompanied_minors ?? 0;
+  const nextPending = pendingCases.find((c) => c.case_id !== selectedId);
+  const goToNext = () => {
+    if (!nextPending) return;
+    setTab('PENDING');
+    selectCase(nextPending.case_id);
+  };
+ 
+  /* ====================================================================== */
  
   return (
     <div className="min-h-screen bg-white text-[#1A1A1A]" style={{ fontFamily: FONT_STACK }}>
-      {/* Stile dello slider: piatto, con bordo scuro come i campi UNHCR */}
-      <style>{`
-        .unhcr-range{-webkit-appearance:none;appearance:none;width:100%;height:14px;border:2px solid #1A1A1A;border-radius:4px;cursor:pointer;background:#fff}
-        .unhcr-range::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:4px;background:#0072BC;border:3px solid #fff;box-shadow:0 0 0 2px #18375F}
-        .unhcr-range::-moz-range-thumb{width:22px;height:22px;border-radius:4px;background:#0072BC;border:3px solid #fff;box-shadow:0 0 0 2px #18375F}
-        .unhcr-range:focus-visible{outline:3px solid #18375F;outline-offset:6px}
-      `}</style>
- 
-      {/* ---------------------------------------------------------------- */}
       {/* Intestazione: barra blu + barra blu scuro (rimuovi se l'app ne ha già una) */}
-      {/* ---------------------------------------------------------------- */}
       <header>
         <div className="bg-[#0072BC] border-b-2 border-[#005a96]">
           <div className="max-w-[1440px] mx-auto px-4 sm:px-8 py-4 flex items-center justify-between gap-4">
@@ -533,20 +609,10 @@ export default function Dashboard() {
         </div>
  
         <div className="bg-[#18375F]">
-          <div className="max-w-[1440px] mx-auto px-4 sm:px-8 py-4 flex flex-col md:flex-row md:items-center gap-4 md:gap-10">
-            <div className="flex-1 max-w-3xl">
-              <FundBar total={TOTAL_FUND} allocated={allocated} selection={isPending ? manualBudget : 0} />
+          <div className="max-w-[1440px] mx-auto px-4 sm:px-8 py-4">
+            <div className="max-w-3xl">
+              <ProgressBar done={completedCases.length} total={cases.length} />
             </div>
-            <button
-              onClick={autoDistribute}
-              disabled={!pendingCases.length}
-              className="inline-flex items-center justify-center gap-3 rounded border-2 border-white bg-[#EFF7FE] px-5 py-3 font-bold text-[#0072BC] hover:bg-white disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#FFD100]"
-            >
-              Distribuisci fondi
-              <span className="w-6 h-6 rounded-full bg-[#0072BC] text-white flex items-center justify-center">
-                <Wand2 className="w-3.5 h-3.5" aria-hidden="true" />
-              </span>
-            </button>
           </div>
         </div>
       </header>
@@ -554,38 +620,35 @@ export default function Dashboard() {
       <main className="max-w-[1440px] mx-auto px-4 sm:px-8 py-8">
         <nav aria-label="Percorso" className="flex items-center gap-2 text-sm">
           <Home className="w-4 h-4 text-[#0072BC]" aria-hidden="true" />
-          <span className="text-[#0072BC]">Aiuti in denaro</span>
+          <span className="text-[#0072BC]">Valutazione dei casi</span>
           <span className="text-[#4D4D4D]" aria-hidden="true">/</span>
-          <span>Valutazione dei nuclei</span>
+          <span>Nuclei familiari</span>
         </nav>
  
         <h1 className="mt-4 text-3xl sm:text-4xl font-bold border-b-2 border-[#1A1A1A] pb-4">
           Valutazione dei nuclei familiari
         </h1>
         <p className="mt-4 text-lg max-w-3xl leading-relaxed">
-          Rivedi la raccomandazione dell&apos;AI e decidi l&apos;importo da erogare a ogni nucleo. La decisione
-          finale è sempre tua.
+          Leggi il fascicolo, scrivi il tuo commento e scegli se includere o escludere il nucleo dal programma di
+          assistenza. Solo dopo l&apos;invio vedrai il parere dell&apos;AI, quando è disponibile.
         </p>
- 
-        {notice && (
-          <div className="mt-6" aria-live="polite">
-            <Notice variant="info" title={notice.title}>
-              {notice.text}
-            </Notice>
-          </div>
-        )}
+        <p className="mt-2 flex items-start gap-2 max-w-3xl text-[#4D4D4D]">
+          <Info className="w-5 h-5 mt-0.5 shrink-0 text-[#18375F]" aria-hidden="true" />
+          Tra i casi possono esserci casi già chiusi, inseriti a scopo di formazione. Se ne incontri uno, vedrai
+          subito la risposta corretta con una spiegazione dettagliata.
+        </p>
  
         <div className="mt-8 grid grid-cols-1 lg:grid-cols-[380px_minmax(0,1fr)] gap-8 lg:gap-10">
           {/* ============================ Coda ============================ */}
           <aside aria-label="Coda di valutazione" className="lg:sticky lg:top-4 lg:self-start">
             <h2 className="text-xl font-bold">Coda di valutazione</h2>
             <p className="mt-1 text-[#4D4D4D]">
-              <b className="text-[#1A1A1A] text-2xl">{pendingCases.length}</b> nuclei in attesa
+              <b className="text-[#1A1A1A] text-2xl">{pendingCases.length}</b> nuclei da valutare
             </p>
  
             {/* Ricerca: bordo scuro da 2px come "Search for a country" */}
             <div className="relative mt-4">
-              <label htmlFor="search" className="sr-only">Cerca per ID, codice o paese</label>
+              <label htmlFor="search" className="sr-only">Cerca per ID o paese</label>
               <input
                 id="search"
                 type="search"
@@ -600,8 +663,8 @@ export default function Dashboard() {
             {/* Schede: stile della barra lingue */}
             <div className="mt-4 flex gap-1 rounded bg-[#EFF7FE] p-1.5 text-sm" role="tablist">
               {[
-                ['PENDING', `In attesa (${pendingCases.length})`],
-                ['APPROVED', `Erogati (${approvedCases.length})`],
+                ['PENDING', `Da valutare (${pendingCases.length})`],
+                ['COMPLETED', `Completati (${completedCases.length})`],
               ].map(([key, label]) => (
                 <button
                   key={key}
@@ -609,7 +672,9 @@ export default function Dashboard() {
                   aria-selected={tab === key}
                   onClick={() => setTab(key)}
                   className={`flex-1 rounded px-3 py-2 font-bold ${FOCUS} ${
-                    tab === key ? 'bg-white text-[#0072BC] shadow-[0_1px_3px_rgba(0,0,0,0.25)]' : 'text-[#0072BC] hover:bg-white/60'
+                    tab === key
+                      ? 'bg-white text-[#0072BC] shadow-[0_1px_3px_rgba(0,0,0,0.25)]'
+                      : 'text-[#0072BC] hover:bg-white/60'
                   }`}
                 >
                   {label}
@@ -623,8 +688,8 @@ export default function Dashboard() {
                   {query
                     ? 'Nessun nucleo corrisponde alla ricerca.'
                     : tab === 'PENDING'
-                    ? 'Tutti i nuclei sono stati processati.'
-                    : 'Nessuna erogazione confermata finora.'}
+                    ? 'Hai valutato tutti i nuclei.'
+                    : 'Nessun nucleo completato finora.'}
                 </p>
               ) : (
                 visibleCases.map((req) => (
@@ -632,7 +697,7 @@ export default function Dashboard() {
                     key={req.case_id}
                     req={req}
                     selected={selectedId === req.case_id}
-                    draft={drafts[req.case_id]}
+                    inProgress={!!submitted[req.case_id]}
                     onSelect={() => selectCase(req.case_id)}
                   />
                 ))
@@ -640,7 +705,7 @@ export default function Dashboard() {
             </div>
           </aside>
  
-          {/* ======================= Profilo famiglia ====================== */}
+          {/* ======================= Dettaglio caso ======================= */}
           {activeCase ? (
             <section ref={detailRef} aria-labelledby="case-title" className="min-w-0 scroll-mt-4">
               {/* Profilo anonimizzato (fascia grigia) */}
@@ -679,263 +744,270 @@ export default function Dashboard() {
                 </dl>
               </div>
  
-              {/* Avvisi che richiedono attenzione dell'operatore */}
-              {isPending && (minors > 0 || (confidence != null && confidence < LOW_CONFIDENCE)) && (
+              {/* Segnalazioni per l'operatore */}
+              {(complicated || (stage !== 'DONE' && minors > 0)) && (
                 <div className="mt-6 space-y-3">
-                  {minors > 0 && (
+                  {complicated && (
+                    <Notice title="Caso complicato">
+                      {stage === 'DONE'
+                        ? "Per questo caso il parere dell'AI non era disponibile."
+                        : "Per questo caso il parere dell'AI non è disponibile. Leggi con attenzione tutto il fascicolo e, se hai dubbi, confrontati con un collega prima di decidere."}
+                    </Notice>
+                  )}
+                  {stage !== 'DONE' && minors > 0 && (
                     <Notice
                       title={`Il nucleo accoglie ${minors} ${minors === 1 ? 'minore non accompagnato' : 'minori non accompagnati'}`}
                     >
-                      Prima di erogare, verifica che le tutele di protezione siano attive.
-                    </Notice>
-                  )}
-                  {confidence != null && confidence < LOW_CONFIDENCE && (
-                    <Notice title={`Affidabilità del modello ridotta (${Math.round(confidence * 100)}%)`}>
-                      Alcuni dati del fascicolo potrebbero essere incompleti. Controlla con attenzione la raccomandazione.
+                      Verifica che le tutele di protezione siano attive.
                     </Notice>
                   )}
                 </div>
               )}
  
-              <div className="mt-10 grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_400px] gap-10 xl:gap-12">
-                {/* ------------ Colonna sinistra: valutazione AI ------------ */}
+              <div className="mt-10 grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_420px] gap-10 xl:gap-12">
+                {/* ------------------- Colonna sinistra: fascicolo ------------------- */}
                 <div className="min-w-0 space-y-12">
-                  <section aria-labelledby="ai-title">
-                    <SectionTitle id="ai-title">Valutazione AI della vulnerabilità</SectionTitle>
- 
-                    <div className="mt-6 flex flex-wrap items-end gap-x-6 gap-y-3">
-                      <div className="flex items-end gap-2">
-                        <span className="text-7xl font-black leading-none text-[#18375F] tabular-nums">{score}</span>
-                        <span className="pb-1 text-xl font-semibold text-[#4D4D4D]">/100</span>
-                      </div>
-                      <div className="pb-1">
-                        <span className={`inline-block rounded border px-3 py-1 font-bold ${level.chip}`}>
-                          {level.long}
-                        </span>
-                        <p className="mt-1 text-sm text-[#4D4D4D]">{level.hint}</p>
-                      </div>
+                  {/* Feedback dell'esercitazione: subito dopo la decisione finale */}
+                  {stage === 'DONE' && cal && (
+                    <div ref={completionRef} tabIndex={-1} className="outline-none">
+                      <Feedback cal={cal} ho={ho} ai={ai} aiAvailable={aiAvailable} />
                     </div>
+                  )}
  
-                    <ScoreScale score={score} />
- 
-                    <p className="mt-6 text-lg leading-relaxed max-w-2xl">
-                      {activeCase.xai_explanation.operator_summary}
-                    </p>
- 
-                    {dimensions.length > 0 && (
-                      <>
-                        <h4 className="mt-8 mb-3 font-bold text-lg">Salute e sicurezza</h4>
-                        <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                          {dimensions.map(([key, dim]) => {
-                            const meta = DIMENSIONS[key] ?? { label: humanize(key), icon: Info };
-                            const s = DIM_LEVELS[dim.level] ?? DIM_LEVELS.stable;
-                            const Icon = meta.icon;
-                            const StatusIcon = s.icon;
-                            return (
-                              <li key={key} className={`rounded border p-4 ${s.box}`}>
-                                <div className="flex items-center justify-between gap-2">
-                                  <span className="flex items-center gap-2 font-bold">
-                                    <Icon className="w-5 h-5 text-[#18375F]" aria-hidden="true" />
-                                    {meta.label}
-                                  </span>
-                                  <span className={`flex items-center gap-1 text-sm font-bold ${s.text}`}>
-                                    <StatusIcon className="w-4 h-4" aria-hidden="true" />
-                                    {s.label}
-                                  </span>
-                                </div>
-                                <p className="mt-2 text-sm leading-relaxed">{dim.note}</p>
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      </>
-                    )}
-                  </section>
- 
-                  <section aria-labelledby="why-title">
-                    <SectionTitle id="why-title" icon={Info}>Perché questo punteggio?</SectionTitle>
-                    <div className="mt-6">
-                      <FactorBars
-                        features={features}
-                        baseline={activeCase.xai_explanation.baseline_score ?? 50}
-                        score={score}
-                      />
-                    </div>
-                    {META.model && (
-                      <p className="mt-4 text-sm text-[#4D4D4D]">
-                        Valutazione generata da: {META.model.name}, versione {META.model.version}.
-                      </p>
-                    )}
-                  </section>
- 
-                  {plan.length > 0 && (
-                    <section aria-labelledby="plan-title">
-                      <SectionTitle id="plan-title" icon={ClipboardList}>Piano di mitigazione suggerito</SectionTitle>
-                      <ul className="mt-2">
-                        {plan.map((item) => {
-                          const p = PRIORITIES[item.priority] ?? PRIORITIES.routine;
+                  {dimensions.length > 0 && (
+                    <section aria-labelledby="dim-title">
+                      <SectionTitle id="dim-title">Situazione del nucleo</SectionTitle>
+                      <ul className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {dimensions.map(([key, dim]) => {
+                          const meta = DIMENSIONS[key] ?? { label: humanize(key), icon: Info };
+                          const s = DIM_LEVELS[dim.level] ?? DIM_LEVELS.stable;
+                          const Icon = meta.icon;
+                          const StatusIcon = s.icon;
                           return (
-                            <li
-                              key={item.action}
-                              className="flex items-start justify-between gap-4 border-b border-[#D9D9D9] py-4"
-                            >
-                              <span className="leading-relaxed">{item.action}</span>
-                              <span className={`shrink-0 rounded border px-2.5 py-0.5 text-sm font-bold ${p.chip}`}>
-                                {p.label}
-                              </span>
+                            <li key={key} className={`rounded border p-4 ${s.box}`}>
+                              <div className="flex items-center justify-between gap-2">
+                                <span className="flex items-center gap-2 font-bold">
+                                  <Icon className="w-5 h-5 text-[#18375F]" aria-hidden="true" />
+                                  {meta.label}
+                                </span>
+                                <span className={`flex items-center gap-1 text-sm font-bold ${s.text}`}>
+                                  <StatusIcon className="w-4 h-4" aria-hidden="true" />
+                                  {s.label}
+                                </span>
+                              </div>
+                              <p className="mt-2 text-sm leading-relaxed">{dim.note}</p>
                             </li>
                           );
                         })}
                       </ul>
                     </section>
                   )}
+ 
+                  {showFactors && (
+                    <section aria-labelledby="factors-title">
+                      <SectionTitle id="factors-title">
+                        Elementi a favore dell&apos;inclusione e dell&apos;esclusione
+                      </SectionTitle>
+                      <p className="mt-4 text-[#4D4D4D] max-w-2xl leading-relaxed">
+                        Sono ordinati per rilevanza. Non indicano di per sé una decisione: sta a te pesarli.
+                      </p>
+                      <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <FactorColumn
+                          title="A favore dell'inclusione"
+                          icon={Plus}
+                          tile="bg-[#EFF7FE] text-[#00538A]"
+                          bar="border-l-[#0072BC]"
+                          items={proInclude}
+                        />
+                        <FactorColumn
+                          title="A favore dell'esclusione"
+                          icon={Minus}
+                          tile="bg-[#EDEDED] text-[#1A1A1A]"
+                          bar="border-l-[#6B6B6B]"
+                          items={proExclude}
+                        />
+                      </div>
+                    </section>
+                  )}
                 </div>
  
-                {/* ------------ Colonna destra: pannello azione (HITL) ------------ */}
-                <aside aria-labelledby="action-title" className="xl:sticky xl:top-4 self-start">
+                {/* ------------------- Colonna destra: decisione ------------------- */}
+                <aside
+                  aria-labelledby="action-title"
+                  className="xl:sticky xl:top-4 xl:max-h-[calc(100vh-2rem)] xl:overflow-y-auto self-start"
+                >
                   {/* Box azzurro con bordo, come "I need help with Registration in:" */}
                   <div className="rounded border-2 border-[#7DB2DC] bg-[#EFF7FE] p-6 sm:p-7">
                     <h3 id="action-title" className="text-xl font-bold leading-snug">
-                      Erogazione per <span className="text-[#0072BC]">{activeCase.case_id}</span>
+                      Decisione per <span className="text-[#0072BC]">{activeCase.case_id}</span>
                     </h3>
  
-                    {isPending ? (
-                      <div className="mt-6 space-y-7">
-                        {/* Raccomandazione AI */}
+                    {/* ---------- Fase 1: valutazione cieca ---------- */}
+                    {stage === 'DECIDE' && (
+                      <div className="mt-5 space-y-6">
+                        <p className="leading-relaxed">
+                          {aiAvailable
+                            ? "Scrivi il tuo commento e scegli una decisione. Dopo l'invio vedrai il parere dell'AI."
+                            : "Per questo caso non c'è un parere dell'AI: la decisione che invii è definitiva."}
+                        </p>
+ 
+                        <fieldset>
+                          <legend className="font-bold mb-2">La tua decisione</legend>
+                          <div className="space-y-3">
+                            {['INCLUDE', 'EXCLUDE'].map((key) => {
+                              const d = DECISIONS[key];
+                              const Icon = d.icon;
+                              return (
+                                <label key={key} className="block cursor-pointer">
+                                  <input
+                                    type="radio"
+                                    name={`decision-${selectedId}`}
+                                    value={key}
+                                    checked={input.decision === key}
+                                    onChange={() => setInput({ decision: key })}
+                                    className="peer sr-only"
+                                  />
+                                  <span className="flex items-start gap-3 rounded border-2 border-[#B9D6EE] bg-white p-4 hover:border-[#0072BC] peer-checked:border-[#0072BC] peer-checked:shadow-[inset_6px_0_0_#0072BC] peer-focus-visible:outline peer-focus-visible:outline-[3px] peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[#18375F]">
+                                    <span className="w-9 h-9 shrink-0 rounded bg-[#EFF7FE] text-[#18375F] flex items-center justify-center ml-1">
+                                      <Icon className="w-5 h-5" aria-hidden="true" />
+                                    </span>
+                                    <span>
+                                      <span className="block font-bold">{d.verb}</span>
+                                      <span className="block text-sm text-[#4D4D4D] mt-0.5">{d.desc}</span>
+                                    </span>
+                                  </span>
+                                </label>
+                              );
+                            })}
+                          </div>
+                        </fieldset>
+ 
                         <div>
-                          <div className="text-[#4D4D4D]">Importo raccomandato dall&apos;AI</div>
-                          <div className="mt-1 text-5xl font-black text-[#18375F] tabular-nums">{usd(suggested)}</div>
-                          {confidence != null && (
-                            <div className="mt-1 text-sm text-[#4D4D4D]">
-                              Affidabilità del modello: {Math.round(confidence * 100)}%
-                            </div>
-                          )}
-                        </div>
- 
-                        {/* Slider */}
-                        <div>
-                          <div className="flex items-baseline justify-between gap-3 mb-3">
-                            <label htmlFor="budget" className="font-bold">Importo da erogare</label>
-                            <span className="text-2xl font-black tabular-nums">{usd(manualBudget)}</span>
-                          </div>
- 
-                          <input
-                            id="budget"
-                            type="range"
-                            className="unhcr-range"
-                            min="0"
-                            max={MAX_BUDGET}
-                            step={STEP}
-                            value={manualBudget}
-                            onChange={(e) => setManualBudget(Number(e.target.value))}
-                            style={{ background: `linear-gradient(to right, #7DB2DC ${budgetPct}%, #fff ${budgetPct}%)` }}
-                            aria-valuetext={usd(manualBudget)}
-                          />
- 
-                          {/* Segno della raccomandazione AI */}
-                          <div className="relative h-7 mt-2" aria-hidden="true">
-                            <div
-                              className="absolute flex flex-col items-center -translate-x-1/2"
-                              style={{ left: `calc(${suggestedPct}% + ${14 - suggestedPct * 0.28}px)` }}
-                            >
-                              <span className="w-0.5 h-2 bg-[#1A1A1A]" />
-                              <span className="text-xs font-bold whitespace-nowrap">AI</span>
-                            </div>
-                          </div>
-                          <div className="flex justify-between text-sm text-[#4D4D4D] -mt-1">
-                            <span>{usd(0)}</span>
-                            <span>{usd(MAX_BUDGET)}</span>
-                          </div>
- 
-                          <div className="mt-4">
-                            {differs ? (
-                              <span className="inline-block rounded border border-[#E6BF00] bg-[#FFF799] px-3 py-1 text-sm font-bold text-[#4A3B00]">
-                                {delta > 0 ? '+' : '−'}
-                                {usd(Math.abs(delta))} rispetto alla raccomandazione
-                              </span>
-                            ) : (
-                              <span className="inline-flex items-center gap-1.5 rounded border border-[#A9D8BA] bg-[#E8F5EC] px-3 py-1 text-sm font-bold text-[#1D5E36]">
-                                <CheckCircle2 className="w-4 h-4" aria-hidden="true" />
-                                In linea con la raccomandazione
-                              </span>
-                            )}
-                          </div>
- 
-                          {overBudget ? (
-                            <div className="mt-4" role="alert">
-                              <Notice title="Importo oltre il fondo disponibile">
-                                Restano {usd(Math.max(remaining, 0))}. Riduci l&apos;importo per poter confermare.
-                              </Notice>
-                            </div>
-                          ) : (
-                            <p className="mt-3 text-sm text-[#4D4D4D]">
-                              Dopo questa erogazione restano <b className="text-[#1A1A1A]">{usd(remaining - manualBudget)}</b> nel fondo.
-                            </p>
-                          )}
-                        </div>
- 
-                        {/* Motivazione */}
-                        <div>
-                          <label htmlFor="reason" className="block font-bold mb-2">
-                            {differs ? 'Motivo della modifica (obbligatorio)' : 'Note per il fascicolo (facoltative)'}
+                          <label htmlFor="comment" className="block font-bold mb-1">
+                            Commento (obbligatorio)
                           </label>
+                          <p id="comment-hint" className="text-sm text-[#4D4D4D] mb-2">
+                            Spiega in poche righe cosa ha pesato di più nella tua valutazione.
+                          </p>
                           <textarea
-                            id="reason"
-                            rows={4}
-                            value={manualReason}
-                            onChange={(e) => setManualReason(e.target.value)}
-                            aria-invalid={reasonMissing}
-                            placeholder={
-                              differs
-                                ? "Spiega perché l'importo è diverso da quello raccomandato dall'AI."
-                                : 'Aggiungi eventuali note operative.'
-                            }
-                            className={`w-full resize-none rounded border-2 bg-white p-4 placeholder:text-[#6B6B6B] ${FOCUS} ${
-                              reasonMissing ? 'border-[#E6BF00]' : 'border-[#1A1A1A]'
-                            }`}
+                            id="comment"
+                            rows={5}
+                            value={input.comment}
+                            onChange={(e) => setInput({ comment: e.target.value })}
+                            aria-describedby="comment-hint comment-count"
+                            className={`w-full resize-none rounded border-2 border-[#1A1A1A] bg-white p-4 placeholder:text-[#6B6B6B] ${FOCUS}`}
+                            placeholder="Scrivi qui il tuo commento."
                           />
+                          <p id="comment-count" className="mt-1 text-sm text-[#4D4D4D]">
+                            {commentLength >= MIN_COMMENT
+                              ? 'Commento sufficiente.'
+                              : `Servono almeno ${MIN_COMMENT} caratteri (${commentLength}/${MIN_COMMENT}).`}
+                          </p>
                         </div>
  
-                        {/* Conferma */}
                         <div>
                           <button
-                            onClick={handleAllocation}
-                            disabled={!canConfirm}
+                            onClick={submitEvaluation}
+                            disabled={!canSubmit}
                             className={`w-full inline-flex items-center justify-center gap-2 rounded bg-[#0072BC] px-5 py-4 text-lg font-bold text-white hover:bg-[#005a96] disabled:bg-[#D9D9D9] disabled:text-[#6B6B6B] disabled:cursor-not-allowed ${FOCUS}`}
                           >
-                            <CheckCircle2 className="w-5 h-5" aria-hidden="true" />
-                            Conferma erogazione di {usd(manualBudget)}
+                            {aiAvailable ? 'Invia la valutazione' : 'Invia la decisione definitiva'}
+                            <ArrowRight className="w-5 h-5" aria-hidden="true" />
                           </button>
-                          {reasonMissing && (
-                            <p className="mt-2 text-sm text-[#4D4D4D] text-center">
-                              Inserisci il motivo della modifica per poter confermare.
-                            </p>
-                          )}
+                          <p className="mt-2 text-sm text-[#4D4D4D] text-center">
+                            {aiAvailable
+                              ? 'Dopo l\'invio non potrai più modificare la valutazione iniziale.'
+                              : 'Dopo l\'invio la decisione non potrà più essere modificata.'}
+                          </p>
                         </div>
                       </div>
-                    ) : (
-                      <div className="mt-6 text-center py-4">
-                        <div className="mx-auto w-14 h-14 rounded-full bg-[#E8F5EC] text-[#1D5E36] flex items-center justify-center">
-                          <CheckCircle2 className="w-8 h-8" aria-hidden="true" />
+                    )}
+ 
+                    {/* ---------- Fase 2: parere AI e risposta dell'operatore ---------- */}
+                    {stage === 'REVIEW' && (
+                      <div className="mt-5 space-y-6">
+                        <div className="rounded border border-[#7DB2DC] bg-white p-4">
+                          <div className="flex flex-wrap items-center justify-between gap-2">
+                            <span className="font-bold">La tua valutazione</span>
+                            <DecisionTag decision={sub.decision} />
+                          </div>
+                          <p className="mt-3 leading-relaxed">{sub.comment}</p>
+                          <p className="mt-2 text-sm text-[#4D4D4D]">Inviata: non è più modificabile.</p>
                         </div>
-                        <h4 className="mt-4 text-xl font-bold">Erogazione approvata</h4>
-                        <p className="mt-2 text-5xl font-black text-[#18375F] tabular-nums">
-                          {usd(activeCase.human_oversight.final_amount)}
-                        </p>
-                        <p className="mt-3 text-[#4D4D4D]">
-                          {activeCase.human_oversight.final_amount === suggested
-                            ? "Importo in linea con la raccomandazione dell'AI."
-                            : `Raccomandazione dell'AI: ${usd(suggested)}.`}
-                        </p>
-                        {activeCase.human_oversight.reviewed_at && (
-                          <p className="mt-1 text-sm text-[#4D4D4D]">
-                            Confermata il {fmtDate(activeCase.human_oversight.reviewed_at)}.
+ 
+                        <AiOpinion ai={ai} score={activeCase.vulnerability_profile.overall_score} />
+ 
+                        <fieldset>
+                          <legend className="font-bold mb-3">Sei d&apos;accordo con il parere dell&apos;AI?</legend>
+                          <div className="space-y-3">
+                            <button
+                              onClick={() => answerAgreement(true)}
+                              className={`w-full text-left rounded border-2 border-[#0072BC] bg-[#0072BC] p-4 text-white hover:bg-[#005a96] ${FOCUS}`}
+                            >
+                              <span className="block text-lg font-bold">Concordo</span>
+                              <span className="block text-sm mt-0.5">
+                                Decisione finale: {DECISIONS[ai.recommendation].label}
+                              </span>
+                            </button>
+                            <button
+                              onClick={() => answerAgreement(false)}
+                              className={`w-full text-left rounded border-2 border-[#0072BC] bg-white p-4 text-[#0072BC] hover:bg-[#EFF7FE] ${FOCUS}`}
+                            >
+                              <span className="block text-lg font-bold">Non concordo</span>
+                              <span className="block text-sm mt-0.5">
+                                Decisione finale: {DECISIONS[opposite(ai.recommendation)].label}
+                              </span>
+                            </button>
+                          </div>
+                        </fieldset>
+                      </div>
+                    )}
+ 
+                    {/* ---------- Fase 3: riepilogo ---------- */}
+                    {stage === 'DONE' && (
+                      <div className="mt-5 space-y-6">
+                        <div
+                          ref={cal ? null : completionRef}
+                          tabIndex={-1}
+                          className="rounded border border-[#A9D8BA] bg-[#E8F5EC] p-5 outline-none"
+                        >
+                          <div className="flex items-center gap-2 font-bold text-[#1D5E36]">
+                            <CheckCircle2 className="w-5 h-5" aria-hidden="true" />
+                            Decisione registrata
+                          </div>
+                          <div className="mt-3">
+                            <DecisionTag decision={ho.final_decision} large />
+                          </div>
+                          <p className="mt-3 text-[#1A1A1A]">
+                            {ho.ai_agreement === 'AGREE' && "Hai concordato con il parere dell'AI."}
+                            {ho.ai_agreement === 'DISAGREE' && "Non hai concordato con il parere dell'AI."}
+                            {ho.ai_agreement === 'NOT_AVAILABLE' && "Il parere dell'AI non era disponibile per questo caso."}
                           </p>
+                          {ho.reviewed_at && (
+                            <p className="mt-1 text-sm text-[#4D4D4D]">Registrata il {fmtDate(ho.reviewed_at)}.</p>
+                          )}
+                        </div>
+ 
+                        <div className="rounded border border-[#7DB2DC] bg-white p-4">
+                          <div className="flex flex-wrap items-center justify-between gap-2">
+                            <span className="font-bold">La tua valutazione iniziale</span>
+                            <DecisionTag decision={ho.initial_decision} />
+                          </div>
+                          <p className="mt-3 leading-relaxed">{ho.initial_comment}</p>
+                        </div>
+ 
+                        {aiAvailable && (
+                          <AiOpinion ai={ai} score={activeCase.vulnerability_profile.overall_score} />
                         )}
-                        {activeCase.human_oversight.reason && (
-                          <blockquote className="mt-5 rounded border border-[#7DB2DC] bg-white p-4 text-left leading-relaxed">
-                            {activeCase.human_oversight.reason}
-                          </blockquote>
+ 
+                        {nextPending && (
+                          <button
+                            onClick={goToNext}
+                            className={`w-full inline-flex items-center justify-center gap-2 rounded bg-[#0072BC] px-5 py-4 text-lg font-bold text-white hover:bg-[#005a96] ${FOCUS}`}
+                          >
+                            Passa al prossimo caso
+                            <ArrowRight className="w-5 h-5" aria-hidden="true" />
+                          </button>
                         )}
                       </div>
                     )}
@@ -955,4 +1027,3 @@ export default function Dashboard() {
     </div>
   );
 }
- 
